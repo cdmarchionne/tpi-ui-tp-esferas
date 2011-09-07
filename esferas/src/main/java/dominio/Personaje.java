@@ -20,9 +20,12 @@ public class Personaje implements ObjetosDragonBall {
 	}
 
 	@Override
+	public String toString() {
+		return this.getNombre();
+	}
+
 	public String getNombre() {
-		// TODO Auto-generated method stub
-		return null;
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {

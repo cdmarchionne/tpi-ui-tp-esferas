@@ -2,6 +2,7 @@ package dominio;
 
 public interface ObjetosDragonBall {
 
-	String getNombre();
+	@Override
+	public String toString();
 
 }

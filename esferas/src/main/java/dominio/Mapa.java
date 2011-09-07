@@ -1,27 +1,25 @@
 package dominio;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
-import utils.Pair;
+import utils.Punto;
 
 public class Mapa extends ObservableObject {
 
 	public static final String CASILLEROS = "casilleros";
 	public static final String CALCULAR_DISTANCIA = "calcularDistancia";
 
-	private Pair<Integer, Integer> dimension;
-	private Map<Pair<Integer, Integer>, Casillero> casilleros;
+	private Punto<Integer> dimension;
+	private Set<Casillero> casilleros;
 
-	public Mapa(Pair<Integer, Integer> dimension) {
+	public Mapa(Punto<Integer> dimension) {
 		super();
 		this.setDimension(dimension);
-		casilleros = new HashMap<Pair<Integer, Integer>, Casillero>();
+		casilleros = new HashSet<Casillero>();
 	}
 
 	// ********************************************************
@@ -38,51 +36,47 @@ public class Mapa extends ObservableObject {
 	/**
 	 * Calculo la diferencia absoluta entre cada elemento del par
 	 */
-	private Integer diferenciaAbsoluta(Pair<Integer, Integer> ubicacionPersonaje,
-			Pair<Integer, Integer> ubicacionEsfera)
+	private Integer diferenciaAbsoluta(Punto<Integer> ubicacionPersonaje,
+			Punto<Integer> ubicacionEsfera)
 	{
-		Pair<Integer, Integer> dif = new Pair<Integer, Integer>(
-				(ubicacionPersonaje.getLeft() - ubicacionEsfera.getLeft()),
-				(ubicacionPersonaje.getRight() - ubicacionEsfera.getRight()));
-		return Math.abs(dif.getLeft()) + Math.abs(dif.getRight());
+		Punto<Integer> dif = new Punto<Integer>(
+				(ubicacionPersonaje.getX() - ubicacionEsfera.getX()),
+				(ubicacionPersonaje.getY() - ubicacionEsfera.getY()));
+		return Math.abs(dif.getX()) + Math.abs(dif.getY());
 	}
 
 	/**
 	 * Devuelvo la posicion en donde esta un Objeto, Personaje o Esfera.
 	 */
-	public Pair<Integer, Integer> buscar(ObjetosDragonBall objeto) {
-		Iterator<Entry<Pair<Integer, Integer>, Casillero>> entries = this.getCasilleros()
-				.entrySet().iterator();
-		while (entries.hasNext()) {
-			Entry<Pair<Integer, Integer>, Casillero> thisEntry = (Entry<Pair<Integer, Integer>, Casillero>) entries
-					.next();
-			Casillero value = (Casillero) thisEntry.getValue();
+	public Punto<Integer> buscar(ObjetosDragonBall objeto) {
 
-			if (value.getObjeto().equals(objeto)) {
-				return (Pair<Integer, Integer>) thisEntry.getKey();
+		for (Casillero casillero : this.getCasilleros()) {
+			if (casillero.hasObject(objeto)) {
+				return casillero.getPosicion();
 			}
 		}
 
-		throw new UserException("El Objeto " + objeto.getNombre() + " no se encuenrta en el mapa.");
+		throw new UserException("El Objeto " + objeto.toString() + " no se encuenrta en el mapa.");
+
 	}
 
 	// ********************************************************
 	// ** Atributos
 	// ********************************************************
 
-	public void setCasilleros(Map<Pair<Integer, Integer>, Casillero> casilleros) {
+	public void setCasilleros(Set<Casillero> casilleros) {
 		this.casilleros = casilleros;
 	}
 
-	public Map<Pair<Integer, Integer>, Casillero> getCasilleros() {
+	public Set<Casillero> getCasilleros() {
 		return casilleros;
 	}
 
-	public void setDimension(Pair<Integer, Integer> dimension) {
+	public void setDimension(Punto<Integer> dimension) {
 		this.dimension = dimension;
 	}
 
-	public Pair<Integer, Integer> getDimension() {
+	public Punto<Integer> getDimension() {
 		return dimension;
 	}
 

@@ -4,13 +4,14 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.MainWindow;
 
-import utils.Pair;
+import utils.Punto;
 import dominio.Mapa;
 
-public class Ventana extends MainWindow<Mapa> {
+@SuppressWarnings("serial")
+public class MapaVentana extends MainWindow<Mapa> {
 
-	public Ventana() {
-		super(new Mapa(new Pair(5, 8)));
+	public MapaVentana() {
+		super(new Mapa(new Punto<Integer>(5, 8)));
 	}
 
 	@Override
@@ -21,13 +22,13 @@ public class Ventana extends MainWindow<Mapa> {
 		// convertir.setCaption("Convertir");
 		// convertir.onClick(new MessageSend(this.getModel(),
 		// Conversor.CONVERTIR));
-		//
+
 		// Label kilometros = new Label(mainPanel);
 		// kilometros.bindValueToProperty(Conversor.KILOMETROS);
 	}
 
 	public static void main(String[] args) {
-		new Ventana().startApplication();
+		new MapaVentana().startApplication();
 	}
 
 }
