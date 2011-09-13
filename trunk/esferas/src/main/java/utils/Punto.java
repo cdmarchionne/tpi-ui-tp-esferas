@@ -1,6 +1,5 @@
 package utils;
 
-import org.eclipse.core.internal.databinding.Pair;
 
 /**
  * Clase que modela el comportamiento de un Punto
@@ -10,6 +9,8 @@ import org.eclipse.core.internal.databinding.Pair;
  * @param <T>
  */
 public class Punto<T> {
+
+	public static final String PUNTO = "Punto";
 
 	private T x;
 	private T y;
@@ -51,7 +52,7 @@ public class Punto<T> {
 		if (o == null)
 			return false;
 
-		if (!(o instanceof Pair))
+		if (!(o instanceof Punto))
 			return false;
 
 		Punto<?> punto = (Punto<?>) o;
