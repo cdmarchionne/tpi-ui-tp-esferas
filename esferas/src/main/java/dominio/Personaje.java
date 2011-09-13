@@ -1,6 +1,9 @@
 package dominio;
 
-public class Personaje implements ObjetosDragonBall {
+public class Personaje extends Posicionable {
+
+	public static final String NOMBRE = "nombre";
+	public static final String DISTANCIA = "distancia";
 
 	private String nombre;
 	private Integer distancia;

@@ -48,7 +48,7 @@ public class Mapa extends ObservableObject {
 	/**
 	 * Devuelvo la posicion en donde esta un Objeto, Personaje o Esfera.
 	 */
-	public Punto<Integer> buscar(ObjetosDragonBall objeto) {
+	public Punto<Integer> buscar(Posicionable objeto) {
 
 		for (Casillero casillero : this.getCasilleros()) {
 			if (casillero.hasObject(objeto)) {
@@ -56,7 +56,8 @@ public class Mapa extends ObservableObject {
 			}
 		}
 
-		throw new UserException("El Objeto " + objeto.toString() + " no se encuenrta en el mapa.");
+		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
+				+ " no se encuenrta en el mapa.");
 
 	}
 
