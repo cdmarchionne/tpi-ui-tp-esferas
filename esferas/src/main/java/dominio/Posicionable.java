@@ -10,12 +10,12 @@ public abstract class Posicionable extends ObservableObject implements ObjetosDr
 
 	public Posicionable() {
 		super();
-		this.casillero = new Casillero();
+		this.setCasillero(new Casillero());
 	}
 
 	public Posicionable(Casillero casillero) {
 		super();
-		this.casillero = casillero;
+		this.setCasillero(casillero);
 	}
 
 	public Casillero getCasillero() {
@@ -23,7 +23,10 @@ public abstract class Posicionable extends ObservableObject implements ObjetosDr
 	}
 
 	public void setCasillero(Casillero casillero) {
-		this.casillero = casillero;
+		if ((!(this.getCasillero() == null)) && (!(this.getCasillero().equals(casillero)))) {
+			this.casillero = casillero;
+			this.casillero.setObjeto(this);
+		}
 	}
 
 	private Punto<Integer> getPosicion() {
