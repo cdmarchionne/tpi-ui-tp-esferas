@@ -29,6 +29,7 @@ public class EsferaVentana extends Dialog<Esfera> {
 		Button crear = new Button(actionsPanel);
 		crear.setCaption("Crear");
 		// crear.onClick(new MessageSend(this.getModel(), Esfera.CREAR));
+		crear.setAsDefault();
 
 	}
 

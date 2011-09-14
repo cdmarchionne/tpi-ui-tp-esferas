@@ -27,14 +27,13 @@ public class MapaVentana extends MainWindow<Mapa> {
 	@Override
 	public void createContents(Panel mainPanel) {
 		// ESTO DE ENTITY TPE NO M CIERRA!
-		// Table<Casillero> table = new Table<Casillero>(mainPanel,
-		// this.getModel().getEntityType());
+		Table<Casillero> table = new Table<Casillero>(mainPanel, Casillero.class);
 		// O SEA HABRIA QUE VER COMO MIERDA ES ESO DE PASARLE EL MODELO O DE
 		// DONDE CARAJO SACARLO.
-		// table.bindContentsToProperty(Mapa.CASILLEROS); // bindeo los
-		// casilleros del mapa con la tabla
+		// table.bindContentsToProperty(Mapa.CASILLEROS);
+		// bindeo los casilleros del mapa con la tabla
 
-		// this.describeResultsGrid(table);
+		this.describeResultsGrid(table);
 
 		mainPanel.setLayout(new VerticalLayout());
 
