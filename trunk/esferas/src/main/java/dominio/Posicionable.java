@@ -4,13 +4,14 @@ import org.uqbar.commons.model.ObservableObject;
 
 import utils.Punto;
 
-public abstract class Posicionable extends ObservableObject implements ObjetosDragonBall {
+public abstract class Posicionable extends ObservableObject {
 
+	private static final String CASILLERO = "casillero";
 	private Casillero casillero;
 
 	public Posicionable() {
 		super();
-		this.setCasillero(new Casillero());
+		this.setCasillero(new Casillero(this));
 	}
 
 	public Posicionable(Casillero casillero) {
@@ -23,12 +24,13 @@ public abstract class Posicionable extends ObservableObject implements ObjetosDr
 	}
 
 	public void setCasillero(Casillero casillero) {
-		if ((!(this.getCasillero() == null)) && (!(this.getCasillero().equals(casillero)))) {
-			this.casillero = casillero;
+		this.setProperty(CASILLERO, casillero);
+		if (!(this.getCasillero() == null) && !(this.getCasillero().equals(casillero))) {
 			this.casillero.setObjeto(this);
 		}
 	}
-
+	
+	
 	private Punto<Integer> getPosicion() {
 		return this.casillero.getPosicion();
 	}
@@ -49,4 +51,6 @@ public abstract class Posicionable extends ObservableObject implements ObjetosDr
 		this.casillero.setPosicion(new Punto<Integer>(getPosicion().getX(), y));
 	}
 
+	public abstract boolean esPersonaje();
+	public abstract boolean esEsfera();
 }
