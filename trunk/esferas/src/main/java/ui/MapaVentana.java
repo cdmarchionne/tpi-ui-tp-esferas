@@ -1,6 +1,7 @@
 package ui;
 
 import org.uqbar.arena.actions.MessageSend;
+import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Panel;
@@ -15,6 +16,9 @@ import dominio.Mapa;
 
 @SuppressWarnings("serial")
 public class MapaVentana extends MainWindow<Mapa> {
+
+	static final String CREAR_ESFERA = "crearEsfera";
+	static final String CREAR_PERSONAJE = "crearPersonaje";
 
 	public MapaVentana() {
 		super(new Mapa(new Punto<Integer>(5, 8)));
@@ -34,9 +38,16 @@ public class MapaVentana extends MainWindow<Mapa> {
 
 		mainPanel.setLayout(new VerticalLayout());
 
-		Button crearEsfera = new Button(mainPanel);
+		Panel creacionPanel = new Panel(mainPanel);
+		creacionPanel.setLayout(new ColumnLayout(2));
+
+		Button crearEsfera = new Button(creacionPanel);
 		crearEsfera.setCaption("Crear Esfera");
-		crearEsfera.onClick(new MessageSend(this, "crearEsfera"));
+		crearEsfera.onClick(new MessageSend(this, this.CREAR_ESFERA));
+
+		Button crearPersonaje = new Button(creacionPanel);
+		crearPersonaje.setCaption("Crear Personaje");
+		crearPersonaje.onClick(new MessageSend(this, this.CREAR_PERSONAJE));
 	}
 
 	public void describeResultsGrid(Table<Casillero> table) {
@@ -51,12 +62,18 @@ public class MapaVentana extends MainWindow<Mapa> {
 		objetoColumn.bindContentsToProperty(Casillero.OBJETO);
 	}
 
-	public static void main(String[] args) {
-		new MapaVentana().startApplication();
-	}
-
 	public void crearEsfera() {
 		Dialog<?> crearEsferaWindow = new EsferaVentana(this);
 		crearEsferaWindow.open();
 	}
+
+	public void crearPersonaje() {
+		Dialog<?> crearPersonajeWindow = new PersonajeVentana(this);
+		crearPersonajeWindow.open();
+	}
+
+	public static void main(String[] args) {
+		new MapaVentana().startApplication();
+	}
+
 }

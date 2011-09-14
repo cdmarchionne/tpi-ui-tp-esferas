@@ -8,6 +8,12 @@ public class Personaje extends Posicionable {
 	private String nombre;
 	private Integer distancia;
 
+	public Personaje() {
+		super();
+		this.nombre = "";
+		this.distancia = 0;
+	}
+
 	public Personaje(String nombre, Integer distancia) {
 		super();
 		this.nombre = nombre;

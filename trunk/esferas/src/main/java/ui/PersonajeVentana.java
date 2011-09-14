@@ -10,13 +10,17 @@ import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
-import dominio.Esfera;
+import dominio.Personaje;
 
 @SuppressWarnings("serial")
-public class EsferaVentana extends Dialog<Esfera> {
+public class PersonajeVentana extends Dialog<Personaje> {
 
-	public EsferaVentana(WindowOwner owner) {
-		super(owner, new Esfera());
+	public PersonajeVentana(WindowOwner owner) {
+		super(owner, new Personaje());
+	}
+
+	public static void main(String[] args) {
+		new MapaVentana().startApplication();
 	}
 
 	@Override
@@ -28,7 +32,7 @@ public class EsferaVentana extends Dialog<Esfera> {
 	protected void addActions(Panel actionsPanel) {
 		Button crear = new Button(actionsPanel);
 		crear.setCaption("Crear");
-		// crear.onClick(new MessageSend(this.getModel(), Esfera.CREAR));
+		// crear.onClick(new MessageSend(this.getModel(), Personaje.CREAR));
 
 	}
 
@@ -37,7 +41,6 @@ public class EsferaVentana extends Dialog<Esfera> {
 		mainPanel.setLayout(new VerticalLayout());
 
 		Panel posicionPanel = new Panel(mainPanel);
-		// posicionPanel.bindContents(Punto.PUNTO);
 		posicionPanel.setLayout(new ColumnLayout(3));
 
 		Label posicionLabel = new Label(posicionPanel);
@@ -49,14 +52,19 @@ public class EsferaVentana extends Dialog<Esfera> {
 		Control posicionY = new TextBox(posicionPanel);
 		posicionY.bindValueToProperty("y");
 
-		Panel esferaPanel = new Panel(mainPanel);
-		// esferaPanel.bindContents(Esfera.ESFERA);
-		esferaPanel.setLayout(new ColumnLayout(2));
+		Panel personajePanel = new Panel(mainPanel);
+		personajePanel.setLayout(new ColumnLayout(2));
 
-		Label numeroLabel = new Label(esferaPanel);
-		numeroLabel.setText("Numero:");
+		Label nombreLabel = new Label(personajePanel);
+		nombreLabel.setText("Nombre: ");
 
-		Control numero = new TextBox(esferaPanel);
-		numero.bindValueToProperty(Esfera.NUMERO);
+		Control nombre = new TextBox(personajePanel);
+		nombre.bindValueToProperty(Personaje.NOMBRE);
+
+		Label distanciaLabel = new Label(personajePanel);
+		distanciaLabel.setText("Distancia: ");
+
+		Control distancia = new TextBox(personajePanel);
+		distancia.bindValueToProperty(Personaje.DISTANCIA);
 	}
 }
