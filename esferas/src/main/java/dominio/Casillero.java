@@ -8,7 +8,7 @@ public class Casillero extends ObservableObject {
 
 	public static final String POSICION = "posicion";
 	public static final String OBJETO = "objeto";
-
+		
 	private Punto<Integer> posicion;
 	private Posicionable objeto;
 
@@ -17,12 +17,21 @@ public class Casillero extends ObservableObject {
 		this.posicion = new Punto<Integer>(0, 0);
 		this.objeto = null;
 	}
+	
 
+	
 	public Casillero(Punto<Integer> posicion, Posicionable objeto) {
 		super();
 		this.posicion = posicion;
 		this.setObjeto(objeto);
 	}
+
+	public Casillero(Posicionable posicionable) {
+		this();
+		this.setObjeto(posicionable);
+	}
+
+
 
 	public Boolean hasObject(Posicionable objeto) {
 		return this.getObjeto().equals(objeto);
@@ -41,10 +50,18 @@ public class Casillero extends ObservableObject {
 	}
 
 	public void setObjeto(Posicionable objeto) {
-		if ((!(this.getObjeto() == null)) && (!(this.getObjeto().equals(objeto)))) {
-			this.objeto = objeto;
+		this.setProperty(OBJETO, objeto);
+		if (!(this.getObjeto() == null) && !(this.getObjeto().equals(objeto))) {
 			this.objeto.setCasillero(this);
 		}
 	}
+	
+	
+	public boolean esPersonaje(){
+		return this.getObjeto().esPersonaje();
+	}
 
+	public boolean esEsfera(){
+		return this.getObjeto().esEsfera();
+	}
 }
