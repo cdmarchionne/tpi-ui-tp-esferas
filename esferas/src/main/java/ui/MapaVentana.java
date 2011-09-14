@@ -42,11 +42,11 @@ public class MapaVentana extends MainWindow<Mapa> {
 
 		Button crearEsfera = new Button(creacionPanel);
 		crearEsfera.setCaption("Crear Esfera");
-		crearEsfera.onClick(new MessageSend(this, this.CREAR_ESFERA));
+		crearEsfera.onClick(new MessageSend(this, CREAR_ESFERA));
 
 		Button crearPersonaje = new Button(creacionPanel);
 		crearPersonaje.setCaption("Crear Personaje");
-		crearPersonaje.onClick(new MessageSend(this, this.CREAR_PERSONAJE));
+		crearPersonaje.onClick(new MessageSend(this, CREAR_PERSONAJE));
 	}
 
 	public void describeResultsGrid(Table<Casillero> table) {
