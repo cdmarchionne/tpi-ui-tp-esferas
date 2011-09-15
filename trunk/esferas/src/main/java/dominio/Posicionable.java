@@ -29,8 +29,7 @@ public abstract class Posicionable extends ObservableObject {
 			this.casillero.setObjeto(this);
 		}
 	}
-	
-	
+
 	private Punto<Integer> getPosicion() {
 		return this.casillero.getPosicion();
 	}
@@ -52,5 +51,6 @@ public abstract class Posicionable extends ObservableObject {
 	}
 
 	public abstract boolean esPersonaje();
+
 	public abstract boolean esEsfera();
 }

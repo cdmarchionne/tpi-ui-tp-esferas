@@ -1,6 +1,5 @@
 package utils;
 
-
 /**
  * Clase que modela el comportamiento de un Punto
  * 
@@ -39,7 +38,7 @@ public class Punto<T> {
 
 	@Override
 	public String toString() {
-		return "(" + this.getX() + this.getY() + ")";
+		return "( " + this.getX() + " , " + this.getY() + " )";
 	}
 
 	@Override
