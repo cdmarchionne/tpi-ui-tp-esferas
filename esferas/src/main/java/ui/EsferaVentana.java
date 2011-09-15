@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.List;
+
+import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -8,9 +11,12 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 
+import dominio.Casillero;
 import dominio.Esfera;
+import dominio.Mapa;
 
 @SuppressWarnings("serial")
 public class EsferaVentana extends Dialog<Esfera> {
@@ -21,16 +27,22 @@ public class EsferaVentana extends Dialog<Esfera> {
 
 	@Override
 	protected void executeTask() {
-		// TODO Auto-generated method stub
+		// TODO: Aca deberiamos crear la esfera y agregarla al Mapa
+		Mapa mapa = (Mapa) ((Window<?>) (this.getOwner())).getModel();
+		List<Casillero> casillero = mapa.getCasillas();
+		casillero.add(this.getModel().getCasillero());
+		mapa.setCasillas(casillero);
 	}
 
 	@Override
 	protected void addActions(Panel actionsPanel) {
-		Button crear = new Button(actionsPanel);
-		crear.setCaption("Crear");
-		// crear.onClick(new MessageSend(this.getModel(), Esfera.CREAR));
-		crear.setAsDefault();
+		Button aceptar = new Button(actionsPanel).setCaption("Crear");
+		aceptar.onClick(new MessageSend(this, ACCEPT));
+		aceptar.setAsDefault();
 
+		Button cancelar = new Button(actionsPanel);
+		cancelar.setCaption("Cancelar");
+		cancelar.onClick(new MessageSend(this, CANCEL));
 	}
 
 	@Override
