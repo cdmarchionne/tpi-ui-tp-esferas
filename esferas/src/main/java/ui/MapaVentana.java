@@ -1,7 +1,5 @@
 package ui;
 
-import java.util.Arrays;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -20,6 +18,7 @@ import dominio.Mapa;
 @SuppressWarnings("serial")
 public class MapaVentana extends MainWindow<Mapa> {
 
+	static final String ACTUALIZAR_GRID = "actualizarGrid";
 	static final String CREAR_ESFERA = "crearEsfera";
 	static final String CREAR_PERSONAJE = "crearPersonaje";
 	static final String BUSCAR_ESTRELLA = "llegaAlaEstrella";
@@ -33,30 +32,24 @@ public class MapaVentana extends MainWindow<Mapa> {
 	public void createContents(Panel mainPanel) {
 		mainPanel.setLayout(new VerticalLayout());
 
-		botoneraCreacion(new Panel(mainPanel));
+		this.botoneraCreacion(new Panel(mainPanel));
 
 		Table<Casillero> table = new Table<Casillero>(mainPanel, Casillero.class);
 		table.bindContentsToProperty(Mapa.CASILLAS);
 		this.describeResultsGrid(table);
 
-		botoneraBusqueda(new Panel(mainPanel));
+		this.botoneraBusqueda(new Panel(mainPanel));
 
 	}
 
 	private void botoneraBusqueda(Panel busquedaPanel) {
 		busquedaPanel.setLayout(new ColumnLayout(3));
 
-		// new
-		// Selector(creacionPanel).setContents(Arrays.asList(Esfera.CantidadEstrellas.values()),
-		// "cantidadEstrellas");//.bindValueToProperty("estado");
-		new Selector(busquedaPanel)
-				.setContents(Arrays.asList(this.getModel().listaEsferas()), null);// .bindValueToProperty("estado");
+		new Selector(busquedaPanel).setContents(this.getModel().getListaEsferas(), "numero")
+				.bindValueToProperty(this.getModel().ESFERA_BUSCADA);
 
-		// new
-		// Selector(creacionPanel).setContents(Arrays.asList(Personaje.NombrePersonaje.values()),
-		// "nombrePersonaje");
-		new Selector(busquedaPanel).setContents(Arrays.asList(this.getModel().listaPersonajes()),
-				null);
+		new Selector(busquedaPanel).setContents(this.getModel().getListaPersonajes(), "nombre")
+				.bindValueToProperty(this.getModel().PERSONAJE_BUSCADO);
 
 		Button buscarEsfera = new Button(busquedaPanel);
 		buscarEsfera.setCaption("Llega¿?");
@@ -90,12 +83,17 @@ public class MapaVentana extends MainWindow<Mapa> {
 	public void crearEsfera() {
 		Dialog<?> crearEsferaWindow = new EsferaVentana(this);
 		crearEsferaWindow.open();
-		// crearEsferaWindow.onAccept(new MessageSend(this, "actualizarGrid"));
+		crearEsferaWindow.onAccept(new MessageSend(this, this.ACTUALIZAR_GRID));
 	}
 
 	public void crearPersonaje() {
 		Dialog<?> crearPersonajeWindow = new PersonajeVentana(this);
 		crearPersonajeWindow.open();
+		crearPersonajeWindow.onAccept(new MessageSend(this, this.ACTUALIZAR_GRID));
+	}
+
+	public void actualizarGrid() {
+		System.out.println("Se creo la Esfera." + this.getModel().getCasillas().toString());
 
 	}
 
