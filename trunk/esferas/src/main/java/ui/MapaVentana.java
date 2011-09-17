@@ -1,5 +1,8 @@
 package ui;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -22,6 +25,8 @@ public class MapaVentana extends MainWindow<Mapa> {
 	static final String CREAR_ESFERA = "crearEsfera";
 	static final String CREAR_PERSONAJE = "crearPersonaje";
 	static final String BUSCAR_ESTRELLA = "llegaAlaEstrella";
+	static final String PUEDE_LLEGAR_PERSONAJE_A_ESFERA = "puedeLLegar";
+	static final String LLAMAR_SHENG_LONG = "llamarShenLong";
 
 	public MapaVentana() {
 
@@ -53,7 +58,16 @@ public class MapaVentana extends MainWindow<Mapa> {
 
 		Button buscarEsfera = new Button(busquedaPanel);
 		buscarEsfera.setCaption("Llega¿?");
-		buscarEsfera.onClick(new MessageSend(this.getModel(), Mapa.PUEDE_CAPTURAR));
+		buscarEsfera.onClick(new MessageSend(this, PUEDE_LLEGAR_PERSONAJE_A_ESFERA));
+
+		Button capturarEsfera = new Button(busquedaPanel);
+		capturarEsfera.setCaption("Capturar");
+		capturarEsfera.onClick(new MessageSend(this, "capturaEsfera"));
+
+		Button llamarShengLong = new Button(busquedaPanel);
+		llamarShengLong.setCaption("Llamar a ShenLong");
+		llamarShengLong.onClick(new MessageSend(this, LLAMAR_SHENG_LONG));
+
 	}
 
 	private void botoneraCreacion(Panel creacionPanel) {
@@ -83,18 +97,61 @@ public class MapaVentana extends MainWindow<Mapa> {
 	public void crearEsfera() {
 		Dialog<?> crearEsferaWindow = new EsferaVentana(this);
 		crearEsferaWindow.open();
-		crearEsferaWindow.onAccept(new MessageSend(this, this.ACTUALIZAR_GRID));
+		crearEsferaWindow.onAccept(new MessageSend(this, ACTUALIZAR_GRID));
+		this.actualizarGrid();
 	}
 
 	public void crearPersonaje() {
 		Dialog<?> crearPersonajeWindow = new PersonajeVentana(this);
 		crearPersonajeWindow.open();
-		crearPersonajeWindow.onAccept(new MessageSend(this, this.ACTUALIZAR_GRID));
+		crearPersonajeWindow.onAccept(new MessageSend(this, ACTUALIZAR_GRID));
+		this.actualizarGrid();
 	}
 
 	public void actualizarGrid() {
 		System.out.println("Se creo la Esfera." + this.getModel().getCasillas().toString());
 
+	}
+
+	public void puedeLLegar() {
+		String accion;
+
+		if (this.getModel().puedeCapturarEsfera()) {
+			accion = "llega";
+		} else {
+			accion = "no llega";
+		}
+		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
+				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion
+				+ " a capturar la " + this.getModel().getEsferaBuscada().toString());
+	}
+
+	public void capturaEsfera() {
+		String accion;
+		Boolean valor = this.getModel().personajeCapturaEsfera();
+
+		if (valor) {
+			accion = "capturo";
+		} else {
+			accion = "no puede capturar";
+		}
+		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
+				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion + " la "
+				+ this.getModel().getEsferaBuscada().toString());
+	}
+
+	public void llamarShenLong() {
+		String accion;
+		Boolean valor = this.getModel().getPersonajeBuscado().puedeInvocarShengLong();
+
+		if (valor) {
+			accion = "puede";
+		} else {
+			accion = "no puede";
+		}
+		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
+				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion
+				+ " llamar a Sheng Long");
 	}
 
 	public static void main(String[] args) {
