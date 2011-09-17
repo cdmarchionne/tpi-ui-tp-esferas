@@ -33,8 +33,12 @@ public class Mapa extends ObservableObject {
 		casilleros = new HashSet<Casillero>();// No se usa
 		casillas = new ArrayList<Casillero>();
 
-		Esfera e = new Esfera(3);
+		Esfera e = new Esfera(new Punto<Integer>(1, 1), 1);
 		casillas.add(e.getCasillero());
+
+		for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
+			casillas.add((new Esfera(new Punto<Integer>(1, 1), i)).getCasillero());
+		}
 		Personaje p = new Personaje("Goku", 4);
 		casillas.add(p.getCasillero());
 
@@ -134,6 +138,23 @@ public class Mapa extends ObservableObject {
 		return personajeBuscado.getDistancia() >= diferenciaAbsoluta(posicionPersonaje,
 				posicionEsfera);
 
+	}
+
+	public Boolean personajeCapturaEsfera() {
+		Boolean valor = this.puedeCapturarEsfera();
+
+		if (valor) {
+			Casillero casilleroPersonaje = personajeBuscado.getCasillero();
+			esferaBuscada.getCasillero().setObjeto(personajeBuscado);
+			this.removeCasilla(casilleroPersonaje);
+			personajeBuscado.addInventario(esferaBuscada);
+		}
+
+		return valor;
+	}
+
+	public void removeCasilla(Casillero casilla) {
+		this.casillas.remove(casilla);
 	}
 
 	// ********************************************************
