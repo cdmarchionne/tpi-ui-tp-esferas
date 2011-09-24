@@ -1,9 +1,7 @@
 package dominio;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
@@ -13,16 +11,14 @@ import utils.Punto;
 public class Mapa extends ObservableObject {
 
 	public static final String CASILLEROS = "casilleros";
-	public static final String CASILLAS = "casillas";
-	public static final String ADD_CASILLA = "addCasilla";
+	public static final String ADD_CASILLERO = "addCasillero";
 	public static final String CALCULAR_DISTANCIA = "calcularDistancia";
 	public static final String PUEDE_CAPTURAR = "puedeCapturarEsfera";
 	public static final String ESFERA_BUSCADA = "esferaBuscada";
 	public static final String PERSONAJE_BUSCADO = "personajeBuscado";
 
 	private Punto<Integer> dimension;
-	private Set<Casillero> casilleros;// No se usa
-	private List<Casillero> casillas;
+	private List<Casillero> casilleros;
 
 	private Esfera esferaBuscada;
 	private Personaje personajeBuscado;
@@ -30,17 +26,16 @@ public class Mapa extends ObservableObject {
 	public Mapa(Punto<Integer> dimension) {
 		super();
 		this.setDimension(dimension);
-		casilleros = new HashSet<Casillero>();// No se usa
-		casillas = new ArrayList<Casillero>();
+		casilleros = new ArrayList<Casillero>();
 
 		Esfera e = new Esfera(new Punto<Integer>(1, 1), 1);
-		casillas.add(e.getCasillero());
+		casilleros.add(e.getCasillero());
 
 		for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
-			casillas.add((new Esfera(new Punto<Integer>(1, 1), i)).getCasillero());
+			casilleros.add((new Esfera(new Punto<Integer>(1, 1), i)).getCasillero());
 		}
 		Personaje p = new Personaje("Goku", 4);
-		casillas.add(p.getCasillero());
+		casilleros.add(p.getCasillero());
 
 		esferaBuscada = e;
 		personajeBuscado = p;
@@ -54,7 +49,7 @@ public class Mapa extends ObservableObject {
 
 		ArrayList<Personaje> resultado = new ArrayList<Personaje>();
 
-		for (Casillero casillero : this.getCasillas()) {
+		for (Casillero casillero : this.getCasilleros()) {
 			if (casillero.esPersonaje()) {
 				resultado.add((Personaje) casillero.getObjeto());
 			}
@@ -67,20 +62,13 @@ public class Mapa extends ObservableObject {
 
 		ArrayList<Esfera> resultado = new ArrayList<Esfera>();
 
-		for (Casillero casillero : this.getCasillas()) {
+		for (Casillero casillero : this.getCasilleros()) {
 			if (casillero.esEsfera()) {
 				resultado.add((Esfera) casillero.getObjeto());
 			}
 		}
 
 		return resultado;
-	}
-
-	/**
-	 * Calculo la diferencia absoluta entre cada elemento del par
-	 */
-	public Integer calcularDistancia(Personaje personaje, Esfera esfera) {
-		return this.diferenciaAbsoluta(this.buscar(personaje), this.buscar(esfera));
 	}
 
 	/**
@@ -96,32 +84,10 @@ public class Mapa extends ObservableObject {
 	}
 
 	/**
-	 * Devuelvo la posicion en donde esta un Objeto, Personaje o Esfera.
+	 * Calculo la diferencia absoluta entre cada elemento del par
 	 */
-	public Punto<Integer> buscar(Posicionable objeto) {// No se usa
-
-		for (Casillero casillero : this.getCasilleros()) {
-			if (casillero.hasObject(objeto)) {
-				return casillero.getPosicion();
-			}
-		}
-
-		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
-				+ " no se encuenrta en el mapa.");
-
-	}
-
-	public Punto<Integer> buscarCasillas(Posicionable objeto) {
-
-		for (Casillero casillero : this.getCasillas()) {
-			if (casillero.hasObject(objeto)) {
-				return casillero.getPosicion();
-			}
-		}
-
-		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
-				+ " no se encuenrta en el mapa.");
-
+	private Integer calcularDistancia(Personaje personaje, Esfera esfera) {
+		return this.diferenciaAbsoluta(this.buscarPosicion(personaje), this.buscarPosicion(esfera));
 	}
 
 	/**
@@ -133,10 +99,22 @@ public class Mapa extends ObservableObject {
 	 *         recorrer el personaje
 	 */
 	public boolean puedeCapturarEsfera() {
-		Punto<Integer> posicionPersonaje = buscarCasillas(personajeBuscado);
-		Punto<Integer> posicionEsfera = buscarCasillas(esferaBuscada);
-		return personajeBuscado.getDistancia() >= diferenciaAbsoluta(posicionPersonaje,
-				posicionEsfera);
+		return personajeBuscado.getDistancia() >= calcularDistancia(personajeBuscado, esferaBuscada);
+	}
+
+	/**
+	 * Devuelvo la posicion en donde esta un Objeto, Personaje o Esfera.
+	 */
+	public Punto<Integer> buscarPosicion(Posicionable objeto) {
+
+		for (Casillero casillero : this.getCasilleros()) {
+			if (casillero.hasObject(objeto)) {
+				return casillero.getPosicion();
+			}
+		}
+
+		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
+				+ " no se encuenrta en el mapa.");
 
 	}
 
@@ -153,21 +131,9 @@ public class Mapa extends ObservableObject {
 		return valor;
 	}
 
-	public void removeCasilla(Casillero casilla) {
-		this.casillas.remove(casilla);
-	}
-
 	// ********************************************************
 	// ** Atributos
 	// ********************************************************
-
-	public void setCasilleros(Set<Casillero> casilleros) {
-		this.casilleros = casilleros;
-	}
-
-	public Set<Casillero> getCasilleros() {
-		return casilleros;
-	}
 
 	public void setDimension(Punto<Integer> dimension) {
 		this.dimension = dimension;
@@ -177,16 +143,20 @@ public class Mapa extends ObservableObject {
 		return dimension;
 	}
 
-	public List<Casillero> getCasillas() {
-		return casillas;
+	public List<Casillero> getCasilleros() {
+		return casilleros;
 	}
 
-	public void setCasillas(List<Casillero> casillas) {
-		this.casillas = casillas;
+	public void setCasilleros(List<Casillero> casilleros) {
+		this.casilleros = casilleros;
 	}
 
-	public void addCasilla(Casillero casilla) {
-		this.casillas.add(casilla);
+	public void addCasillero(Casillero casillero) {
+		this.casilleros.add(casillero);
+	}
+
+	public void removeCasilla(Casillero casillero) {
+		this.casilleros.remove(casillero);
 	}
 
 	public Esfera getEsferaBuscada() {

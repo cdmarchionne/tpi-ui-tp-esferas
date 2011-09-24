@@ -1,8 +1,5 @@
 package ui;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -40,7 +37,7 @@ public class MapaVentana extends MainWindow<Mapa> {
 		this.botoneraCreacion(new Panel(mainPanel));
 
 		Table<Casillero> table = new Table<Casillero>(mainPanel, Casillero.class);
-		table.bindContentsToProperty(Mapa.CASILLAS);
+		table.bindContentsToProperty(Mapa.CASILLEROS);
 		this.describeResultsGrid(table);
 
 		this.botoneraBusqueda(new Panel(mainPanel));
@@ -109,7 +106,13 @@ public class MapaVentana extends MainWindow<Mapa> {
 	}
 
 	public void actualizarGrid() {
-		System.out.println("Se creo la Esfera." + this.getModel().getCasillas().toString());
+		System.out.println("Tabla: { ");
+		for (Casillero casillero : this.getModel().getCasilleros()) {
+
+			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
+					+ casillero.getObjeto().toString() + " ] ");
+		}
+		System.out.println("\t}");
 
 	}
 
@@ -121,9 +124,12 @@ public class MapaVentana extends MainWindow<Mapa> {
 		} else {
 			accion = "no llega";
 		}
-		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
-				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion
-				+ " a capturar la " + this.getModel().getEsferaBuscada().toString());
+
+		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
+				+ accion + " a capturar la " + this.getModel().getEsferaBuscada().toString();
+
+		new MessageDialog(this.getOwner(), "Alcanza Esfera?", mensaje).open();
+
 	}
 
 	public void capturaEsfera() {
@@ -135,9 +141,11 @@ public class MapaVentana extends MainWindow<Mapa> {
 		} else {
 			accion = "no puede capturar";
 		}
-		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
-				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion + " la "
-				+ this.getModel().getEsferaBuscada().toString());
+
+		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
+				+ accion + " la " + this.getModel().getEsferaBuscada().toString();
+
+		new MessageDialog(this.getOwner(), "Captura de Esfera", mensaje).open();
 	}
 
 	public void llamarShenLong() {
@@ -149,9 +157,10 @@ public class MapaVentana extends MainWindow<Mapa> {
 		} else {
 			accion = "no puede";
 		}
-		JOptionPane.showMessageDialog(new JFrame("Prueba"), "El personaje "
-				+ this.getModel().getPersonajeBuscado().getNombre() + " " + accion
-				+ " llamar a Sheng Long");
+		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
+				+ accion + " llamar a Sheng Long";
+
+		new MessageDialog(this.getOwner(), "Llamar a ShenLong", mensaje).open();
 	}
 
 	public static void main(String[] args) {
