@@ -13,7 +13,10 @@ import org.uqbar.arena.windows.MainWindow;
 
 import utils.Punto;
 import dominio.Casillero;
+import dominio.Esfera;
 import dominio.Mapa;
+import dominio.Personaje;
+import dominio.Posicionable;
 
 @SuppressWarnings("serial")
 public class MapaVentana extends MainWindow<Mapa> {
@@ -24,6 +27,9 @@ public class MapaVentana extends MainWindow<Mapa> {
 	static final String BUSCAR_ESTRELLA = "llegaAlaEstrella";
 	static final String PUEDE_LLEGAR_PERSONAJE_A_ESFERA = "puedeLLegar";
 	static final String LLAMAR_SHENG_LONG = "llamarShenLong";
+
+	private Selector selectorEsferaBuscada;
+	private Selector selectorPersonajeBuscado;
 
 	public MapaVentana() {
 
@@ -47,11 +53,13 @@ public class MapaVentana extends MainWindow<Mapa> {
 	private void botoneraBusqueda(Panel busquedaPanel) {
 		busquedaPanel.setLayout(new ColumnLayout(3));
 
-		new Selector(busquedaPanel).setContents(this.getModel().getListaEsferas(), "numero")
-				.bindValueToProperty(this.getModel().ESFERA_BUSCADA);
+		selectorEsferaBuscada = new Selector(busquedaPanel);
+		cargarSelectorEsfera();
+		selectorEsferaBuscada.bindValueToProperty(this.getModel().ESFERA_BUSCADA);
 
-		new Selector(busquedaPanel).setContents(this.getModel().getListaPersonajes(), "nombre")
-				.bindValueToProperty(this.getModel().PERSONAJE_BUSCADO);
+		selectorPersonajeBuscado = new Selector(busquedaPanel);
+		cargarSelectorPersonaje();
+		selectorPersonajeBuscado.bindValueToProperty(this.getModel().PERSONAJE_BUSCADO);
 
 		Button buscarEsfera = new Button(busquedaPanel);
 		buscarEsfera.setCaption("Llega¿?");
@@ -65,6 +73,14 @@ public class MapaVentana extends MainWindow<Mapa> {
 		llamarShengLong.setCaption("Llamar a ShenLong");
 		llamarShengLong.onClick(new MessageSend(this, LLAMAR_SHENG_LONG));
 
+	}
+
+	private void cargarSelectorEsfera() {
+		selectorEsferaBuscada.setContents(this.getModel().getListaEsferas(), "numero");
+	}
+
+	private void cargarSelectorPersonaje() {
+		selectorPersonajeBuscado.setContents(this.getModel().getListaPersonajes(), "nombre");
 	}
 
 	private void botoneraCreacion(Panel creacionPanel) {
@@ -106,7 +122,21 @@ public class MapaVentana extends MainWindow<Mapa> {
 	}
 
 	public void actualizarGrid() {
-		System.out.println("Tabla: { ");
+		cargarSelectorEsfera();
+		cargarSelectorPersonaje();
+
+		imprimirTablero();
+		imprimirMapa();
+
+		System.out.println("Esferas: \t" + this.getModel().getListaEsferas());
+		System.out.println("Personajes: \t" + this.getModel().getListaPersonajes());
+	}
+
+	/**
+	 * Imprimo los elementos que contiene el mapa
+	 */
+	private void imprimirMapa() {
+		System.out.println("Mapa: \t{");
 		for (Casillero casillero : this.getModel().getCasilleros()) {
 
 			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
@@ -114,6 +144,38 @@ public class MapaVentana extends MainWindow<Mapa> {
 		}
 		System.out.println("\t}");
 
+	}
+
+	/**
+	 * Imprimo el tablero como una matriz dando detalles de su contenido.
+	 */
+	private void imprimirTablero() {
+		Punto<Integer> dimension = this.getModel().getDimension();
+
+		for (int i = 0; i < dimension.getX(); i++) {
+			System.out.print((i + 1) + ":\t[ ");
+			for (int j = 0; j < dimension.getY(); j++) {
+				System.out.print(" (" + objetoDelCasillero(new Punto<Integer>(i, j)) + ") ");
+			}
+			System.out.print(" ]\n");
+		}
+		System.out.print("\n");
+	}
+
+	private String objetoDelCasillero(Punto<Integer> posicion) {
+		String objetoDelCasillero;
+
+		if (this.getModel().hayObjetoEn(posicion)) {
+			Posicionable objeto = this.getModel().buscarObjeto(posicion);
+			if (objeto.esEsfera())
+				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero();
+			else
+				objetoDelCasillero = "P." + ((Personaje) objeto).getNombre().charAt(0);
+		} else {
+			objetoDelCasillero = "   ";
+		}
+
+		return objetoDelCasillero;
 	}
 
 	public void puedeLLegar() {
@@ -134,9 +196,8 @@ public class MapaVentana extends MainWindow<Mapa> {
 
 	public void capturaEsfera() {
 		String accion;
-		Boolean valor = this.getModel().personajeCapturaEsfera();
 
-		if (valor) {
+		if (this.getModel().personajeCapturaEsfera()) {
 			accion = "capturo";
 		} else {
 			accion = "no puede capturar";

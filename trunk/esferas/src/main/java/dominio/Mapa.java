@@ -16,6 +16,8 @@ public class Mapa extends ObservableObject {
 	public static final String PUEDE_CAPTURAR = "puedeCapturarEsfera";
 	public static final String ESFERA_BUSCADA = "esferaBuscada";
 	public static final String PERSONAJE_BUSCADO = "personajeBuscado";
+	public static final String LISTA_PERSONAJES = "listaPersonajes";
+	public static final String LISTA_ESFERAS = "listaEsferas";
 
 	private Punto<Integer> dimension;
 	private List<Casillero> casilleros;
@@ -31,9 +33,10 @@ public class Mapa extends ObservableObject {
 		Esfera e = new Esfera(new Punto<Integer>(1, 1), 1);
 		casilleros.add(e.getCasillero());
 
-		for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
-			casilleros.add((new Esfera(new Punto<Integer>(1, 1), i)).getCasillero());
-		}
+		// for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
+		// casilleros.add((new Esfera(new Punto<Integer>(1, 1),
+		// i)).getCasillero());
+		// }
 		Personaje p = new Personaje("Goku", 4);
 		casilleros.add(p.getCasillero());
 
@@ -114,8 +117,31 @@ public class Mapa extends ObservableObject {
 		}
 
 		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
-				+ " no se encuenrta en el mapa.");
+				+ " no se encuentra en el mapa.");
 
+	}
+
+	public Posicionable buscarObjeto(Punto<Integer> posicion) {
+
+		for (Casillero casillero : this.getCasilleros()) {
+			if (casillero.getPosicion().equals(posicion)) {
+				return casillero.getObjeto();
+			}
+		}
+
+		throw new UserException("La posicion " + posicion.toString()
+				+ " se encuentra vacia en el mapa.");
+	}
+
+	public boolean hayObjetoEn(Punto<Integer> posicion) {
+
+		for (Casillero casillero : this.getCasilleros()) {
+			if (casillero.getPosicion().equals(posicion)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public Boolean personajeCapturaEsfera() {
@@ -153,10 +179,18 @@ public class Mapa extends ObservableObject {
 
 	public void addCasillero(Casillero casillero) {
 		this.casilleros.add(casillero);
+		this.actualizarVista();
 	}
 
 	public void removeCasilla(Casillero casillero) {
 		this.casilleros.remove(casillero);
+		this.actualizarVista();
+	}
+
+	private void actualizarVista() {
+		this.firePropertyChange(CASILLEROS, null, this.getCasilleros());
+		this.firePropertyChange(LISTA_ESFERAS, null, this.getListaEsferas());
+		this.firePropertyChange(LISTA_PERSONAJES, null, this.getListaPersonajes());
 	}
 
 	public Esfera getEsferaBuscada() {

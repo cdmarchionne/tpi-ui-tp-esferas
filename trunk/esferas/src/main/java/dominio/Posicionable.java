@@ -24,10 +24,12 @@ public abstract class Posicionable extends ObservableObject {
 	}
 
 	public void setCasillero(Casillero casillero) {
+		Casillero casilleroOLD = this.getCasillero();
+
 		this.setProperty(CASILLERO, casillero);
-		if (!(this.getCasillero() == null) && !(this.getCasillero().equals(casillero))) {
-			this.casillero.setObjeto(this);
-		}
+		// this.firePropertyChange(CASILLERO, casilleroOLD,
+		// this.getCasillero());
+		// this.firePropertyChange(CASILLERO, null, casillero);
 	}
 
 	private Punto<Integer> getPosicion() {
