@@ -8,8 +8,10 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 
+import dominio.Mapa;
 import dominio.Personaje;
 
 @SuppressWarnings("serial")
@@ -25,7 +27,9 @@ public class PersonajeVentana extends Dialog<Personaje> {
 
 	@Override
 	protected void executeTask() {
-		// TODO Auto-generated method stub
+		// TODO: Aca deberiamos crear el personaje y agregarlo al Mapa
+		Mapa mapa = (Mapa) ((Window<?>) (this.getOwner())).getModel();
+		mapa.addCasillero(this.getModel().getCasillero());
 	}
 
 	@Override

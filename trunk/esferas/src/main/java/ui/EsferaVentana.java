@@ -1,7 +1,5 @@
 package ui;
 
-import java.util.List;
-
 import org.uqbar.arena.actions.MessageSend;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -14,7 +12,6 @@ import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.arena.windows.WindowOwner;
 
-import dominio.Casillero;
 import dominio.Esfera;
 import dominio.Mapa;
 
@@ -29,9 +26,7 @@ public class EsferaVentana extends Dialog<Esfera> {
 	protected void executeTask() {
 		// TODO: Aca deberiamos crear la esfera y agregarla al Mapa
 		Mapa mapa = (Mapa) ((Window<?>) (this.getOwner())).getModel();
-		List<Casillero> casillero = mapa.getCasillas();
-		casillero.add(this.getModel().getCasillero());
-		mapa.setCasillas(casillero);
+		mapa.addCasillero(this.getModel().getCasillero());
 	}
 
 	@Override
