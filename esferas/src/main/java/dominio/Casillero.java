@@ -50,7 +50,7 @@ public class Casillero extends ObservableObject {
 
 		this.setProperty(OBJETO, objeto);
 		this.firePropertyChange(OBJETO, objetoOLD, this.getObjeto());
-		// this.firePropertyChange(OBJETO, null, objeto);
+		objeto.setCasillero(this);
 	}
 
 	public boolean esPersonaje() {
