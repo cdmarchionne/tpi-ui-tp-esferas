@@ -49,7 +49,7 @@ public class Casillero extends ObservableObject {
 		Posicionable objetoOLD = this.getObjeto();
 
 		this.setProperty(OBJETO, objeto);
-		// this.firePropertyChange(OBJETO, objetoOLD, this.getObjeto());
+		this.firePropertyChange(OBJETO, objetoOLD, this.getObjeto());
 		// this.firePropertyChange(OBJETO, null, objeto);
 	}
 

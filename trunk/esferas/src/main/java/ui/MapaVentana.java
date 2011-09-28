@@ -5,7 +5,6 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
@@ -21,15 +20,10 @@ import dominio.Posicionable;
 @SuppressWarnings("serial")
 public class MapaVentana extends MainWindow<Mapa> {
 
+	static final String REALIZAR_BUSQUEDA = "realizarBusqueda";
 	static final String ACTUALIZAR_GRID = "actualizarGrid";
 	static final String CREAR_ESFERA = "crearEsfera";
 	static final String CREAR_PERSONAJE = "crearPersonaje";
-	static final String BUSCAR_ESTRELLA = "llegaAlaEstrella";
-	static final String PUEDE_LLEGAR_PERSONAJE_A_ESFERA = "puedeLLegar";
-	static final String LLAMAR_SHENG_LONG = "llamarShenLong";
-
-	private Selector selectorEsferaBuscada;
-	private Selector selectorPersonajeBuscado;
 
 	public MapaVentana() {
 
@@ -46,41 +40,10 @@ public class MapaVentana extends MainWindow<Mapa> {
 		table.bindContentsToProperty(Mapa.CASILLEROS);
 		this.describeResultsGrid(table);
 
-		this.botoneraBusqueda(new Panel(mainPanel));
+		Button busquedaButton = new Button(mainPanel);
+		busquedaButton.setCaption("¿ Atrapame si puedes ?");
+		busquedaButton.onClick(new MessageSend(this, REALIZAR_BUSQUEDA));
 
-	}
-
-	private void botoneraBusqueda(Panel busquedaPanel) {
-		busquedaPanel.setLayout(new ColumnLayout(3));
-
-		selectorEsferaBuscada = new Selector(busquedaPanel);
-		cargarSelectorEsfera();
-		selectorEsferaBuscada.bindValueToProperty(this.getModel().ESFERA_BUSCADA);
-
-		selectorPersonajeBuscado = new Selector(busquedaPanel);
-		cargarSelectorPersonaje();
-		selectorPersonajeBuscado.bindValueToProperty(this.getModel().PERSONAJE_BUSCADO);
-
-		Button buscarEsfera = new Button(busquedaPanel);
-		buscarEsfera.setCaption("Llega¿?");
-		buscarEsfera.onClick(new MessageSend(this, PUEDE_LLEGAR_PERSONAJE_A_ESFERA));
-
-		Button capturarEsfera = new Button(busquedaPanel);
-		capturarEsfera.setCaption("Capturar");
-		capturarEsfera.onClick(new MessageSend(this, "capturaEsfera"));
-
-		Button llamarShengLong = new Button(busquedaPanel);
-		llamarShengLong.setCaption("Llamar a ShenLong");
-		llamarShengLong.onClick(new MessageSend(this, LLAMAR_SHENG_LONG));
-
-	}
-
-	private void cargarSelectorEsfera() {
-		selectorEsferaBuscada.setContents(this.getModel().getListaEsferas(), "numero");
-	}
-
-	private void cargarSelectorPersonaje() {
-		selectorPersonajeBuscado.setContents(this.getModel().getListaPersonajes(), "nombre");
 	}
 
 	private void botoneraCreacion(Panel creacionPanel) {
@@ -114,6 +77,13 @@ public class MapaVentana extends MainWindow<Mapa> {
 		this.actualizarGrid();
 	}
 
+	public void realizarBusqueda() {
+		Dialog<?> busquedaWindow = new BusquedaVentana(this, this.getModel());
+		busquedaWindow.open();
+		busquedaWindow.onAccept(new MessageSend(this, ACTUALIZAR_GRID));
+		this.actualizarGrid();
+	}
+
 	public void crearPersonaje() {
 		Dialog<?> crearPersonajeWindow = new PersonajeVentana(this);
 		crearPersonajeWindow.open();
@@ -122,9 +92,6 @@ public class MapaVentana extends MainWindow<Mapa> {
 	}
 
 	public void actualizarGrid() {
-		cargarSelectorEsfera();
-		cargarSelectorPersonaje();
-
 		imprimirTablero();
 		imprimirMapa();
 
@@ -168,60 +135,14 @@ public class MapaVentana extends MainWindow<Mapa> {
 		if (this.getModel().hayObjetoEn(posicion)) {
 			Posicionable objeto = this.getModel().buscarObjeto(posicion);
 			if (objeto.esEsfera())
-				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero();
+				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero().getCantidadEstrellas();
 			else
-				objetoDelCasillero = "P." + ((Personaje) objeto).getNombre().charAt(0);
+				objetoDelCasillero = "P." + ((Personaje) objeto).toString().charAt(0);
 		} else {
 			objetoDelCasillero = "   ";
 		}
 
 		return objetoDelCasillero;
-	}
-
-	public void puedeLLegar() {
-		String accion;
-
-		if (this.getModel().puedeCapturarEsfera()) {
-			accion = "llega";
-		} else {
-			accion = "no llega";
-		}
-
-		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
-				+ accion + " a capturar la " + this.getModel().getEsferaBuscada().toString();
-
-		new MessageDialog(this.getOwner(), "Alcanza Esfera?", mensaje).open();
-
-	}
-
-	public void capturaEsfera() {
-		String accion;
-
-		if (this.getModel().personajeCapturaEsfera()) {
-			accion = "capturo";
-		} else {
-			accion = "no puede capturar";
-		}
-
-		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
-				+ accion + " la " + this.getModel().getEsferaBuscada().toString();
-
-		new MessageDialog(this.getOwner(), "Captura de Esfera", mensaje).open();
-	}
-
-	public void llamarShenLong() {
-		String accion;
-		Boolean valor = this.getModel().getPersonajeBuscado().puedeInvocarShengLong();
-
-		if (valor) {
-			accion = "puede";
-		} else {
-			accion = "no puede";
-		}
-		String mensaje = "El personaje " + this.getModel().getPersonajeBuscado().getNombre() + " "
-				+ accion + " llamar a Sheng Long";
-
-		new MessageDialog(this.getOwner(), "Llamar a ShenLong", mensaje).open();
 	}
 
 	public static void main(String[] args) {

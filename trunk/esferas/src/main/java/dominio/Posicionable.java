@@ -27,8 +27,7 @@ public abstract class Posicionable extends ObservableObject {
 		Casillero casilleroOLD = this.getCasillero();
 
 		this.setProperty(CASILLERO, casillero);
-		// this.firePropertyChange(CASILLERO, casilleroOLD,
-		// this.getCasillero());
+		this.firePropertyChange(CASILLERO, casilleroOLD, this.getCasillero());
 		// this.firePropertyChange(CASILLERO, null, casillero);
 	}
 
