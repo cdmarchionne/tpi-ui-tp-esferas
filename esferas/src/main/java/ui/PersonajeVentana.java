@@ -4,6 +4,7 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.WindowOwner;
 
@@ -28,8 +29,11 @@ public class PersonajeVentana extends CasilleroVentana {
 		Label nombreLabel = new Label(personajePanel);
 		nombreLabel.setText("Nombre: ");
 
-		Control nombre = new TextBox(personajePanel);
-		nombre.bindValueToProperty(Personaje.NOMBRE);
+		new Selector(personajePanel).setContents(getMapa().listaPersonajesNoCreadas(),
+				Personaje.NOMBRE_PERSONAJE).bindValueToProperty(Personaje.NOMBRE);
+
+		// Control nombre = new TextBox(personajePanel);
+		// nombre.bindValueToProperty(Personaje.NOMBRE);
 
 		Label distanciaLabel = new Label(personajePanel);
 		distanciaLabel.setText("Distancia: ");
@@ -37,4 +41,5 @@ public class PersonajeVentana extends CasilleroVentana {
 		Control distancia = new TextBox(personajePanel);
 		distancia.bindValueToProperty(Personaje.DISTANCIA);
 	}
+
 }

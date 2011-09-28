@@ -5,21 +5,22 @@ import java.util.List;
 
 public class Personaje extends Posicionable {
 
+	public static final String NOMBRE_PERSONAJE = "nombrePersonaje";
 	public static final String NOMBRE = "nombre";
 	public static final String DISTANCIA = "distancia";
 
-	private String nombre;
+	private NombrePersonaje nombre;
 	private Integer distancia;
 	private List<Esfera> inventario;
 
 	public Personaje() {
 		super();
-		this.nombre = "";
+		this.nombre = NombrePersonaje.GOKU;
 		this.distancia = 0;
 		this.inventario = new ArrayList<Esfera>();
 	}
 
-	public Personaje(String nombre, Integer distancia) {
+	public Personaje(NombrePersonaje nombre, Integer distancia) {
 		this();
 		this.nombre = nombre;
 		this.distancia = distancia;
@@ -35,14 +36,14 @@ public class Personaje extends Posicionable {
 
 	@Override
 	public String toString() {
-		return this.getNombre();
+		return this.getNombre().getNombrePersonaje();
 	}
 
-	public String getNombre() {
+	public NombrePersonaje getNombre() {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(NombrePersonaje nombre) {
 		this.nombre = nombre;
 	}
 

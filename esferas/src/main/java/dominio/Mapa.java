@@ -1,12 +1,15 @@
 package dominio;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
+import dominio.Esfera.CantidadEstrellas;
+import dominio.Personaje.NombrePersonaje;
 
 public class Mapa extends ObservableObject {
 
@@ -30,14 +33,14 @@ public class Mapa extends ObservableObject {
 		this.setDimension(dimension);
 		casilleros = new ArrayList<Casillero>();
 
-		Esfera e = new Esfera(new Punto<Integer>(1, 1), 1);
+		Esfera e = new Esfera(new Punto<Integer>(1, 1), Esfera.CantidadEstrellas.UNA);
 		casilleros.add(e.getCasillero());
 
 		// for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
 		// casilleros.add((new Esfera(new Punto<Integer>(1, 1),
 		// i)).getCasillero());
 		// }
-		Personaje p = new Personaje("Goku", 4);
+		Personaje p = new Personaje(Personaje.NombrePersonaje.GOKU, 4);
 		casilleros.add(p.getCasillero());
 
 		esferaBuscada = e;
@@ -72,6 +75,62 @@ public class Mapa extends ObservableObject {
 		}
 
 		return resultado;
+	}
+
+	/**
+	 * @return Devuelve una lista con los Personajes que todavia no fueron
+	 *         Cargados en el Mapa
+	 */
+	public List<NombrePersonaje> listaPersonajesNoCreadas() {
+		List<NombrePersonaje> listaPersonajesNoCreadas = new ArrayList<Personaje.NombrePersonaje>();
+
+		for (NombrePersonaje personajeExistente : Arrays.asList(NombrePersonaje.values())) {
+			if (!existePersonajeEnElMapa(personajeExistente))
+				listaPersonajesNoCreadas.add(personajeExistente);
+		}
+		return listaPersonajesNoCreadas;
+	}
+
+	private boolean existePersonajeEnElMapa(NombrePersonaje personajeExistente) {
+		for (Personaje personajeDelMapa : this.getListaPersonajes()) {
+			if (personajeExistente == (personajeDelMapa.getNombre()))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @return Devuelve una lista con las Esferas que todavia no fueron
+	 *         Cargados en el Mapa
+	 */
+	public List<CantidadEstrellas> listaEsferasNoCreadas() {
+
+		List<CantidadEstrellas> listaEsferasNoCreadas = new ArrayList<Esfera.CantidadEstrellas>();
+
+		for (CantidadEstrellas esferaExistente : Arrays.asList(CantidadEstrellas.values())) {
+			if ((!existeEsferaAtrapadaEnLosPersonajes(esferaExistente))
+					&& (!existeEsferaEnElMapa(esferaExistente)))
+				listaEsferasNoCreadas.add(esferaExistente);
+		}
+		return listaEsferasNoCreadas;
+	}
+
+	private boolean existeEsferaEnElMapa(CantidadEstrellas esferaExistente) {
+		for (Esfera esferaDelMapa : this.getListaEsferas()) {
+			if (esferaExistente == (esferaDelMapa.getNumero()))
+				return true;
+		}
+		return false;
+	}
+
+	private boolean existeEsferaAtrapadaEnLosPersonajes(CantidadEstrellas esferaExistente) {
+		for (Personaje personajeDelMapa : this.getListaPersonajes()) {
+			for (Esfera esferaDelPersonajeEnMapa : personajeDelMapa.getInventario()) {
+				if (esferaExistente == (esferaDelPersonajeEnMapa.getNumero()))
+					return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -145,16 +204,19 @@ public class Mapa extends ObservableObject {
 	}
 
 	public Boolean personajeCapturaEsfera() {
-		Boolean valor = this.puedeCapturarEsfera();
+		Boolean puedeCapturarla = this.puedeCapturarEsfera();
 
-		if (valor) {
-			Casillero casilleroPersonaje = personajeBuscado.getCasillero();
-			esferaBuscada.getCasillero().setObjeto(personajeBuscado);
-			this.removeCasilla(casilleroPersonaje);
+		if (puedeCapturarla) {
 			personajeBuscado.addInventario(esferaBuscada);
+
+			Casillero casilleroPersonaje = personajeBuscado.getCasillero();
+			Casillero casilleroEsfera = esferaBuscada.getCasillero();
+
+			casilleroEsfera.setObjeto(personajeBuscado);
+			this.removeCasilla(casilleroPersonaje);
 		}
 
-		return valor;
+		return puedeCapturarla;
 	}
 
 	// ********************************************************

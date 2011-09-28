@@ -23,8 +23,11 @@ public class CasilleroVentana extends Dialog<Posicionable> {
 
 	@Override
 	protected void executeTask() {
-		Mapa mapa = (Mapa) ((Window<?>) (this.getOwner())).getModel();
-		mapa.addCasillero(this.getModel().getCasillero());
+		getMapa().addCasillero(this.getModel().getCasillero());
+	}
+
+	protected Mapa getMapa() {
+		return (Mapa) ((Window<?>) (this.getOwner())).getModel();
 	}
 
 	@Override
