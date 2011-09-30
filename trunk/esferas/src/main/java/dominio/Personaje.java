@@ -3,6 +3,8 @@ package dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.uqbar.commons.model.UserException;
+
 public class Personaje extends Posicionable {
 
 	public static final String NOMBRE_PERSONAJE = "nombrePersonaje";
@@ -27,6 +29,10 @@ public class Personaje extends Posicionable {
 	}
 
 	public void setDistancia(Integer distancia) {
+		if ((distancia == null) || (distancia < 0)) {
+			throw new UserException(
+					"La distancia que puede recorrer un personaje debe ser positiva");
+		}
 		this.distancia = distancia;
 	}
 
@@ -44,6 +50,9 @@ public class Personaje extends Posicionable {
 	}
 
 	public void setNombre(NombrePersonaje nombre) {
+		if (nombre == null) {
+			throw new UserException("Seleccione un nombre valido");
+		}
 		this.nombre = nombre;
 	}
 

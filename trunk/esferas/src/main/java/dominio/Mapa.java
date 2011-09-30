@@ -16,6 +16,10 @@ public class Mapa extends ObservableObject {
 	public static final String CASILLEROS = "casilleros";
 	public static final String ADD_CASILLERO = "addCasillero";
 	public static final String CALCULAR_DISTANCIA = "calcularDistancia";
+	public static final String FALTAN_CREAR_PERSONAJES = "faltanCrearPersonajes";
+	public static final String FALTAN_CREAR_ESFERAS = "faltanCrearEsferas";
+	public static final String HAY_PERSONAJE_Y_ESFERA_BUCADA = "hayPersonajeYEsferaBuscada";
+	public static final String PUEDE_LLAMAR_A_SHENG_LONG = "puedeLlamarAShengLong";
 	public static final String PUEDE_CAPTURAR = "puedeCapturarEsfera";
 	public static final String ESFERA_BUSCADA = "esferaBuscada";
 	public static final String PERSONAJE_BUSCADO = "personajeBuscado";
@@ -36,10 +40,6 @@ public class Mapa extends ObservableObject {
 		Esfera e = new Esfera(new Punto<Integer>(1, 1), Esfera.CantidadEstrellas.UNA);
 		casilleros.add(e.getCasillero());
 
-		// for (int i = 2; i <= Esfera.CantidadEstrellas.values().length; i++) {
-		// casilleros.add((new Esfera(new Punto<Integer>(1, 1),
-		// i)).getCasillero());
-		// }
 		Personaje p = new Personaje(Personaje.NombrePersonaje.GOKU, 4);
 		casilleros.add(p.getCasillero());
 
@@ -81,13 +81,14 @@ public class Mapa extends ObservableObject {
 	 * @return Devuelve una lista con los Personajes que todavia no fueron
 	 *         Cargados en el Mapa
 	 */
-	public List<NombrePersonaje> listaPersonajesNoCreadas() {
+	public List<NombrePersonaje> getListaPersonajesNoCreadas() {
 		List<NombrePersonaje> listaPersonajesNoCreadas = new ArrayList<Personaje.NombrePersonaje>();
 
 		for (NombrePersonaje personajeExistente : Arrays.asList(NombrePersonaje.values())) {
 			if (!existePersonajeEnElMapa(personajeExistente))
 				listaPersonajesNoCreadas.add(personajeExistente);
 		}
+
 		return listaPersonajesNoCreadas;
 	}
 
@@ -103,7 +104,7 @@ public class Mapa extends ObservableObject {
 	 * @return Devuelve una lista con las Esferas que todavia no fueron
 	 *         Cargados en el Mapa
 	 */
-	public List<CantidadEstrellas> listaEsferasNoCreadas() {
+	public List<CantidadEstrellas> getListaEsferasNoCreadas() {
 
 		List<CantidadEstrellas> listaEsferasNoCreadas = new ArrayList<Esfera.CantidadEstrellas>();
 
@@ -164,6 +165,19 @@ public class Mapa extends ObservableObject {
 		return personajeBuscado.getDistancia() >= calcularDistancia(personajeBuscado, esferaBuscada);
 	}
 
+	public String puedeCapturarEsferaMensaje() {
+		String accion;
+
+		if (this.puedeCapturarEsfera()) {
+			accion = "llega";
+		} else {
+			accion = "no llega";
+		}
+
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion
+				+ " a capturar la " + this.getEsferaBuscada().toString();
+	}
+
 	/**
 	 * Devuelvo la posicion en donde esta un Objeto, Personaje o Esfera.
 	 */
@@ -183,7 +197,7 @@ public class Mapa extends ObservableObject {
 	public Posicionable buscarObjeto(Punto<Integer> posicion) {
 
 		for (Casillero casillero : this.getCasilleros()) {
-			if (casillero.getPosicion().equals(posicion)) {
+			if (casillero.isPosicion(posicion)) {
 				return casillero.getObjeto();
 			}
 		}
@@ -195,7 +209,7 @@ public class Mapa extends ObservableObject {
 	public boolean hayObjetoEn(Punto<Integer> posicion) {
 
 		for (Casillero casillero : this.getCasilleros()) {
-			if (casillero.getPosicion().equals(posicion)) {
+			if (casillero.isPosicion(posicion)) {
 				return true;
 			}
 		}
@@ -219,6 +233,32 @@ public class Mapa extends ObservableObject {
 		return puedeCapturarla;
 	}
 
+	public String personajeCapturaEsferaMensaje() {
+		String accion;
+
+		if (this.personajeCapturaEsfera()) {
+			accion = "capturo";
+		} else {
+			accion = "no puede capturar";
+		}
+
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion + " la "
+				+ this.getEsferaBuscada().toString();
+	}
+
+	public String llamarShenLongMensaje() {
+		String accion;
+
+		if (this.getPersonajeBuscado().puedeInvocarShengLong()) {
+			accion = "puede";
+		} else {
+			accion = "no puede";
+		}
+
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion
+				+ " llamar a Sheng Long";
+	}
+
 	// ********************************************************
 	// ** Atributos
 	// ********************************************************
@@ -240,8 +280,15 @@ public class Mapa extends ObservableObject {
 	}
 
 	public void addCasillero(Casillero casillero) {
+		this.validatePosicionDisponible(casillero.getPosicion());
 		this.casilleros.add(casillero);
 		this.actualizarVista();
+	}
+
+	protected void validatePosicionDisponible(Punto<Integer> posicion) {
+		for (Casillero casillero : this.getCasilleros()) {
+			casillero.assertNoEstasEnPosicion(posicion);
+		}
 	}
 
 	public void removeCasilla(Casillero casillero) {
@@ -269,6 +316,30 @@ public class Mapa extends ObservableObject {
 
 	public void setPersonajeBuscado(Personaje personajeBuscado) {
 		this.personajeBuscado = personajeBuscado;
+	}
+
+	public boolean isPuedeLlamarAShengLong() {
+		return this.getPersonajeBuscado() != null;
+	}
+
+	public boolean isHayPersonajeYEsferaBuscada() {
+		return (!this.getListaPersonajes().isEmpty()) && (!this.getListaEsferas().isEmpty());
+	}
+
+	public boolean isFaltanCrearPersonajes() {
+		return (!this.getListaPersonajesNoCreadas().isEmpty());
+	}
+
+	public void actualizarFaltanCrearPersonajes() {
+		this.firePropertyChange(FALTAN_CREAR_PERSONAJES, null, this.isFaltanCrearPersonajes());
+	}
+
+	public boolean isFaltanCrearEsferas() {
+		return (!this.getListaEsferasNoCreadas().isEmpty());
+	}
+
+	public void actualizarFaltanCrearEsferas() {
+		this.firePropertyChange(FALTAN_CREAR_ESFERAS, null, this.isFaltanCrearEsferas());
 	}
 
 }

@@ -15,6 +15,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import dominio.Mapa;
 import dominio.Posicionable;
 
+@SuppressWarnings("serial")
 public class CasilleroVentana extends Dialog<Posicionable> {
 
 	public CasilleroVentana(WindowOwner owner, Posicionable model) {
@@ -35,6 +36,7 @@ public class CasilleroVentana extends Dialog<Posicionable> {
 		Button aceptar = new Button(actionsPanel).setCaption("Crear");
 		aceptar.onClick(new MessageSend(this, ACCEPT));
 		aceptar.setAsDefault();
+		aceptar.disableOnError();
 
 		Button cancelar = new Button(actionsPanel);
 		cancelar.setCaption("Cancelar");
@@ -46,7 +48,6 @@ public class CasilleroVentana extends Dialog<Posicionable> {
 		mainPanel.setLayout(new VerticalLayout());
 
 		panelDePosicion(new Panel(mainPanel));
-
 	}
 
 	private void panelDePosicion(Panel posicionPanel) {
@@ -62,4 +63,5 @@ public class CasilleroVentana extends Dialog<Posicionable> {
 		Control posicionY = new TextBox(posicionPanel);
 		posicionY.bindValueToProperty("y");
 	}
+
 }

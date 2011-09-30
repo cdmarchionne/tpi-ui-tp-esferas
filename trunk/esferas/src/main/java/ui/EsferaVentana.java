@@ -8,10 +8,17 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import dominio.Esfera;
 
+@SuppressWarnings("serial")
 public class EsferaVentana extends CasilleroVentana {
 
 	public EsferaVentana(WindowOwner owner) {
 		super(owner, new Esfera());
+	}
+
+	@Override
+	protected void executeTask() {
+		super.executeTask();
+		this.getMapa().actualizarFaltanCrearEsferas();
 	}
 
 	@Override
@@ -27,11 +34,12 @@ public class EsferaVentana extends CasilleroVentana {
 		Label numeroLabel = new Label(esferaPanel);
 		numeroLabel.setText("Numero:");
 
-		new Selector(esferaPanel).setContents(getMapa().listaEsferasNoCreadas(),
-				Esfera.CANTIDAD_ESTRELLAS).bindValueToProperty(Esfera.NUMERO);
-
-		// Control numero = new TextBox(esferaPanel);
-		// numero.bindValueToProperty(Esfera.NUMERO);
+		Selector selectorEsfera = new Selector(esferaPanel);
+		selectorEsfera.setContents(getMapa().getListaEsferasNoCreadas(), Esfera.CANTIDAD_ESTRELLAS);
+		selectorEsfera.bindValueToProperty(Esfera.NUMERO);
+		// selectorEsfera
+		// .bindEnabled(new ObservableProperty(this.getMapa(),
+		// Mapa.FALTAN_CREAR_ESFERAS));
 	}
 
 }
