@@ -1,6 +1,7 @@
 package dominio;
 
 import org.uqbar.commons.model.ObservableObject;
+import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
 
@@ -59,5 +60,16 @@ public class Casillero extends ObservableObject {
 
 	public boolean esEsfera() {
 		return this.getObjeto().esEsfera();
+	}
+
+	public void assertNoEstasEnPosicion(Punto<Integer> posicion) {
+		if (isPosicion(posicion)) {
+			throw new UserException("La Posicion " + posicion + " ya ocupada por: "
+					+ this.getObjeto());
+		}
+	}
+
+	public boolean isPosicion(Punto<Integer> posicion) {
+		return this.getPosicion().equals(posicion);
 	}
 }

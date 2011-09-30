@@ -1,6 +1,7 @@
 package dominio;
 
 import org.uqbar.commons.model.ObservableObject;
+import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
 
@@ -28,7 +29,6 @@ public abstract class Posicionable extends ObservableObject {
 
 		this.setProperty(CASILLERO, casillero);
 		this.firePropertyChange(CASILLERO, casilleroOLD, this.getCasillero());
-		// this.firePropertyChange(CASILLERO, null, casillero);
 	}
 
 	private Punto<Integer> getPosicion() {
@@ -40,6 +40,9 @@ public abstract class Posicionable extends ObservableObject {
 	}
 
 	public void setX(Integer x) {
+		if ((x == null) || (x < 0)) {
+			throw new UserException("Coordenada debe ser mayor a 0");
+		}
 		this.casillero.setPosicion(new Punto<Integer>(x, getPosicion().getY()));
 	}
 
@@ -48,6 +51,9 @@ public abstract class Posicionable extends ObservableObject {
 	}
 
 	public void setY(Integer y) {
+		if ((y == null) || (y < 0)) {
+			throw new UserException("Coordenada debe ser mayor a 0");
+		}
 		this.casillero.setPosicion(new Punto<Integer>(getPosicion().getX(), y));
 	}
 

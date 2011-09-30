@@ -8,15 +8,13 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 
-public class MessageDialog extends Dialog {
+import dominio.AplicationModelInformacion;
 
-	private String titulo;
-	private String mensaje;
+@SuppressWarnings("serial")
+public class MessageDialog extends Dialog<AplicationModelInformacion> {
 
-	public MessageDialog(WindowOwner owner, String titulo, String mensaje) {
-		super(owner, null);
-		this.titulo = titulo;
-		this.mensaje = mensaje;
+	public MessageDialog(WindowOwner owner, AplicationModelInformacion model) {
+		super(owner, model);
 	}
 
 	@Override
@@ -28,12 +26,12 @@ public class MessageDialog extends Dialog {
 
 	@Override
 	protected void createFormPanel(Panel mainPanel) {
-		this.setTitle(this.titulo);
+		this.setTitle(this.getModel().getTitulo());
 
 		mainPanel.setLayout(new VerticalLayout());
 
 		Label mensaje = new Label(mainPanel);
-		mensaje.setText(this.mensaje);
+		mensaje.bindValueToProperty(AplicationModelInformacion.MENSAJE);
 	}
 
 	@Override

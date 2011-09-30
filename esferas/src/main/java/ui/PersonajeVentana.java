@@ -10,10 +10,17 @@ import org.uqbar.arena.windows.WindowOwner;
 
 import dominio.Personaje;
 
+@SuppressWarnings("serial")
 public class PersonajeVentana extends CasilleroVentana {
 
 	public PersonajeVentana(WindowOwner owner) {
 		super(owner, new Personaje());
+	}
+
+	@Override
+	protected void executeTask() {
+		super.executeTask();
+		this.getMapa().actualizarFaltanCrearPersonajes();
 	}
 
 	@Override
@@ -29,11 +36,8 @@ public class PersonajeVentana extends CasilleroVentana {
 		Label nombreLabel = new Label(personajePanel);
 		nombreLabel.setText("Nombre: ");
 
-		new Selector(personajePanel).setContents(getMapa().listaPersonajesNoCreadas(),
+		new Selector(personajePanel).setContents(getMapa().getListaPersonajesNoCreadas(),
 				Personaje.NOMBRE_PERSONAJE).bindValueToProperty(Personaje.NOMBRE);
-
-		// Control nombre = new TextBox(personajePanel);
-		// nombre.bindValueToProperty(Personaje.NOMBRE);
 
 		Label distanciaLabel = new Label(personajePanel);
 		distanciaLabel.setText("Distancia: ");
@@ -41,5 +45,4 @@ public class PersonajeVentana extends CasilleroVentana {
 		Control distancia = new TextBox(personajePanel);
 		distancia.bindValueToProperty(Personaje.DISTANCIA);
 	}
-
 }

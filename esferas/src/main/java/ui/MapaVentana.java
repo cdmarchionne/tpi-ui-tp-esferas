@@ -1,6 +1,7 @@
 package ui;
 
 import org.uqbar.arena.actions.MessageSend;
+import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -52,10 +53,12 @@ public class MapaVentana extends MainWindow<Mapa> {
 		Button crearEsfera = new Button(creacionPanel);
 		crearEsfera.setCaption("Crear Esfera");
 		crearEsfera.onClick(new MessageSend(this, CREAR_ESFERA));
+		crearEsfera.bindEnabled(new ObservableProperty(Mapa.FALTAN_CREAR_ESFERAS));
 
 		Button crearPersonaje = new Button(creacionPanel);
 		crearPersonaje.setCaption("Crear Personaje");
 		crearPersonaje.onClick(new MessageSend(this, CREAR_PERSONAJE));
+		crearPersonaje.bindEnabled(new ObservableProperty(Mapa.FALTAN_CREAR_PERSONAJES));
 	}
 
 	public void describeResultsGrid(Table<Casillero> table) {
