@@ -47,6 +47,11 @@
 	      <version>3.8.1</version>
 	      <scope>test</scope>
 	    </dependency>
+	    <dependency>
+		  <groupId>ar.edu.unq.tpi</groupId>
+		  <artifactId>esferas</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		</dependency> 
   </dependencies>
   
   <build>

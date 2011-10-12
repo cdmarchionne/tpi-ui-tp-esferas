@@ -4,4 +4,19 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+	<servlet>
+		<servlet-name>mapaServlet</servlet-name>
+		<servlet-class>servlet.MapaServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>mapaServlet</servlet-name>
+		<url-pattern>/mapa</url-pattern>
+	</servlet-mapping>
+
+	<taglib>
+		<taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+		<taglib-location>c.tld</taglib-location>
+	</taglib>
 </web-app>

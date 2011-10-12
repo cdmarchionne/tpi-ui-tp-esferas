@@ -1,0 +1,30 @@
+body {
+	background-color:#khaki;
+}
+
+h1 {
+	text-align:center;
+	background-color:#SteelBlue;
+}
+
+h2 {
+	text-align:center;
+	background-color:#khaki;
+}
+
+p {
+	font-family:"Times New Roman";
+	font-size:20px;
+}
+
+table {
+	border-collapse:collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+td, th {
+	padding:5px;
+}
