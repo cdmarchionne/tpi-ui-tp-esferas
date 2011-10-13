@@ -9,10 +9,18 @@
 		<servlet-name>mapaServlet</servlet-name>
 		<servlet-class>servlet.MapaServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>agregarEsferaServlet</servlet-name>
+		<servlet-class>servlet.AgregarEsferaServlet</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>mapaServlet</servlet-name>
 		<url-pattern>/mapa</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>agregarEsferaServlet</servlet-name>
+		<url-pattern>/agregarEsfera</url-pattern>
 	</servlet-mapping>
 
 	<taglib>
