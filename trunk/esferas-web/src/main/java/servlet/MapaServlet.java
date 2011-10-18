@@ -16,8 +16,8 @@ public class MapaServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 
-		String dimensionX = request.getParameter("x");
-		String dimensionY = request.getParameter("y");
+		String dimensionX = request.getParameter("dimX");
+		String dimensionY = request.getParameter("dimY");
 		
 		if (isCompleted(dimensionX) && isCompleted(dimensionY)){
 			request.setAttribute("mensajeError", "Complete los campos obligatorios");
@@ -29,6 +29,7 @@ public class MapaServlet extends HttpServlet {
 				Integer y = Integer.parseInt(dimensionY);
 				
 				request.getSession().setAttribute("mapa", new Mapa(new Punto<Integer>(x,y)));
+				request.getRequestDispatcher("mapa.jsp").forward(request, response);
 				
 			} catch (Exception e) {
 				request.setAttribute("mensajeError", "Complete los campos con valores numericos");
