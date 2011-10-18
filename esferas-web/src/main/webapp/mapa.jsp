@@ -9,28 +9,44 @@
 	</head>
 
 	<body>
-		<center>
-		<h1>DRAGON BALL</h1>
-		<h2>Mapa</h2>
-		<c:if test="${sessionScope.mapa != null}" >
-			<h3>Dimension:	${sessionScope.mapa.dimension} </h3>
-			 <table>
+		<div>
+		<%@include file="pages/header.jsp"%>
+	
+		<div>
+			<center>
+			<h2>Mapa</h2>
+			<c:if test="${sessionScope.mapa != null}">
+				<form method="post" action="agregarEsfera">
+					<input type="submit" value="Agregar Esferas" />
+				</form>
+				<!-- 
+				<form method="post" action="agregarPersonaje">
+					<input type="submit" value="Agregar Personajes" />
+				</form>
+				 -->
+				 <br/>
+				<h3>Dimension: ${sessionScope.mapa.dimension}</h3>
+				<table>
 					<tr>
 						<td>Posicion</td>
-				    	<td>Elemento</td>
-				    </tr>
-				<c:forEach items="${sessionScope.mapa.casilleros}" var="casillero" varStatus="status">
-					<tr>
-						<td>${casillero.posicion}</td>
-				    	<td>${casillero.objeto}</td>
-				    </tr>
-				</c:forEach>
-			</table>
-			</br>
-			<input type="submit" value="Agregar Esferas" />
-			<input type="submit" value="Agregar Personajes" />
-			</br>
+						<td>Elemento</td>
+						<td>Imagen</td>
+					</tr>
+					<c:forEach items="${sessionScope.mapa.casilleros}" var="casillero" >
+						<tr>
+							<td>${casillero.posicion}</td>
+							<td>${casillero.objeto}</td>
+							<td><img src="images/goku.jpg" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<br/>
 
-		</c:if>
+			</c:if>
+	 		</center>
+		</div>
+	
+		<%@include file="pages/footer.jsp"%>
+		</div>
 	</body>
 </html>
