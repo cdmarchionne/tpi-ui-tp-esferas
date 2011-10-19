@@ -36,7 +36,7 @@
 						<tr>
 							<td>${casillero.posicion}</td>
 							<td>${casillero.objeto}</td>
-							<td><img src="images/goku.jpg" /></td>
+							<td><img src="images/${casillero.objeto.name.toLowerCase()}.jpg"/></td>
 						</tr>
 					</c:forEach>
 				</table>
