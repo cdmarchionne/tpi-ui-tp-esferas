@@ -80,13 +80,17 @@ public class Personaje extends Posicionable {
 		return (this.getInventario().size() == Esfera.CantidadEstrellas.values().length);
 	}
 
+	public String getName(){
+		return this.getNombre().toString();
+	}
+	
 	/**
 	 * 
 	 * @author mariano
 	 *         Algo para dejar contento al cliente
 	 */
 	public enum NombrePersonaje {
-		Bulma("Bulma"), GOKU("Gokú"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
+		Bulma("Bulma"), GOKU("Goku"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
 				"Vegeta"), PICOLO("Picolo");
 
 		private String nombrePersonaje;

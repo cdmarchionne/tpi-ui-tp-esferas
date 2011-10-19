@@ -51,6 +51,10 @@ public class Esfera extends Posicionable {
 		return true;
 	}
 
+	public String getName(){
+		return this.getNumero().toString();
+	}
+	
 	/**
 	 * 
 	 * @author mariano
