@@ -8,28 +8,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import utils.Punto;
+import dominio.Casillero;
+import dominio.Esfera;
+import dominio.Esfera.CantidadEstrellas;
 import dominio.Mapa;
 
 @SuppressWarnings("serial")
-public class MapaServlet extends HttpServlet {
+public class CrearEsferaServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
 
-		String dimensionX = request.getParameter("dimX");
-		String dimensionY = request.getParameter("dimY");
+		String posicionX = request.getParameter("x");
+		String posicionY = request.getParameter("y");
+		String numeroEsfera = request.getParameter("numero");
 		
-		if (isCompleted(dimensionX) && isCompleted(dimensionY)){
+		if (isCompleted(posicionX) && isCompleted(posicionY)){
 			request.setAttribute("mensajeError", "Complete los campos obligatorios");
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		}
 		else{
 			try {
-				Integer x = Integer.parseInt(dimensionX);
-				Integer y = Integer.parseInt(dimensionY);
+				Integer x = Integer.parseInt(posicionX);
+				Integer y = Integer.parseInt(posicionY);
+				Integer numero = Integer.parseInt(numeroEsfera);
+				Punto<Integer> posicion = new Punto<Integer>(x,y);
 				
-				request.getSession().setAttribute("mapa", new Mapa(new Punto<Integer>(x,y)));
+				CantidadEstrellas esfera = CantidadEstrellas.getCantidadEstrellas(numero);
+				Casillero casillero = new Casillero(posicion, new Esfera(posicion,esfera));
+				
+				Mapa mapa = (Mapa) request.getSession().getAttribute("mapa");
+				mapa.addCasillero(casillero);
+//				mapa.imprimirTablero();
+				request.getSession().setAttribute("mapa", mapa);
+				
 				request.getRequestDispatcher("mapa.jsp").forward(request, response);
 				
 			} catch (Exception e) {
