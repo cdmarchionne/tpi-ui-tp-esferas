@@ -27,10 +27,10 @@
 					<h3>Posicion</h3>
 				<br/>
 					<label for="posX">X</label>
-					<input type="text" name="x" value="${param.x}" />
+					<input type="text" id="x" name="x" value="${param.x}" />
 				<br/>
 					<label for="posY">Y</label>
-					<input type="text" name="y" value="${param.y}" />
+					<input type="text" id="y" name="y" value="${param.y}" />
 				<br/>
 				<br/>
 					<h3>Numero</h3>
@@ -38,9 +38,9 @@
 					<input type="text" name="numero" value="${param.numero}" />
 					 -->
 					 
-					<select id="numero" class="Esfera.CantidadEstrellas" name="numero">
+					<select id="numero" name="numero" class="Esfera.CantidadEstrellas" >
 						<c:forEach items="${sessionScope.mapa.listaEsferasNoCreadas}" var="esfera" varStatus="status">
-								<option value="${status.index}">Esfera ${esfera.cantidadEstrellas}</option>
+								<option value="${esfera.cantidadEstrellas}">Esfera ${esfera.cantidadEstrellas}</option>
 						</c:forEach>
 					</select>
 				<br/>

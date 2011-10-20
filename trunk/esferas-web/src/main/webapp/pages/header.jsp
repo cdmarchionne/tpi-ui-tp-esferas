@@ -3,7 +3,9 @@
 <html>
 	<div>
 		<center>
-			<h1>DRAGON BALL</h1>
+			<a href="index.jsp" name="Home" >
+				<h1>DRAGON BALL</h1>
+			</a>
 		</center>
 	</div>
 </html>
