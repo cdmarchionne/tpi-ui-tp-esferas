@@ -26,7 +26,7 @@
 							<label for="dimencion">Dimencion</label>
 							<br/>
 							<label for="dimencionX">X</label>
-							<input type="text" id="dimX" name="dimX" title="Horizontal" value="${param.dimX}" maxlength="2"/>
+							<input type="text" id="dimX" name="dimX" title="Horizontal" value="${param.dimX}" maxlength="2" />
 							<br/>
 							<label for="dimencionY">Y</label>
 							<input type="text" id="dimY" name="dimY" title="Vertical" value="${param.dimY}" maxlength="2"/>

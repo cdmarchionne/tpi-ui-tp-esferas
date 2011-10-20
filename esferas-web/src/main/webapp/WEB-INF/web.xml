@@ -13,6 +13,10 @@
 		<servlet-name>agregarEsferaServlet</servlet-name>
 		<servlet-class>servlet.AgregarEsferaServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>crearEsferaServlet</servlet-name>
+		<servlet-class>servlet.CrearEsferaServlet</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>mapaServlet</servlet-name>
@@ -21,6 +25,10 @@
 	<servlet-mapping>
 		<servlet-name>agregarEsferaServlet</servlet-name>
 		<url-pattern>/agregarEsfera</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>crearEsferaServlet</servlet-name>
+		<url-pattern>/crearEsfera</url-pattern>
 	</servlet-mapping>
 
 	<taglib>

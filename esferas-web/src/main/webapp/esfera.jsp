@@ -6,6 +6,12 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>DRAGON BALL</title>
 		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<script type="text/javascript" src="scripts/formulario.js"></script>
+		<script>
+			function validar_crear_esfera(){
+			    return (validar_campo("x") && validar_campo("y"));
+			}
+		</script>
 	</head>
 
 	<body>
@@ -16,6 +22,7 @@
 			<center>
 			<h2>Esferas</h2>
 			<br/>
+			<form name="crearEsfera" method="post" action="crearEsfera" onsubmit="return validar_crear_esfera()">
 				<br/>
 					<h3>Posicion</h3>
 				<br/>
@@ -40,8 +47,9 @@
 				
 				<br/>
 					<input type="submit" value="Agregar" />
-					<input type="submit" value="Cancelar" />
+					<input type="button" value="Cancelar" />
 				<br/>
+			</form>
 	 		</center>
 		</div>
 	
