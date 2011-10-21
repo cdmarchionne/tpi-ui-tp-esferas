@@ -14,8 +14,16 @@
 		<servlet-class>servlet.AgregarEsferaServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>agregarPersonajeServlet</servlet-name>
+		<servlet-class>servlet.AgregarPersonajeServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>crearEsferaServlet</servlet-name>
 		<servlet-class>servlet.CrearEsferaServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>crearPersonajeServlet</servlet-name>
+		<servlet-class>servlet.CrearPersonajeServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -27,8 +35,16 @@
 		<url-pattern>/agregarEsfera</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>agregarPersonajeServlet</servlet-name>
+		<url-pattern>/agregarPersonaje</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>crearEsferaServlet</servlet-name>
 		<url-pattern>/crearEsfera</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>crearPersonajeServlet</servlet-name>
+		<url-pattern>/crearPersonaje</url-pattern>
 	</servlet-mapping>
 
 	<taglib>

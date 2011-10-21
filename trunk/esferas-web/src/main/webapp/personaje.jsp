@@ -8,7 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="styles.css" />
 		<script type="text/javascript" src="scripts/formulario.js"></script>
 		<script>
-			function validar_crear_esfera(){
+			function validar_crear_personaje(){
 			    return (validar_campo("x") && validar_campo("y"));
 			}
 		</script>
@@ -20,25 +20,29 @@
 	
 		<div>
 			<center>
-			<h2>Esferas</h2>
+			<h2>Personaje</h2>
 			<br/>
-			<form name="crearEsfera" method="post" action="crearEsfera" onsubmit="return validar_crear_esfera()">
+			<form name="crearPersonaje" method="post" action="crearPersonaje" onsubmit="return validar_crear_personaje()">
 				<br/>
 					<h3>Posicion</h3>
 				<br/>
 					<label for="posX">X</label>
-					<input type="text" id="x" name="x" value="${param.x}" size="3" maxlength="2" />
+					<input type="text" id="x" name="x" value="${param.x}" />
 				<br/>
 					<label for="posY">Y</label>
-					<input type="text" id="y" name="y" value="${param.y}" size="3" maxlength="2"/>
+					<input type="text" id="y" name="y" value="${param.y}" />
 				<br/>
 				<br/>
-					<h3>Numero</h3>
-					<select id="numero" name="numero" class="Esfera.CantidadEstrellas" >
-						<c:forEach items="${sessionScope.mapa.listaEsferasNoCreadas}" var="esfera" varStatus="status">
-								<option value="${status.index}">Esfera ${esfera.cantidadEstrellas}</option>
+					<h3>Nombre</h3>
+					<select id="personaje" name="personaje" class="Personaje.NombrePersonaje" >
+						<c:forEach items="${sessionScope.mapa.listaPersonajesNoCreadas}" var="personaje" varStatus="status">
+								<option value="${status.index}">${personaje.nombrePersonaje}</option>
 						</c:forEach>
 					</select>
+				<br/>
+				<br/>
+					<label for="distancia">Distancia</label>
+					<input type="text" id="distancia" name="distancia" value="${param.distancia}" />
 				<br/>
 				
 				<br/>

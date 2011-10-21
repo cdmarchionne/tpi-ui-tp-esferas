@@ -12,9 +12,11 @@ import dominio.Casillero;
 import dominio.Esfera;
 import dominio.Esfera.CantidadEstrellas;
 import dominio.Mapa;
+import dominio.Personaje;
+import dominio.Personaje.NombrePersonaje;
 
 @SuppressWarnings("serial")
-public class CrearEsferaServlet extends HttpServlet {
+public class CrearPersonajeServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
@@ -22,7 +24,8 @@ public class CrearEsferaServlet extends HttpServlet {
 
 		String posicionX = request.getParameter("x");
 		String posicionY = request.getParameter("y");
-		String numeroEsferaIndex = request.getParameter("numero");
+		String personajeIndex = request.getParameter("personaje");
+		String distanciaMaxima = request.getParameter("distancia");
 		
 		if (isCompleted(posicionX) && isCompleted(posicionY)){
 			request.setAttribute("mensajeError", "Complete los campos obligatorios");
@@ -32,12 +35,13 @@ public class CrearEsferaServlet extends HttpServlet {
 			try {
 				Integer x = Integer.parseInt(posicionX);
 				Integer y = Integer.parseInt(posicionY);
-				Integer index = Integer.parseInt(numeroEsferaIndex);
+				Integer index = Integer.parseInt(personajeIndex);
+				Integer distancia = Integer.parseInt(distanciaMaxima);
 				Mapa mapa = (Mapa) request.getSession().getAttribute("mapa");
 				
 				Punto<Integer> posicion = new Punto<Integer>(x,y);
-				CantidadEstrellas esfera = mapa.getListaEsferasNoCreadas().get(index);
-				Casillero casillero = new Casillero(posicion, new Esfera(esfera));				
+				NombrePersonaje personaje = mapa.getListaPersonajesNoCreadas().get(index);
+				Casillero casillero = new Casillero(posicion, new Personaje(personaje,distancia));				
 				mapa.addCasillero(casillero);
 				
 				request.getRequestDispatcher("mapa.jsp").forward(request, response);
