@@ -1,5 +1,10 @@
 package dominio;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.uqbar.commons.model.UserException;
+
 import utils.Punto;
 
 public class Esfera extends Posicionable {
@@ -68,6 +73,14 @@ public class Esfera extends Posicionable {
 
 		private CantidadEstrellas(int cantidad) {
 			this.cantidadEstrellas = cantidad;
+		}
+		
+		public static CantidadEstrellas getCantidadEstrellas(int numero) {
+			List<CantidadEstrellas> esferas = Arrays.asList(CantidadEstrellas.values());
+			if ((0<numero) && (numero<esferas.size())) 
+				return esferas.get(numero-1);
+			else
+				throw new UserException("Las estrellas son "+ esferas.size());
 		}
 
 		public int getCantidadEstrellas() {
