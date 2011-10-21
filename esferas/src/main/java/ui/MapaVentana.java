@@ -13,10 +13,7 @@ import org.uqbar.arena.windows.MainWindow;
 
 import utils.Punto;
 import dominio.Casillero;
-import dominio.Esfera;
 import dominio.Mapa;
-import dominio.Personaje;
-import dominio.Posicionable;
 
 @SuppressWarnings("serial")
 public class MapaVentana extends MainWindow<Mapa> {
@@ -95,57 +92,11 @@ public class MapaVentana extends MainWindow<Mapa> {
 	}
 
 	public void actualizarGrid() {
-		imprimirTablero();
-		imprimirMapa();
+		this.getModel().imprimirTablero();
+		this.getModel().imprimirMapa();
 
 		System.out.println("Esferas: \t" + this.getModel().getListaEsferas());
 		System.out.println("Personajes: \t" + this.getModel().getListaPersonajes());
-	}
-
-	/**
-	 * Imprimo los elementos que contiene el mapa
-	 */
-	private void imprimirMapa() {
-		System.out.println("Mapa: \t{");
-		for (Casillero casillero : this.getModel().getCasilleros()) {
-
-			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
-					+ casillero.getObjeto().toString() + " ] ");
-		}
-		System.out.println("\t}");
-
-	}
-
-	/**
-	 * Imprimo el tablero como una matriz dando detalles de su contenido.
-	 */
-	private void imprimirTablero() {
-		Punto<Integer> dimension = this.getModel().getDimension();
-
-		for (int i = 0; i < dimension.getX(); i++) {
-			System.out.print((i + 1) + ":\t[ ");
-			for (int j = 0; j < dimension.getY(); j++) {
-				System.out.print(" (" + objetoDelCasillero(new Punto<Integer>(i, j)) + ") ");
-			}
-			System.out.print(" ]\n");
-		}
-		System.out.print("\n");
-	}
-
-	private String objetoDelCasillero(Punto<Integer> posicion) {
-		String objetoDelCasillero;
-
-		if (this.getModel().hayObjetoEn(posicion)) {
-			Posicionable objeto = this.getModel().buscarObjeto(posicion);
-			if (objeto.esEsfera())
-				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero().getCantidadEstrellas();
-			else
-				objetoDelCasillero = "P." + ((Personaje) objeto).toString().charAt(0);
-		} else {
-			objetoDelCasillero = "   ";
-		}
-
-		return objetoDelCasillero;
 	}
 
 	public static void main(String[] args) {

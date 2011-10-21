@@ -342,4 +342,51 @@ public class Mapa extends ObservableObject {
 		this.firePropertyChange(FALTAN_CREAR_ESFERAS, null, this.isFaltanCrearEsferas());
 	}
 
+	/**
+	 * Imprimo los elementos que contiene el mapa
+	 */
+	public void imprimirMapa() {
+		System.out.println("Mapa: \t{");
+		for (Casillero casillero : this.getCasilleros()) {
+
+			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
+					+ casillero.getObjeto().toString() + " ] ");
+		}
+		System.out.println("\t}");
+
+	}
+
+	/**
+	 * Imprimo el tablero como una matriz dando detalles de su contenido.
+	 */
+	public void imprimirTablero() {
+		Punto<Integer> dimension = this.getDimension();
+
+		for (int i = 0; i < dimension.getX(); i++) {
+			System.out.print((i + 1) + ":\t[ ");
+			for (int j = 0; j < dimension.getY(); j++) {
+				System.out.print(" (" + objetoDelCasillero(new Punto<Integer>(i, j)) + ") ");
+			}
+			System.out.print(" ]\n");
+		}
+		System.out.print("\n");
+	}
+	
+	private String objetoDelCasillero(Punto<Integer> posicion) {
+		String objetoDelCasillero;
+
+		if (this.hayObjetoEn(posicion)) {
+			Posicionable objeto = this.buscarObjeto(posicion);
+			if (objeto.esEsfera())
+				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero().getCantidadEstrellas();
+			else
+				objetoDelCasillero = "P." + ((Personaje) objeto).toString().charAt(0);
+		} else {
+			objetoDelCasillero = "   ";
+		}
+
+		return objetoDelCasillero;
+	}
+
+
 }
