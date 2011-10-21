@@ -19,11 +19,9 @@
 				<form method="post" action="agregarEsfera">
 					<input type="submit" value="Agregar Esferas" />
 				</form>
-				<!-- 
 				<form method="post" action="agregarPersonaje">
 					<input type="submit" value="Agregar Personajes" />
 				</form>
-				 -->
 				 <br/>
 				<h3>Dimension: ${sessionScope.mapa.dimension}</h3>
 				<table>
@@ -36,7 +34,7 @@
 						<tr>
 							<td>${casillero.posicion}</td>
 							<td>${casillero.objeto}</td>
-							<td><img src="images/${casillero.objeto.name.toLowerCase()}.jpg"/></td>
+							<td><img src="images/${casillero.objeto.name.toLowerCase()}.png"/></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-public class AgregarEsferaServlet extends HttpServlet {
+public class AgregarPersonajeServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	IOException {
 		
-		request.getRequestDispatcher("esfera.jsp").forward(request, response);
+		request.getRequestDispatcher("personaje.jsp").forward(request, response);
 		
 	}
 	
