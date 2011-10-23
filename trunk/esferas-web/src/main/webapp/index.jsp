@@ -7,7 +7,7 @@
 		<title>DRAGON BALL</title>
 		<link rel="stylesheet" type="text/css" href="styles.css" />
 		<script type="text/javascript" src="scripts/formulario.js"></script>
-		<script>
+		<script type="text/javascript" >
 			function validar_crear_mapa(){
 			    return (validar_campo("dimX") && validar_campo("dimY"));
 			}
