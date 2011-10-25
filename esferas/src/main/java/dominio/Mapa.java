@@ -343,6 +343,53 @@ public class Mapa extends ObservableObject {
 	}
 
 	/**
+	 * Obtengo todo el Tablero
+	 */
+//	public List<List<Casillero>> getTablero() {
+//		List<List<Casillero>> tablero = new ArrayList<ArrayList<Casillero>>();
+//		
+//		for (int j = 0; j < this.getDimension().getY(); j++) {
+//			tablero[j].addAll(this.getFila(j));
+//		}
+//		
+//		return tablero;
+//	}
+	
+	/**
+	 * Obtengo todas la Fila del Tablero
+	 */
+	public List<Casillero> getFila(int numeroFila) {
+		List<Casillero> fila = new ArrayList<Casillero>();
+		
+		for (int i = 0; i < this.getDimension().getX(); i++) {
+			Punto<Integer> posicion = new Punto<Integer>(i, numeroFila);
+			if(this.hayObjetoEn(posicion))
+				fila.add(this.buscarObjeto(posicion).getCasillero());
+			else
+				fila.add(new Casillero(posicion,new PosicionableNulo()));
+		}
+		
+		return fila;
+	}
+	
+	/**
+	 * Obtengo todas la Columna del Tablero
+	 */
+	public List<Casillero> getColumna(int numeroColumna) {
+		List<Casillero> columna = new ArrayList<Casillero>();
+		
+		for (int j = 0; j < this.getDimension().getY(); j++) {
+			Punto<Integer> posicion = new Punto<Integer>(numeroColumna, j);
+			if(this.hayObjetoEn(posicion))
+				columna.add(this.buscarObjeto(posicion).getCasillero());
+			else
+				columna.add(new Casillero(posicion,new PosicionableNulo()));
+		}
+		
+		return columna;
+	}
+	
+	/**
 	 * Imprimo los elementos que contiene el mapa
 	 */
 	public void imprimirMapa() {
@@ -365,16 +412,16 @@ public class Mapa extends ObservableObject {
 		for (int i = 0; i < dimension.getX(); i++) {
 			System.out.print((i + 1) + ":\t[ ");
 			for (int j = 0; j < dimension.getY(); j++) {
-				System.out.print(" (" + objetoDelCasillero(new Punto<Integer>(i, j)) + ") ");
+				System.out.print(" (" + objetoDelCasilleroString(new Punto<Integer>(i, j)) + ") ");
 			}
 			System.out.print(" ]\n");
 		}
 		System.out.print("\n");
 	}
 	
-	private String objetoDelCasillero(Punto<Integer> posicion) {
+	private String objetoDelCasilleroString(Punto<Integer> posicion) {
 		String objetoDelCasillero;
-
+		
 		if (this.hayObjetoEn(posicion)) {
 			Posicionable objeto = this.buscarObjeto(posicion);
 			if (objeto.esEsfera())
@@ -384,9 +431,8 @@ public class Mapa extends ObservableObject {
 		} else {
 			objetoDelCasillero = "   ";
 		}
-
+		
 		return objetoDelCasillero;
 	}
-
-
+	
 }
