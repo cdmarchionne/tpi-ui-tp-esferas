@@ -42,6 +42,17 @@
 							<td><img src="images/${casillero.objeto.name.toLowerCase()}.png"/></td>
 						</tr>
 					</c:forEach>
+
+					<!--
+					<c:forEach items="${sessionScope.mapa.getFila(0)}" var="fila" >
+						<tr>
+							<td>
+								${fila.objeto}
+								<img src="images/${casillero.objeto.name.toLowerCase()}.png" class="Posicionable"/>
+							</td>
+						</tr>
+					</c:forEach>
+					 -->
 				</table>
 				<br/>
 
