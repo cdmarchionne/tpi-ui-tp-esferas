@@ -285,6 +285,9 @@ public class Mapa extends ObservableObject {
 		this.actualizarVista();
 	}
 
+	/**
+	 * Metodo que verifica la posicion del mapa esta vacia
+	 */
 	protected void validatePosicionDisponible(Punto<Integer> posicion) {
 		for (Casillero casillero : this.getCasilleros()) {
 			casillero.assertNoEstasEnPosicion(posicion);
