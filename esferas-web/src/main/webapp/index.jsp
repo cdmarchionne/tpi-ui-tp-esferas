@@ -25,11 +25,11 @@
 						<form name="mapa" method="post" action="mapa" onsubmit="return validar_crear_mapa()">
 							<label for="dimencion">Dimencion</label>
 							<br/>
-							<label for="dimencionX">X</label>
-							<input type="text" id="dimX" name="dimX" title="Horizontal" value="${param.dimX}" maxlength="2" />
+								<label for="dimencionX">X</label>
+								<input class="punto" type="text" id="dimX" name="dimX" title="Horizontal" value="${param.dimX}" maxlength="2" />
 							<br/>
-							<label for="dimencionY">Y</label>
-							<input type="text" id="dimY" name="dimY" title="Vertical" value="${param.dimY}" maxlength="2"/>
+								<label for="dimencionY">Y</label>
+								<input class="punto" type="text" id="dimY" name="dimY" title="Vertical" value="${param.dimY}" maxlength="2"/>
 							<br/>
 							<input type="submit" value="Crear Mapa" />
 						</form>
