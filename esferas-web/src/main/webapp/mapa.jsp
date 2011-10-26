@@ -6,11 +6,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>DRAGON BALL</title>
 		<link rel="stylesheet" type="text/css" href="styles.css" />
-		<script type="text/javascript" >
-			function validar_habilitar_agregar_esfera(){
-			    return ($sessionScope.mapa.faltanCrearEsferas);
-			}
-		</script>
 	</head>
 
 	<body>
@@ -23,12 +18,12 @@
 			<c:if test="${sessionScope.mapa != null}">
 				<div style="float: left; width: 48%;" align="right">
 					<form method="post" action="agregarEsfera" >
-						<input type="submit" id="agregarEsfera"  value="Agregar Esferas" />
+						<input type="submit" id="agregarEsfera"  value="Agregar Esferas" ${sessionScope.mapa.faltanCrearEsferas ? "" : "disabled"} />
 					</form>
 				</div>
 				<div style="float: right; width: 48%;" align="left">
 					<form method="post" action="agregarPersonaje">
-						<input type="submit"  id="agregarPersonajes" value="Agregar Personajes" />
+						<input type="submit"  id="agregarPersonajes" value="Agregar Personajes" ${sessionScope.mapa.faltanCrearPersonajes ? "" : "disabled"} />
 					</form>
 				</div>
 					<br/>
@@ -52,7 +47,7 @@
 								</td>
 								<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
 									<td>
-										<img src="images/${fila.objeto.name.toLowerCase()}.png"/>
+										<img id="${fila.objeto.name.toLowerCase()}" src="images/${fila.objeto.name.toLowerCase()}.png"/>
 									</td>
 								</c:forEach>
 							</tr>
