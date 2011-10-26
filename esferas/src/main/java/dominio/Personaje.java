@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 
-import dominio.Esfera.CantidadEstrellas;
-
 public class Personaje extends Posicionable {
 
 	public static final String NOMBRE_PERSONAJE = "nombrePersonaje";
