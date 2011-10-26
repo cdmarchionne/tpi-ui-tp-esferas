@@ -1,12 +1,7 @@
 package dominio;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
-
-import dominio.Esfera.CantidadEstrellas;
 
 import utils.Punto;
 
