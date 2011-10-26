@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.uqbar.commons.model.UserException;
+
 import utils.Punto;
 import dominio.Casillero;
 import dominio.Esfera;
@@ -37,8 +39,14 @@ public class CrearEsferaServlet extends HttpServlet {
 				
 				Punto<Integer> posicion = new Punto<Integer>(x,y);
 				CantidadEstrellas esfera = mapa.getListaEsferasNoCreadas().get(index);
-				Casillero casillero = new Casillero(posicion, new Esfera(esfera));				
-				mapa.addCasillero(casillero);
+				Casillero casillero = new Casillero(posicion, new Esfera(esfera));
+				try {
+					mapa.addCasillero(casillero);
+				} catch (UserException e) {
+					// Cuando intento agregar un casillero en una posicion ya ocupada se genera esta excepsion
+					request.setAttribute("mensajeError", e.getMessage());
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+				}
 				
 				request.getRequestDispatcher("mapa.jsp").forward(request, response);
 				
