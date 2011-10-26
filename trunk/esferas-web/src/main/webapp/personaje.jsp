@@ -23,14 +23,12 @@
 			<h2>Personaje</h2>
 			<br/>
 			<form name="crearPersonaje" method="post" action="crearPersonaje" onsubmit="return validar_crear_personaje()">
+				<h3>Posicion</h3>
+				<label for="posX">X</label>
+				<input class="punto" type="text" id="x" name="x" value="${param.x}" />
 				<br/>
-					<h3>Posicion</h3>
-				<br/>
-					<label for="posX">X</label>
-					<input type="text" id="x" name="x" value="${param.x}" />
-				<br/>
-					<label for="posY">Y</label>
-					<input type="text" id="y" name="y" value="${param.y}" />
+				<label for="posY">Y</label>
+				<input class="punto" type="text" id="y" name="y" value="${param.y}" />
 				<br/>
 				<br/>
 					<h3>Nombre</h3>
@@ -42,7 +40,7 @@
 				<br/>
 				<br/>
 					<label for="distancia">Distancia</label>
-					<input type="text" id="distancia" name="distancia" value="${param.distancia}" />
+					<input class="punto" type="text" id="distancia" name="distancia" value="${param.distancia}" />
 				<br/>
 				
 				<br/>

@@ -2,14 +2,18 @@ body {
 	background-color:#FFFACD;
 }
 
+.punto {
+	size: 3;
+	maxlength: 2;
+	width: 50px;
+}
+
 h1 {
 	text-align:center;
-	text-decoration:#4682B4;
 }
 
 h2 {
 	text-align:center;
-	background-color:#khaki;
 }
 
 p {
@@ -28,3 +32,4 @@ table, th, td {
 td, th {
 	padding:5px;
 }
+

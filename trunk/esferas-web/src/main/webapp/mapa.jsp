@@ -21,41 +21,44 @@
 			<center>
 			<h2>Mapa</h2>
 			<c:if test="${sessionScope.mapa != null}">
-				<form method="post" action="agregarEsfera" >
-					<input type="submit" id="agregarEsfera"  value="Agregar Esferas" />
-				</form>
-				<form method="post" action="agregarPersonaje">
-					<input type="submit"  id="agregarPersonajes" value="Agregar Personajes" />
-				</form>
-				 <br/>
-				<h3>Dimension: ${sessionScope.mapa.dimension}</h3>
-				<table>
-					<tr>
-						<td>Posicion</td>
-						<td>Elemento</td>
-						<td>Imagen</td>
-					</tr>
-					<c:forEach items="${sessionScope.mapa.casilleros}" var="casillero" >
+				<div style="float: left; width: 48%;" align="right">
+					<form method="post" action="agregarEsfera" >
+						<input type="submit" id="agregarEsfera"  value="Agregar Esferas" />
+					</form>
+				</div>
+				<div style="float: right; width: 48%;" align="left">
+					<form method="post" action="agregarPersonaje">
+						<input type="submit"  id="agregarPersonajes" value="Agregar Personajes" />
+					</form>
+				</div>
+					<br/>
+					<br/>
+					<h3>Dimension: ${sessionScope.mapa.dimension}</h3>
+					<table>
 						<tr>
-							<td>${casillero.posicion}</td>
-							<td>${casillero.objeto}</td>
-							<td><img src="images/${casillero.objeto.name.toLowerCase()}.png"/></td>
+							<td></td>
+							<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
+								<td>
+							 		<center>
+										${statusFila.index}
+							 		</center>
+								</td>
+							</c:forEach>
 						</tr>
-					</c:forEach>
-
-					<!--
-					<c:forEach items="${sessionScope.mapa.getFila(0)}" var="fila" >
-						<tr>
-							<td>
-								${fila.objeto}
-								<img src="images/${casillero.objeto.name.toLowerCase()}.png" class="Posicionable"/>
-							</td>
-						</tr>
-					</c:forEach>
-					 -->
-				</table>
-				<br/>
-
+						<c:forEach items="${sessionScope.mapa.getColumna(0)}" var="columna" varStatus="statusColumna" >
+							<tr>
+								<td>
+									${statusColumna.index}
+								</td>
+								<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
+									<td>
+										<img src="images/${fila.objeto.name.toLowerCase()}.png"/>
+									</td>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+					</table>
+					<br/>
 			</c:if>
 	 		</center>
 		</div>

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.uqbar.commons.model.UserException;
+
 import utils.Punto;
 import dominio.Casillero;
 import dominio.Esfera;
@@ -42,9 +44,14 @@ public class CrearPersonajeServlet extends HttpServlet {
 				Punto<Integer> posicion = new Punto<Integer>(x,y);
 				NombrePersonaje personaje = mapa.getListaPersonajesNoCreadas().get(index);
 				Casillero casillero = new Casillero(posicion, new Personaje(personaje,distancia));				
-				mapa.addCasillero(casillero);
-				
-				request.getRequestDispatcher("mapa.jsp").forward(request, response);
+				try {
+					mapa.addCasillero(casillero);
+					request.getRequestDispatcher("mapa.jsp").forward(request, response);
+				} catch (UserException e) {
+					// Cuando intento agregar un casillero en una posicion ya ocupada se genera esta excepsion
+					request.setAttribute("mensajeError", e.getMessage());
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+				}
 				
 			} catch (Exception e) {
 				request.setAttribute("mensajeError", "Complete los campos con valores numericos");

@@ -23,14 +23,13 @@
 			<h2>Esferas</h2>
 			<br/>
 			<form name="crearEsfera" method="post" action="crearEsfera" onsubmit="return validar_crear_esfera()">
+				<h3>Posicion</h3>
 				<br/>
-					<h3>Posicion</h3>
+				<label for="posX">X</label>
+				<input type="text" id="x" name="x" value="${param.x}" size="3" maxlength="2" />
 				<br/>
-					<label for="posX">X</label>
-					<input type="text" id="x" name="x" value="${param.x}" size="3" maxlength="2" />
-				<br/>
-					<label for="posY">Y</label>
-					<input type="text" id="y" name="y" value="${param.y}" size="3" maxlength="2"/>
+				<label for="posY">Y</label>
+				<input type="text" id="y" name="y" value="${param.y}" size="3" maxlength="2"/>
 				<br/>
 				<br/>
 					<h3>Numero</h3>

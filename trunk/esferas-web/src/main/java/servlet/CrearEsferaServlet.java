@@ -42,13 +42,12 @@ public class CrearEsferaServlet extends HttpServlet {
 				Casillero casillero = new Casillero(posicion, new Esfera(esfera));
 				try {
 					mapa.addCasillero(casillero);
+					request.getRequestDispatcher("mapa.jsp").forward(request, response);
 				} catch (UserException e) {
 					// Cuando intento agregar un casillero en una posicion ya ocupada se genera esta excepsion
 					request.setAttribute("mensajeError", e.getMessage());
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}
-				
-				request.getRequestDispatcher("mapa.jsp").forward(request, response);
 				
 			} catch (Exception e) {
 				request.setAttribute("mensajeError", "Complete los campos con valores numericos");
