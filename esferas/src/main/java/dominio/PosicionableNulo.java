@@ -8,6 +8,11 @@ public class PosicionableNulo extends Posicionable{
 	}
 
 	@Override
+	public String toString() {
+		return "nulo";
+	}
+
+	@Override
 	public boolean esPersonaje() {
 		return false;
 	}
