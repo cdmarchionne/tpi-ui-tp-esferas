@@ -285,9 +285,6 @@ public class Mapa extends ObservableObject {
 		this.actualizarVista();
 	}
 
-	/**
-	 * Metodo que verifica la posicion del mapa esta vacia
-	 */
 	protected void validatePosicionDisponible(Punto<Integer> posicion) {
 		for (Casillero casillero : this.getCasilleros()) {
 			casillero.assertNoEstasEnPosicion(posicion);
@@ -345,97 +342,4 @@ public class Mapa extends ObservableObject {
 		this.firePropertyChange(FALTAN_CREAR_ESFERAS, null, this.isFaltanCrearEsferas());
 	}
 
-	/**
-	 * Obtengo todo el Tablero
-	 */
-//	public List<List<Casillero>> getTablero() {
-//		List<List<Casillero>> tablero = new ArrayList<ArrayList<Casillero>>();
-//		
-//		for (int j = 0; j < this.getDimension().getY(); j++) {
-//			tablero[j].addAll(this.getFila(j));
-//		}
-//		
-//		return tablero;
-//	}
-	
-	/**
-	 * Obtengo todas la Fila del Tablero
-	 */
-	public List<Casillero> getFila(int numeroFila) {
-		List<Casillero> fila = new ArrayList<Casillero>();
-		
-		for (int i = 0; i < this.getDimension().getX(); i++) {
-			Punto<Integer> posicion = new Punto<Integer>(i, numeroFila);
-			if(this.hayObjetoEn(posicion))
-				fila.add(this.buscarObjeto(posicion).getCasillero());
-			else
-				fila.add(new Casillero(posicion,new PosicionableNulo()));
-		}
-		
-		return fila;
-	}
-	
-	/**
-	 * Obtengo todas la Columna del Tablero
-	 */
-	public List<Casillero> getColumna(int numeroColumna) {
-		List<Casillero> columna = new ArrayList<Casillero>();
-		
-		for (int j = 0; j < this.getDimension().getY(); j++) {
-			Punto<Integer> posicion = new Punto<Integer>(numeroColumna, j);
-			if(this.hayObjetoEn(posicion))
-				columna.add(this.buscarObjeto(posicion).getCasillero());
-			else
-				columna.add(new Casillero(posicion,new PosicionableNulo()));
-		}
-		
-		return columna;
-	}
-	
-	/**
-	 * Imprimo los elementos que contiene el mapa
-	 */
-	public void imprimirMapa() {
-		System.out.println("Mapa: \t{");
-		for (Casillero casillero : this.getCasilleros()) {
-
-			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
-					+ casillero.getObjeto().toString() + " ] ");
-		}
-		System.out.println("\t}");
-
-	}
-
-	/**
-	 * Imprimo el tablero como una matriz dando detalles de su contenido.
-	 */
-	public void imprimirTablero() {
-		Punto<Integer> dimension = this.getDimension();
-
-		for (int i = 0; i < dimension.getX(); i++) {
-			System.out.print((i + 1) + ":\t[ ");
-			for (int j = 0; j < dimension.getY(); j++) {
-				System.out.print(" (" + objetoDelCasilleroString(new Punto<Integer>(i, j)) + ") ");
-			}
-			System.out.print(" ]\n");
-		}
-		System.out.print("\n");
-	}
-	
-	private String objetoDelCasilleroString(Punto<Integer> posicion) {
-		String objetoDelCasillero;
-		
-		if (this.hayObjetoEn(posicion)) {
-			Posicionable objeto = this.buscarObjeto(posicion);
-			if (objeto.esEsfera())
-				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero().getCantidadEstrellas();
-			else
-				objetoDelCasillero = "P." + ((Personaje) objeto).toString().charAt(0);
-		} else {
-			objetoDelCasillero = "   ";
-		}
-		
-		return objetoDelCasillero;
-	}
-	
 }

@@ -1,7 +1,6 @@
 package dominio;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.uqbar.commons.model.UserException;
@@ -81,31 +80,19 @@ public class Personaje extends Posicionable {
 		return (this.getInventario().size() == Esfera.CantidadEstrellas.values().length);
 	}
 
-	public String getName(){
-		return this.getNombre().toString();
-	}
-	
 	/**
 	 * 
 	 * @author mariano
 	 *         Algo para dejar contento al cliente
 	 */
 	public enum NombrePersonaje {
-		Bulma("Bulma"), GOKU("Goku"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
+		Bulma("Bulma"), GOKU("Gokú"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
 				"Vegeta"), PICOLO("Picolo");
 
 		private String nombrePersonaje;
 
 		private NombrePersonaje(String nombre) {
 			this.nombrePersonaje = nombre;
-		}
-
-		public static NombrePersonaje getCantidadEstrellas(int persona) {
-			List<NombrePersonaje> personajes = Arrays.asList(NombrePersonaje.values());
-			if ((0<persona) && (persona<personajes.size())) 
-				return personajes.get(persona-1);
-			else
-				throw new UserException("Las estrellas son "+ personajes.size());
 		}
 
 		public String getNombrePersonaje() {
