@@ -16,7 +16,7 @@ public class Casillero extends ObservableObject {
 	public Casillero() {
 		super();
 		this.posicion = new Punto<Integer>(0, 0);
-		this.objeto = new PosicionableNulo();
+		this.objeto = null;
 	}
 
 	public Casillero(Punto<Integer> posicion, Posicionable objeto) {
