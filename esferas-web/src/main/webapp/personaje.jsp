@@ -32,7 +32,7 @@
 				<br/>
 				<br/>
 					<h3>Nombre</h3>
-					<select id="personaje" name="personaje" class="Personaje.NombrePersonaje" >
+					<select id="selector" name="selector" class="Personaje.NombrePersonaje" >
 						<c:forEach items="${sessionScope.mapa.listaPersonajesNoCreadas}" var="personaje" varStatus="status">
 								<option value="${status.index}">${personaje.nombrePersonaje}</option>
 						</c:forEach>

@@ -33,7 +33,7 @@
 				<br/>
 				<br/>
 					<h3>Numero</h3>
-					<select id="numero" name="numero" class="Esfera.CantidadEstrellas" >
+					<select id="selector" name="selector" class="Esfera.CantidadEstrellas" >
 						<c:forEach items="${sessionScope.mapa.listaEsferasNoCreadas}" var="esfera" varStatus="status">
 								<option value="${status.index}">Esfera ${esfera.cantidadEstrellas}</option>
 						</c:forEach>

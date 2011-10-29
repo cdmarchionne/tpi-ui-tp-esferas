@@ -43,6 +43,6 @@ public class MapaServlet extends HttpServlet {
 	}
 
 	private boolean isCompleted(String valor){
-		return (valor==null) || (valor.isEmpty());
+		return StringUtils.isEmpty(valor.trim()); 
 	}
 }
