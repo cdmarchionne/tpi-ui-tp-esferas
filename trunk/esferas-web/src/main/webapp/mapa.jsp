@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>DRAGON BALL</title>
 		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<script type="text/javascript" src="scripts/draggable.js"></script>
 	</head>
 
 	<body>
@@ -47,7 +48,9 @@
 								</td>
 								<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
 									<td>
-										<img id="${fila.objeto.name.toLowerCase()}" src="images/${fila.objeto.name.toLowerCase()}.png"/>
+									    <div id="${statusColumna.index}.${statusFila.index}" class="Posicionable" onmousedown="comienzoMovimiento(event, this.id);" onmouseover="this.style.cursor='move'">
+											<img src="images/${fila.objeto.name.toLowerCase()}.png"/>
+									    </div>
 									</td>
 								</c:forEach>
 							</tr>
