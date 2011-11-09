@@ -12,6 +12,7 @@ import dominio.Esfera.CantidadEstrellas;
 import dominio.Personaje.NombrePersonaje;
 
 public class Mapa extends ObservableObject {
+	private static final long serialVersionUID = 1L;
 
 	public static final String CASILLEROS = "casilleros";
 	public static final String ADD_CASILLERO = "addCasillero";
@@ -25,6 +26,8 @@ public class Mapa extends ObservableObject {
 	public static final String PERSONAJE_BUSCADO = "personajeBuscado";
 	public static final String LISTA_PERSONAJES = "listaPersonajes";
 	public static final String LISTA_ESFERAS = "listaEsferas";
+	public static final String DIMENSION = "dimension";
+	public static final Object MAPA = "mapa";
 
 	private Punto<Integer> dimension;
 	private List<Casillero> casilleros;
@@ -280,9 +283,18 @@ public class Mapa extends ObservableObject {
 	}
 
 	public void addCasillero(Casillero casillero) {
+		this.validatePosicionValida(casillero);
 		this.validatePosicionDisponible(casillero.getPosicion());
 		this.casilleros.add(casillero);
 		this.actualizarVista();
+	}
+
+	private void validatePosicionValida(Casillero casillero) {
+		Punto<Integer> posicion = casillero.getPosicion();
+		if (!posicion.between(new Punto<Integer>(0,0),this.getDimension())) {
+			throw new UserException("La Posicion " + posicion + " del " + casillero.getObjeto() +
+					" no es valida.");
+		}
 	}
 
 	/**
