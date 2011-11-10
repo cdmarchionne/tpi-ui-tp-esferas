@@ -1,5 +1,7 @@
 package ar.edu.unq.tpi.esferas_wicket;
 
+import java.io.Serializable;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -11,30 +13,30 @@ import utils.Punto;
 
 public class CrearMapaPage extends WebPage {
 
-	private static final long serialVersionUID = -8852388658486519991L;
+	private static final long serialVersionUID = 1L;
 
+	private Form<Prueba> form;
+	
 	public CrearMapaPage() {
-		Form form = new Form("nuevoMapaForm", new CompoundPropertyModel(new Punto<Integer>(1, 1)));
-		this.add(form);
-    	this.addFields(form);
-		this.addButtons(form);
+		this.setForm(new Form<Prueba>("nuevoMapaForm", new CompoundPropertyModel(new Prueba())));
+    	this.addFields();
+		this.addButtons();
+
 	}
-    
 
 	/**
 	 * Crea y agrega los controles para crear un mapa nuevo.
 	 */
-	protected void addFields(Form form) {
-    	form.add(new TextField<Integer>("x"));
-    	form.add(new TextField<Integer>("y"));
-		form.add(new FeedbackPanel("feedbackPanel"));
+	protected void addFields() {
+    	this.form.add(new TextField<String>(Prueba.MENSAJE));
+    	this.form.add(new FeedbackPanel("feedbackPanel"));
 	}
 
 	/**
 	 * Crea y agrega los botones: aceptar y cancelar.
 	 */
-	protected void addButtons( Form form) {
-		form.add(new Button("ok") {
+	protected void addButtons() {
+		this.form.add(new Button("ok") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -43,11 +45,12 @@ public class CrearMapaPage extends WebPage {
 //				Mapa mapa = new Mapa(form.getModelObject());
 				// navegacion: vuelve a la pagina de busqueda.
 //				this.setResponsePage(new MapaPage(mapa));
+//				System.out.println(this.form.getModelObject());
 				System.out.println("Aprete Aceptar");
 			}
 		});
 
-		form.add(new Button("cancel") {
+		this.form.add(new Button("cancel") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -57,5 +60,47 @@ public class CrearMapaPage extends WebPage {
 			}
 		});
 	}
+	
+	public Form<Prueba> getForm() {
+		return form;
+	}
+	
+	
+	public void setForm(Form<Prueba> form) {
+		this.form = form;
+		this.add(form);
+	}
+	
+	//inner class
+    private class Prueba implements Serializable{
+    	private static final long serialVersionUID = 1L;
+    	
+		public static final String MENSAJE ="mensaje";
+        private String mensaje;
+        
+        public Prueba() {
+        	this("NADA");
+        }
+        
+        public Prueba(String mensaje) {
+        	super();
+        	this.setMensaje(mensaje);
+		}
+
+		public String getMensaje() {
+			return mensaje;
+		}
+
+		public void setMensaje(String mensaje) {
+			this.mensaje = mensaje;
+		}
+		
+		@Override
+		public String toString() {
+			return this.getMensaje();
+		}
+    }
 
 }
+
+
