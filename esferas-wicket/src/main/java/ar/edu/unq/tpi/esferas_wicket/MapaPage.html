@@ -18,11 +18,59 @@
 		<div id="bd">
 			<h2>Mapa</h2>
 			<p>
-				Dimension
-				<br/>
-				X: <span wicket:id="dimX">valor</span>
-				Y: <span wicket:id="dimY">valor</span>
+				Dimension <span wicket:id="dim">valor</span>
 			</p>
+			<p>
+				Elementos Existente
+				<select wicket:id="esferas">
+					<option>Esfera_1</option>
+					<option>Esfera_2</option>
+				</select>
+				<select wicket:id="personajes">
+					<option>Personaje_1</option>
+					<option>Personaje_2</option>
+				</select>
+			</p>
+			<p>
+				Elementos InExistente
+				<select wicket:id="sinEsferas">
+					<option>Esfera_X</option>
+					<option>Esfera_Y</option>
+				</select>
+				<select wicket:id="sinPersonajes">
+					<option>Personaje_X</option>
+					<option>Personaje_Y</option>
+				</select>
+			</p>
+			<!-- 
+			<table>
+				<tr>
+					<td></td>
+					<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
+						<td>
+					 		<center>
+								${statusFila.index}
+					 		</center>
+						</td>
+					</c:forEach>
+				</tr>
+				<c:forEach items="${sessionScope.mapa.getColumna(0)}" var="columna" varStatus="statusColumna" >
+					<tr>
+						<td>
+							${statusColumna.index}
+						</td>
+						<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
+							<td>
+							    <div id="${statusColumna.index}.${statusFila.index}" class="Posicionable" onmousedown="comienzoMovimiento(event, this.id);" onmouseover="this.style.cursor='move'">
+									<img src="images/${fila.objeto.name.toLowerCase()}.png"/>
+							    </div>
+							</td>
+						</c:forEach>
+					</tr>
+				</c:forEach>
+			</table>
+			 -->
+			 
 		</div>
 		
 		<div id="ft">

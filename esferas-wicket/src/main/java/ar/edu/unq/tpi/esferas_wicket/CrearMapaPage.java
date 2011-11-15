@@ -1,56 +1,58 @@
 package ar.edu.unq.tpi.esferas_wicket;
 
-import java.io.Serializable;
-
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 
 import utils.Punto;
+import dominio.Mapa;
 
 public class CrearMapaPage extends WebPage {
 
 	private static final long serialVersionUID = 1L;
 
-	private Form<Prueba> form;
+	private Punto<Integer> punto;
 	
 	public CrearMapaPage() {
-		this.setForm(new Form<Prueba>("nuevoMapaForm", new CompoundPropertyModel(new Prueba())));
-    	this.addFields();
-		this.addButtons();
+		Form<Punto<Integer>> form = new Form<Punto<Integer>>("nuevoMapaForm", this.createModel());
+		this.add(form);
+    	this.addFields(form);
+		this.addButtons(form);
 
 	}
 
 	/**
 	 * Crea y agrega los controles para crear un mapa nuevo.
 	 */
-	protected void addFields() {
-    	this.form.add(new TextField<String>(Prueba.MENSAJE));
-    	this.form.add(new FeedbackPanel("feedbackPanel"));
+	protected void addFields(final Form<Punto<Integer>> form) {
+		form.add(new RequiredTextField<Integer>(Punto.X,Integer.class));
+    	form.add(new RequiredTextField<Integer>(Punto.Y,Integer.class));
+    	form.add(new FeedbackPanel("feedbackPanel"));
 	}
 
 	/**
 	 * Crea y agrega los botones: aceptar y cancelar.
 	 */
-	protected void addButtons() {
-		this.form.add(new Button("ok") {
+	protected void addButtons(final Form<Punto<Integer>> form) {
+		form.add(new Button("aceptar") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {
 				// invoca la logica de negocio
-//				Mapa mapa = new Mapa(form.getModelObject());
+				Mapa mapa = new Mapa(form.getModelObject());
 				// navegacion: vuelve a la pagina de busqueda.
+//				this.setMapa(mapa);
+				this.redirectToInterceptPage(new MapaPage(mapa));
 //				this.setResponsePage(new MapaPage(mapa));
-//				System.out.println(this.form.getModelObject());
 				System.out.println("Aprete Aceptar");
 			}
 		});
 
-		this.form.add(new Button("cancel") {
+		form.add(new Button("cancel") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -61,45 +63,12 @@ public class CrearMapaPage extends WebPage {
 		});
 	}
 	
-	public Form<Prueba> getForm() {
-		return form;
+	
+	protected CompoundPropertyModel<Punto<Integer>> createModel() {
+		this.punto = new Punto<Integer>(0,0);
+		return new CompoundPropertyModel<Punto<Integer>>(this.punto);
 	}
-	
-	
-	public void setForm(Form<Prueba> form) {
-		this.form = form;
-		this.add(form);
-	}
-	
-	//inner class
-    private class Prueba implements Serializable{
-    	private static final long serialVersionUID = 1L;
-    	
-		public static final String MENSAJE ="mensaje";
-        private String mensaje;
-        
-        public Prueba() {
-        	this("NADA");
-        }
-        
-        public Prueba(String mensaje) {
-        	super();
-        	this.setMensaje(mensaje);
-		}
 
-		public String getMensaje() {
-			return mensaje;
-		}
-
-		public void setMensaje(String mensaje) {
-			this.mensaje = mensaje;
-		}
-		
-		@Override
-		public String toString() {
-			return this.getMensaje();
-		}
-    }
 
 }
 
