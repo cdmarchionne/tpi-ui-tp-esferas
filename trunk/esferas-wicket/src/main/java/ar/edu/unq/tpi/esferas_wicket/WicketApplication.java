@@ -3,6 +3,8 @@ package ar.edu.unq.tpi.esferas_wicket;
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.request.mapper.BufferedResponseMapper;
 
 import dominio.Mapa;
@@ -31,6 +33,8 @@ public class WicketApplication extends WebApplication{
 		}
 	}
 	
+	
+	
 	/**
 	 * Devuelvo un booleano que representa si ya existe el mapa
 	 * @return
@@ -53,5 +57,5 @@ public class WicketApplication extends WebApplication{
 	public void setMapa(Mapa mapa) {
 		this.mapa = mapa;
 	}
-
+	
 }
