@@ -1,9 +1,9 @@
 package ar.edu.unq.tpi.esferas_wicket;
 
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.PropertyModel;
 
 import utils.Punto;
@@ -11,45 +11,46 @@ import dominio.Esfera;
 import dominio.Mapa;
 import dominio.Personaje;
 
-public class MapaPage extends WebPage {
+public class MapaPage extends EsferaPage {
+
 	private static final long serialVersionUID = 1L;
+	
+	public MapaPage() {
+		initMapa();
+	}
 
-    public MapaPage(final Mapa mapa) {
-    	this.add(new Label("dim", new PropertyModel<Punto<Integer>>(mapa, Mapa.DIMENSION)));
-    	this.add(new DropDownChoice<Esfera>("esferas", mapa.getListaEsferas(), new IChoiceRenderer<Esfera>() {
-	         // Gets the display value that is visible to the end user.
-	        public String getDisplayValue(Esfera esfera) {
-				return esfera.getName();
-	        }
-
-	         // Gets the value that is invisble to the end user, and that is used as the selection id.
-	        public String getIdValue(Esfera esfera, int index) {
-				return ((Integer) index).toString();
-	        }
-	    }));
-    	
-    	this.add(new DropDownChoice<Personaje>("personajes", mapa.getListaPersonajes(), new IChoiceRenderer<Personaje>() {
-	         // Gets the display value that is visible to the end user.
-	        public String getDisplayValue(Personaje personaje) {
-				return personaje.getName();
-	        }
-
-	         // Gets the value that is invisble to the end user, and that is used as the selection id.
-	        public String getIdValue(Personaje personaje, int index) {
-				return ((Integer) index).toString();
-	        }
-	    }));
-    	
-
-    	this.add(new DropDownChoice<Esfera.CantidadEstrellas>("sinEsferas", mapa.getListaEsferasNoCreadas()));
-    	this.add(new DropDownChoice<Personaje.NombrePersonaje>("sinPersonajes", mapa.getListaPersonajesNoCreadas()));
-    	
+	protected void initMapa() {
+		this.add(new Label("dim", new PropertyModel<Punto<Integer>>(this.getMapa(), Mapa.DIMENSION)));
+		
+		this.add(new DropDownChoice<Esfera>("esferas", this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>()));
+		this.add(new DropDownChoice<Personaje>("personajes", this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>()));
+		
+		this.add(new DropDownChoice<Esfera.CantidadEstrellas>("sinEsferas", this.getMapa().getListaEsferasNoCreadas()));
+		this.add(new DropDownChoice<Personaje.NombrePersonaje>("sinPersonajes", this.getMapa().getListaPersonajesNoCreadas()));
+		
+		Form form = new Form("mapaForm");
+		this.add(form);
+		this.addFeedbackPanel(form);
+		this.addButtons(form);
+	}
+	
+	public MapaPage(EsferaPage paginaOrigen) {
+		super(paginaOrigen);
+		initMapa();
     }
 
-//	private void add(DropDownChoice<Esfera> dropDownChoice,
-//			IChoiceRenderer<Esfera> iChoiceRenderer) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-    
+	/**
+	 * Crea y agrega los botones: aceptar y cancelar.
+	 */
+	protected void addButtons(final Form form) {
+			form.add(new Button("crearEsfera") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit() {
+				this.setResponsePage(new CrearEsferaPage(MapaPage.this));
+			}
+		});
+	}
+
 }
