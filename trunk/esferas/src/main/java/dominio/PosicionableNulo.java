@@ -1,6 +1,9 @@
 package dominio;
 
-public class PosicionableNulo extends Posicionable{
+import java.io.Serializable;
+
+public class PosicionableNulo extends Posicionable implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getName() {

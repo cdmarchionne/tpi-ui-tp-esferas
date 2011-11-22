@@ -1,11 +1,14 @@
 package dominio;
 
+import java.io.Serializable;
+
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
 
-public class Casillero extends ObservableObject {
+public class Casillero extends ObservableObject implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public static final String POSICION = "posicion";
 	public static final String OBJETO = "objeto";
@@ -15,19 +18,18 @@ public class Casillero extends ObservableObject {
 
 	public Casillero() {
 		super();
-		this.posicion = new Punto<Integer>(0, 0);
+		this.posicion = null;
 		this.objeto = null;
 	}
 
-	public Casillero(Punto<Integer> posicion, Posicionable objeto) {
-		super();
+	public Casillero(Punto<Integer> posicion, Posicionable posicionable) {
+		this();
 		this.posicion = posicion;
-		this.setObjeto(objeto);
+		this.setObjeto(posicionable);
 	}
 
 	public Casillero(Posicionable posicionable) {
-		this();
-		this.setObjeto(posicionable);
+		this(new Punto<Integer>((-1), (-1)), posicionable);
 	}
 
 	public Boolean hasObject(Posicionable objeto) {

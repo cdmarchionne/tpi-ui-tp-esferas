@@ -1,13 +1,13 @@
 package dominio;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 
-import utils.Punto;
-
-public class Esfera extends Posicionable {
+public class Esfera extends Posicionable implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	public static final String ESFERA = "esfera";
 	public static final String NUMERO = "numero";
@@ -17,21 +17,11 @@ public class Esfera extends Posicionable {
 
 	public Esfera() {
 		super();
-		this.numero = CantidadEstrellas.UNA;
+		this.numero = null;
 	}
 
 	public Esfera(CantidadEstrellas cantidad) {
-		super();
-		this.numero = cantidad;
-	}
-
-	public Esfera(Punto<Integer> posicion) {
 		this();
-		this.setCasillero(new Casillero(posicion, this));
-	}
-
-	public Esfera(Punto<Integer> posicion, CantidadEstrellas cantidad) {
-		this(posicion);
 		this.numero = cantidad;
 	}
 

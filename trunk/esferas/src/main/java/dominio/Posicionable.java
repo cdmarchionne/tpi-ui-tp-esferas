@@ -1,11 +1,14 @@
 package dominio;
 
+import java.io.Serializable;
+
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
 
-public abstract class Posicionable extends ObservableObject {
+public abstract class Posicionable extends ObservableObject implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private static final String CASILLERO = "casillero";
 	private Casillero casillero;
@@ -31,8 +34,12 @@ public abstract class Posicionable extends ObservableObject {
 		this.firePropertyChange(CASILLERO, casilleroOLD, this.getCasillero());
 	}
 
-	private Punto<Integer> getPosicion() {
+	protected final Punto<Integer> getPosicion() {
 		return this.casillero.getPosicion();
+	}
+	
+	protected final void setPosicion(Punto<Integer> posicion) {
+		this.casillero.setPosicion(posicion);
 	}
 
 	public Integer getX() {
