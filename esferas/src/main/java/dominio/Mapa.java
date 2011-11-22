@@ -1,5 +1,6 @@
 package dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,7 +12,7 @@ import utils.Punto;
 import dominio.Esfera.CantidadEstrellas;
 import dominio.Personaje.NombrePersonaje;
 
-public class Mapa extends ObservableObject {
+public class Mapa extends ObservableObject implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public static final String CASILLEROS = "casilleros";
@@ -27,7 +28,7 @@ public class Mapa extends ObservableObject {
 	public static final String LISTA_PERSONAJES = "listaPersonajes";
 	public static final String LISTA_ESFERAS = "listaEsferas";
 	public static final String DIMENSION = "dimension";
-	public static final Object MAPA = "mapa";
+	public static final String MAPA = "mapa";
 
 	private Punto<Integer> dimension;
 	private List<Casillero> casilleros;
@@ -40,14 +41,11 @@ public class Mapa extends ObservableObject {
 		this.setDimension(dimension);
 		casilleros = new ArrayList<Casillero>();
 
-		Esfera e = new Esfera(new Punto<Integer>(1, 1), Esfera.CantidadEstrellas.UNA);
-		casilleros.add(e.getCasillero());
+		esferaBuscada = new Esfera(Esfera.CantidadEstrellas.UNA);
+		casilleros.add(new Casillero(new Punto<Integer>(1, 1), esferaBuscada));
 
-		Personaje p = new Personaje(Personaje.NombrePersonaje.GOKU, 4);
-		casilleros.add(p.getCasillero());
-
-		esferaBuscada = e;
-		personajeBuscado = p;
+		personajeBuscado = new Personaje(Personaje.NombrePersonaje.GOKU, 4);
+		casilleros.add(new Casillero(new Punto<Integer>(0, 0), personajeBuscado));
 	}
 
 	// ********************************************************

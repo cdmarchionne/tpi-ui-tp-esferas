@@ -1,12 +1,14 @@
 package dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.uqbar.commons.model.UserException;
 
-public class Personaje extends Posicionable {
+public class Personaje extends Posicionable implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	public static final String NOMBRE_PERSONAJE = "nombrePersonaje";
 	public static final String NOMBRE = "nombre";
@@ -18,7 +20,7 @@ public class Personaje extends Posicionable {
 
 	public Personaje() {
 		super();
-		this.nombre = NombrePersonaje.GOKU;
+		this.nombre = null;
 		this.distancia = 0;
 		this.inventario = new ArrayList<Esfera>();
 	}
@@ -91,7 +93,7 @@ public class Personaje extends Posicionable {
 	 *         Algo para dejar contento al cliente
 	 */
 	public enum NombrePersonaje {
-		Bulma("Bulma"), GOKU("Goku"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
+		BULMA("Bulma"), GOKU("Goku"), GOHAN("Gohan"), CELL("Cell"), KRILIN("Krilin"), VIDEL("Videl"), VEGETA(
 				"Vegeta"), PICOLO("Picolo");
 
 		private String nombrePersonaje;
