@@ -48,8 +48,8 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	}
 
 	public void setX(Integer x) {
-		if (validarEntero(x)) {
-			throw new UserException("Coordenada X debe ser mayor a 0");
+		if (!validarEnteroPositivo(x)) {
+			throw new UserException("Coordenada X (" + x + ") debe ser mayor a 0");
 		}
 		this.casillero.setX(x);
 	}
@@ -59,7 +59,7 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	}
 
 	public void setY(Integer y) {
-		if (validarEntero(y)) {
+		if (!validarEnteroPositivo(y)) {
 			throw new UserException("Coordenada Y debe ser mayor a 0");
 		}
 		this.casillero.setY(y);
@@ -71,8 +71,8 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 
 	public abstract boolean esEsfera();
 
-	private boolean validarEntero(Integer numero) {
-		return !((numero == null) || (numero < 0));
+	private boolean validarEnteroPositivo(Integer numero) {
+		return numero != null && numero >= 0;
 	}
 
 }
