@@ -1,0 +1,27 @@
+<?page title="First ZK - Project"?>
+<window title="Init Page" border="normal" width="800px">
+
+	<grid>
+
+		<rows>
+			<row>EJEMPLOS MVC</row>
+			<row>
+				<button label="Calculadora" href="calculadoraPage.zul" />
+				Ejemplo de Calculadora Basica
+			</row>
+
+			<row>
+				<button label="Formulario" href="formulario.zul" />
+			</row>
+
+			<row>
+			</row>
+		</rows>
+
+
+
+
+	</grid>
+
+
+</window>
