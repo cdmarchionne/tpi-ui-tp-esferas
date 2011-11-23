@@ -18,35 +18,31 @@
 		<div id="bd">
 			<h2>Mapa</h2>
 			<p>
-				Dimension <span wicket:id="dim">valor</span>
+				Dimension <span wicket:id="dimension">valor</span>
+				
+		        <form wicket:id="mapaForm">
+					<input wicket:id="crearEsfera" type="submit" name="crearEsfera" value="Crear Esfera" />
+					<input wicket:id="crearPersonaje" type="submit" name="crearPersonaje" value="Crear Personaje" />
+					<div wicket:id="feedbackPanel"></div> 
+				</form>
+			
 			</p>
 			<p>
 				Elementos Existente
-				<select wicket:id="esferas">
-					<option>Esfera_1</option>
-					<option>Esfera_2</option>
-				</select>
-				<select wicket:id="personajes">
+				<select wicket:id="personajeBuscado">
 					<option>Personaje_1</option>
 					<option>Personaje_2</option>
 				</select>
-			</p>
-			<p>
-				Elementos InExistente
-				<select wicket:id="sinEsferas">
-					<option>Esfera_X</option>
-					<option>Esfera_Y</option>
+				<select wicket:id="esferaBuscada">
+					<option>Esfera_1</option>
+					<option>Esfera_2</option>
 				</select>
-				<select wicket:id="sinPersonajes">
-					<option>Personaje_X</option>
-					<option>Personaje_Y</option>
-				</select>
+		        <form wicket:id="busquedaForm">
+					<input wicket:id="atrapar" type="submit" name="atrapar" value="Atrapar" />
+					<input wicket:id="llamar" type="submit" name="llamar" value="Llamar a ShengLong" />
+					<div wicket:id="feedbackPanel"></div> 
+				</form>
 			</p>
-	        <form wicket:id="mapaForm">
-				<input wicket:id="crearEsfera" type="submit" name="crearEsfera" value="Crear Esfera" />
-				<div wicket:id="feedbackPanel"></div> 
-			</form>
-			
 			<!-- 
 			<table>
 				<tr>

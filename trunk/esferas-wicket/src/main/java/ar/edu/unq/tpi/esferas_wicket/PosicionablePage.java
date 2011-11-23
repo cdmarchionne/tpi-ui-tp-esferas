@@ -7,20 +7,22 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.validation.validator.MinimumValidator;
 
 import utils.Punto;
 import dominio.Mapa;
+import dominio.Posicionable;
 
-public class EsferaPage extends WebPage implements Serializable{
+public class PosicionablePage extends WebPage implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private EsferaPage paginaOrigen;
+	private PosicionablePage paginaOrigen;
 	
-	public EsferaPage() {
+	public PosicionablePage() {
 		super();
 	}
 	
-	public EsferaPage(EsferaPage paginaOrigen) {
+	public PosicionablePage(PosicionablePage paginaOrigen) {
 		this();
 		this.paginaOrigen = paginaOrigen;
 	}
@@ -47,8 +49,7 @@ public class EsferaPage extends WebPage implements Serializable{
 	 */
 	public final RequiredTextField<Integer> createRequiredIntegerField(String nombre) {
 		RequiredTextField<Integer> campo = new RequiredTextField<Integer>(nombre,Integer.class);
-//		campo.add(NumberValidator);
-//		campo.add(validator);
+		campo.add(new MinimumValidator<Integer>(0));
 		return campo;
 	}
 	
@@ -60,7 +61,29 @@ public class EsferaPage extends WebPage implements Serializable{
 		form.add(this.createRequiredIntegerField(Punto.Y));
 	}
 	
-	public final void addButtonCancel(final Form<?> form) {
+	/**
+	 * Crea y agrega los botones: aceptar y cancelar.
+	 */
+	protected void addButtonsOfPosicionable(final Form<? extends Posicionable> form) {
+		this.addCrearBotonAceptarParaPosicionables(form);
+		this.addButtonCancelToReverse(form);
+	}
+
+	protected final void addCrearBotonAceptarParaPosicionables(final Form<? extends Posicionable> form) {
+		form.add(new Button("aceptar") {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onSubmit() {
+				// invoca la logica de negocio
+				PosicionablePage.this.getMapa().addCasillero(form.getModelObject().getCasillero());
+				// navegacion: vuelve a la pagina de busqueda.
+				this.setResponsePage(MapaPage.class);		
+			}
+		});
+	}
+	
+	protected final void addButtonCancelToClear(final Form<?> form) {
 		form.add(new Button("cancel") {
 				private static final long serialVersionUID = 1L;
 				
@@ -71,11 +94,22 @@ public class EsferaPage extends WebPage implements Serializable{
 		});
 	}
 
-	public EsferaPage getPaginaOrigen() {
+	public final void addButtonCancelToReverse(final Form<?> form) {
+		form.add(new Button("cancel") {
+				private static final long serialVersionUID = 1L;
+				
+				@Override
+				public void onSubmit() {
+					this.setResponsePage(paginaOrigen);		
+			}
+		});
+	}
+
+	public PosicionablePage getPaginaOrigen() {
 		return paginaOrigen;
 	}
 
-	public void setPaginaOrigen(EsferaPage paginaOrigen) {
+	public void setPaginaOrigen(PosicionablePage paginaOrigen) {
 		this.paginaOrigen = paginaOrigen;
 	}
 
