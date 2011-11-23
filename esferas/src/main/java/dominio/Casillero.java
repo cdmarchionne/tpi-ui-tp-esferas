@@ -43,6 +43,14 @@ public class Casillero extends ObservableObject implements Serializable {
 	public void setPosicion(Punto<Integer> posicion) {
 		this.posicion = posicion;
 	}
+	
+	public void setX(Integer x) {
+		this.posicion.setX(x);
+	}
+	
+	public void setY(Integer y) {
+		this.posicion.setY(y);
+	}
 
 	public Posicionable getObjeto() {
 		return objeto;
