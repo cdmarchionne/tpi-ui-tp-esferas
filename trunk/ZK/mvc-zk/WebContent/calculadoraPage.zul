@@ -1,0 +1,36 @@
+<?page title="Calculadora Web"?>
+<window title="Esta es la Calculadora Web" border="normal" width="400px"
+	apply="controllers.CalculadoraController">
+
+	<grid>
+		<rows>
+			<row>
+				Operando1
+				<textbox id="op1" />
+			</row>
+			<row>
+				Operando2
+				<textbox id="op2" />
+			</row>
+
+			<row>
+					Resultado:
+					<label id="resultado" />
+					
+
+			</row>
+			<row>
+				<button label="Sumar" id="sumar" />
+				<button label="Restar" id="restar" />
+				<button label="Dividir" id="dividir" />
+				<button label="Multiplicar" id="multiplicar" />
+			</row>
+		</rows>
+	</grid>
+
+
+
+
+
+
+</window>
