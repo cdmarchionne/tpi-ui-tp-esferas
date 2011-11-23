@@ -39,7 +39,8 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	}
 	
 	protected final void setPosicion(Punto<Integer> posicion) {
-		this.casillero.setPosicion(posicion);
+		this.casillero.setX(posicion.getX());
+		this.casillero.setY(posicion.getY());
 	}
 
 	public Integer getX() {
@@ -47,10 +48,10 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	}
 
 	public void setX(Integer x) {
-		if ((x == null) || (x < 0)) {
-			throw new UserException("Coordenada debe ser mayor a 0");
+		if (validarEntero(x)) {
+			throw new UserException("Coordenada X debe ser mayor a 0");
 		}
-		this.casillero.setPosicion(new Punto<Integer>(x, getPosicion().getY()));
+		this.casillero.setX(x);
 	}
 
 	public Integer getY() {
@@ -58,10 +59,10 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	}
 
 	public void setY(Integer y) {
-		if ((y == null) || (y < 0)) {
-			throw new UserException("Coordenada debe ser mayor a 0");
+		if (validarEntero(y)) {
+			throw new UserException("Coordenada Y debe ser mayor a 0");
 		}
-		this.casillero.setPosicion(new Punto<Integer>(getPosicion().getX(), y));
+		this.casillero.setY(y);
 	}
 
 	public abstract String getName();
@@ -69,4 +70,9 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	public abstract boolean esPersonaje();
 
 	public abstract boolean esEsfera();
+
+	private boolean validarEntero(Integer numero) {
+		return !((numero == null) || (numero < 0));
+	}
+
 }
