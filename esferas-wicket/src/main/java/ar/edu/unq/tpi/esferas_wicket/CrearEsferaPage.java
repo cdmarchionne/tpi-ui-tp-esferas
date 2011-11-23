@@ -3,9 +3,12 @@ package ar.edu.unq.tpi.esferas_wicket;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.PropertyModel;
 
-import dominio.Casillero;
+import utils.Punto;
+
 import dominio.Esfera;
 
 public class CrearEsferaPage extends EsferaPage {
@@ -24,7 +27,8 @@ public class CrearEsferaPage extends EsferaPage {
 	 */
 	protected void addFields(final Form<Esfera> form) {
 		this.addPunto(form);
-		this.add(new DropDownChoice<Esfera.CantidadEstrellas>("sinEsferas", this.getMapa().getListaEsferasNoCreadas()));
+//		form.add(new DropDownChoice<Esfera.CantidadEstrellas>("numero", this.getMapa().getListaEsferasNoCreadas()));
+		form.add(new DropDownChoice<Esfera.CantidadEstrellas>("numero", this.getMapa().getListaEsferasNoCreadas()));
     	this.addFeedbackPanel(form);
 	}
 
@@ -49,7 +53,7 @@ public class CrearEsferaPage extends EsferaPage {
 	}
 	
 	protected CompoundPropertyModel<Esfera> createModel() {
-		return new CompoundPropertyModel<Esfera>(new Esfera());
+		return new CompoundPropertyModel<Esfera>(new Esfera(Esfera.CantidadEstrellas.TRES));
 	}
 
 }
