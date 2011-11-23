@@ -14,7 +14,6 @@ import dominio.Mapa;
 public class EsferaPage extends WebPage implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	
 	private EsferaPage paginaOrigen;
 	
 	public EsferaPage() {
@@ -48,6 +47,7 @@ public class EsferaPage extends WebPage implements Serializable{
 	 */
 	public final RequiredTextField<Integer> createRequiredIntegerField(String nombre) {
 		RequiredTextField<Integer> campo = new RequiredTextField<Integer>(nombre,Integer.class);
+//		campo.add(NumberValidator);
 //		campo.add(validator);
 		return campo;
 	}
