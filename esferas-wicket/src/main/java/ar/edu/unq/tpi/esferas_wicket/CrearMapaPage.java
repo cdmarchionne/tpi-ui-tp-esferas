@@ -7,7 +7,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import utils.Punto;
 import dominio.Mapa;
 
-public class CrearMapaPage extends EsferaPage {
+public class CrearMapaPage extends PosicionablePage {
 	private static final long serialVersionUID = 1L;
 
 	public CrearMapaPage() {
@@ -18,7 +18,7 @@ public class CrearMapaPage extends EsferaPage {
 		this.addButtons(form);
 	}
 	
-	public CrearMapaPage(EsferaPage paginaOrigen) {
+	public CrearMapaPage(PosicionablePage paginaOrigen) {
 		super(paginaOrigen);
 	}
 	
@@ -37,7 +37,7 @@ public class CrearMapaPage extends EsferaPage {
 			}
 		});
 
-		this.addButtonCancel(form);
+		this.addButtonCancelToClear(form);
 	}
 	
 	
