@@ -27,7 +27,7 @@ public class Esfera extends Posicionable implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Esfera de " + numero.getCantidadEstrellas() + " Estrellas";
+		return "Esfera de " + numero + " Estrellas";
 	}
 
 	public CantidadEstrellas getNumero() {
