@@ -1,103 +1,78 @@
 <?page title="Formulario Web"?>
-<window title="Nuestro Formulario Web" border="normal" width="400px">
+<window title="Nuestro Formulario Web" border="normal" width="auto" apply="controllers.FormularioController">
 
-<grid>
-	<columns>
-		<column label="Tipo" width="150px" />
-		<column label="Valor" />
-	</columns>
-	<rows>
-		<row>
-			<label value="Nombre" width="150px" />
-			<textbox value="Matias" width="150px" />
-		</row>
-		<row>
-			Contraseña
-			<textbox type="password" value="123456789" width="150px" />
-		</row>
-		
-		<row>
-			Edad:
-			<intbox value="19" constraint="no negative,no zero"
-				width="150px" />
-		</row>
-		<row>
-			Telefono:
-			<intbox constraint="no negative,no zero" width="150px"
-				value="12345678" />
-		</row>
-		<row>
-			Birthday:
-			<hlayout>
-				<datebox id="db" width="150px" />
-				
-			</hlayout>
-		</row>
-		<row>
-			Address
-			<vlayout>
-				<textbox width="250px"
-					value="123 W. 45 Street, New York, NY 10001" />
+	<grid width="auto">
+		<columns>
+			<column label="Tipo" width="150px" />
+			<column label="Valor" />
+
+		</columns>
+		<rows>
+			<row>
+				<label value="Nombre" width="150px" />
+				<textbox id="nombre" width="150px" />
+			</row>
+			<row>
+				Contraseña
+				<textbox id="contrasenia" type="password" width="150px" />
+			</row>
+
+			<row>
+				Edad:
+				<intbox id="edad" constraint="no negative,no zero"
+					width="150px" />
+			</row>
+			<row>
+				Telefono:
+				<intbox id="telefono" constraint="no negative,no zero"
+					width="150px" />
+			</row>
+			<row>
+				Cumpleaños:
 				<hlayout>
-					<label value="Zip code :" />
-					<intbox constraint="no negative,no zero"
-						width="150px" />
+					<datebox id="cumpleanios" width="150px" />
+
 				</hlayout>
-			</vlayout>
-		</row>
-		<row>
-			E-mail:
-			<textbox width="150px" value="zk@zkoss.org"
-				constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" />
-		</row>
-		<row>
-			Introduction:
-			<hlayout>
-				<textbox id="intro" rows="3" width="250px">
-					<attribute name="value">I think ZK is the best! </attribute>
-				</textbox>
+			</row>
+			<row>
+				Direccion:
 				<vlayout>
-					More line :
-						<spinner value="3" constraint="no negative,no zero"
-							onChanging="if (event.value.length() > 0 &amp;&amp; Integer.parseInt(event.value) > 0) intro.rows = Integer.parseInt(event.value);" />
-				</vlayout>
-			</hlayout>
-		</row>
-		<row>
-			Validation
-			<hlayout>
-				<vlayout>
-					<span sclass="edition-field">
-						Captcha and Colorbox requires
-						<a href="http://www.zkoss.org/product/zk/edition" sclass="edition-field" label=" ZK PE or EE."/>
-					</span>
+					<textbox id="direccion" width="250px" />
 					<hlayout>
-					<textbox width="150px"
-						onChange='captchaResult.value = cpa.value.equalsIgnoreCase(self.value) ? "OK": "Wrong"'/>
-					<label id="captchaResult"/>
-					</hlayout>
-					<captcha id="cpa" length="6" width="150px"
-						height="50px" />
-				</vlayout>
-				<vlayout>
-					<label value=" " pre="true"/>
-					(Case Insensitive)
-					<button label="Regenerate"
-						onClick="cpa.randomValue();" />
-					<hlayout>
-						Background-Color:
-						<colorbox color="#FFFFFF" onChange="cpa.setBgColor(self.color); cpa.randomValue();" />
+						<label value="Codigo Postal:" />
+						<intbox id="codigoPostal"
+							constraint="no negative,no zero" width="150px" />
 					</hlayout>
 				</vlayout>
-			</hlayout>
-		</row>
-	</rows>
-</grid>
-			
+			</row>
+			<row>
+				E-mail:
+				<textbox id="email" width="150px"
+					constraint="/.+@.+\.[a-z]+/: Por favor ingrese una direccion de email" />
+			</row>
 
+			<row>
+				Opinion Sobre Wicket:
+				<hlayout>
+					<textbox id="opinion" rows="3" width="250px">
 
+					</textbox>
+				</hlayout>
+			</row>
 
+			<row>
+				<button id="aceptar" label="Aceptar" />
+			</row>
 
+			<row>
+				<button label="Voler al menù" id="menuPrincipal"
+					href="index.zul" />
+			</row>
 
+		</rows>
+	</grid>
 
+	
 </window>
+
+
