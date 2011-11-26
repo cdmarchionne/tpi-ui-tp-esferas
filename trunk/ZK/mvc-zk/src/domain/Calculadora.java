@@ -36,6 +36,9 @@ public class Calculadora {
 	}
 
 
+	public Integer raizCuadrada(){
+		return op1*op1;
+	}
 	public void setOp1(int valor) {
 		this.op1 = valor;
 		
@@ -45,5 +48,6 @@ public class Calculadora {
 		this.op2 = valor;
 		
 	}
-
+	
+	
 }
