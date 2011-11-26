@@ -1,5 +1,7 @@
 <?page title="First ZK - Project"?>
-<window title="Init Page" border="normal" width="800px">
+<window title="Init Page" border="normal" width="300px"
+	sizable="false">
+<!--VER EL SIZABLE EN FALSE Y TRUE-->
 
 	<grid>
 
@@ -12,10 +14,17 @@
 
 			<row>
 				<button label="Formulario" href="formulario.zul" />
+				Ejemplo de formulario
 			</row>
-
 			<row>
+				<button label="PaginaCombinada" href="paginaCompleta.zul" />
+				Ejemplo de paginas combinadas
 			</row>
+			<row>
+				<button label="Pagina con Tabla de Personas" href="tablaPersonas.zul" />
+				Ejemplo de tabla y listbox
+			</row>
+			<row></row>
 		</rows>
 
 

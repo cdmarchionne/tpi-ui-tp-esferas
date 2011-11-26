@@ -1,0 +1,35 @@
+<?page title="Pagina con Tabla de Personas"?>
+<?variable-resolver class="controllers.PersonaResolver" ?>
+<window title="Muestra en las personas en una Tabla" border="normal"
+	sizable="true" width="auto" height="auto">
+
+
+
+
+
+	<grid>
+		<columns>
+			<column label="Nombre" sort="auto" height="auto"/>
+				<column label="Edad" sort="auto" height="auto"/>
+					<column label="Telefono" sort="auto" height="auto"/>
+						<column label="Cumpleaños" sort="auto" height="auto"/>
+							<column label="Direccion" sort="auto" height="auto"/>
+								<column label="Email" sort="auto" height="auto"/>
+									<column label="Opinion" sort="auto" height="auto"/>
+				
+		</columns>
+		<rows>
+			<row forEach="${personas}">
+				<label value="${each.nombre}"/>
+				<label value="${each.edad}"/>
+				<label value="${each.telefono }"/>
+				<label value="${each.cumpleanios}"/>
+				<label value="${each.direccion}"/>
+				<label value="${each.email}"/>
+				<label value="${each.opinion}"/>
+				
+			</row>
+		</rows>
+	</grid>
+
+</window>

@@ -1,0 +1,20 @@
+<?page title="Pagina Completa"?>
+<window title="Pagina Embebida con Otras paginas" border="normal" sizable="true" width="auto" height="auto">
+
+<tablelayout columns="2">
+	<tablechildren rowspan="1">
+		<panel title="Calculadora" border="normal" width="auto"  collapsible="true">
+			<panelchildren><include src= "calculadoraPage.zul"/></panelchildren>
+		</panel>
+	</tablechildren>
+	<tablechildren height="auto">
+		<panel  title="Formulario" border="normal"  collapsible="true" height="auto">
+		 	<panelchildren>
+		 		<include src= "formulario.zul"/>
+		 	</panelchildren>
+		 </panel>
+	</tablechildren>
+</tablelayout>
+
+
+</window>
