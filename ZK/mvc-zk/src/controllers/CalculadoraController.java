@@ -23,44 +23,40 @@ public class CalculadoraController extends GenericForwardComposer {
 	
 	Label resultado;
 	
-	Button sumar ;
-	Button resar ;
-	Button Dividir ;
-	Button Multiplicar ;
-	
-	
 	
 	public CalculadoraController(){		
 	
 		this.calc = new Calculadora();
 			
 	}
-	private void getOperandos() {
-		this.calc.setOp1(Integer.parseInt(op1.getText()));
-		this.calc.setOp2(Integer.parseInt(op2.getText()));
+	
+	private void obtenerOperandos() {
+		this.calc.setOp1(Integer.parseInt(op1.getValue()));
+		this.calc.setOp2(Integer.parseInt(op2.getValue()));
 	}
 	
 	
 	
 	public  void onClick$sumar(Event event){
-		getOperandos();
+		obtenerOperandos();
 		resultado.setValue(this.calc.sumar().toString());
 	}
 
 	public void onClick$restar(Event event){
-		getOperandos();
+		obtenerOperandos();
 		resultado.setValue(this.calc.restar().toString());
 	}		
 	
 	public void onClick$multiplicar(Event event){
-		getOperandos();
+		obtenerOperandos();
 		resultado.setValue(this.calc.multiplicar().toString());
 	}
 	
 	public void onClick$dividir(Event event){
-		getOperandos();
+		obtenerOperandos();
 		resultado.setValue(this.calc.dividir().toString());
 	
 	}
 
+	
 }
