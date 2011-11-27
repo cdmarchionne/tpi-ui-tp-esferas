@@ -68,7 +68,7 @@
 				<button label="Voler al menù" id="menuPrincipal"
 					href="index.zul" />
 			</row>
-
+			<row><button upload="true" label="Fileupload" onUpload="myProcessUpload(event.getMedia())"/></row>
 		</rows>
 	</grid>
 
