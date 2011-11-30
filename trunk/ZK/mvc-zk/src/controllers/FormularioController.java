@@ -4,18 +4,18 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Intbox;
-
 import org.zkoss.zul.Textbox;
 
+import domain.formulario.ListaPersonas;
 import domain.formulario.Persona;
 
-public class FormularioController extends GenericForwardComposer{
+public class FormularioController extends GenericForwardComposer {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	Textbox nombre;
 	Textbox contrasenia;
 	Intbox edad;
@@ -25,18 +25,18 @@ public class FormularioController extends GenericForwardComposer{
 	Intbox codigoPostal;
 	Textbox email;
 	Textbox opinion;
-	
-	
-	
-	public void onClick$aceptar(Event event){
-		new Persona(nombre.getValue(),contrasenia.getValue(),edad.getValue(),
-				telefono.getValue(),cumpleanios.getValue(),direccion.getValue(),
-				codigoPostal.getValue(),email.getValue(),opinion.getValue());
-		
+
+	public void onClick$aceptar(Event event) {
+		Persona p = new Persona(nombre.getValue(), contrasenia.getValue(), edad.getValue(),
+				telefono.getValue(), cumpleanios.getValue(), direccion.getValue(),
+				codigoPostal.getValue(), email.getValue(), opinion.getValue());
+
+		ListaPersonas.getInstance().getListaPersonas().add(p);
+
 		this.limpiarCampos();
 	}
-	
-	public void limpiarCampos(){
+
+	public void limpiarCampos() {
 		this.nombre.setValue("");
 		this.contrasenia.setValue("");
 		this.edad.setRawValue("");
@@ -46,7 +46,6 @@ public class FormularioController extends GenericForwardComposer{
 		this.codigoPostal.setRawValue("");
 		this.email.setRawValue("");
 		this.opinion.setRawValue("");
-		
-		
+
 	}
 }

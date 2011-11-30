@@ -29,6 +29,9 @@
 				<label value="${each.opinion}"/>
 				
 			</row>
+			<row>
+				<button label="Volver al menú" id="menuPrincipal" href="index.zul" />
+			</row>
 		</rows>
 	</grid>
 

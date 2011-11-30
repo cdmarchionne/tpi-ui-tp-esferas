@@ -3,7 +3,6 @@
 
 <button label="Hello World!" onClick='Messagebox.show("Hello World!")' />
 
-<button label="Voler al menù" id="menuPrincipal" href="index.zul" />
-		
+<button label="Volver al menú" id="menuPrincipal" href="index.zul" />
 
 </window>

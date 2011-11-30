@@ -8,11 +8,11 @@
 		<rows>
 			<row>
 				Operando1
-				<textbox id="op1" />
+				<textbox id="op1" constraint="no empty"/>
 			</row>
 			<row>
 				Operando2
-				<textbox id="op2" />
+				<textbox id="op2" constraint="no empty"/>
 			</row>
 			<row>
 				Resultado:
@@ -26,7 +26,7 @@
 				
 			</row> 	
 			<row>
-				<button label="Voler al menù" id="menuPrincipal"
+				<button label="Volver al menú" id="menuPrincipal"
 					href="index.zul" />
 			</row>
 			
