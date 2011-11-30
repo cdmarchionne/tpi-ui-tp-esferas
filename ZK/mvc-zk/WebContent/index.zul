@@ -8,6 +8,10 @@
 		<rows>
 			<row>EJEMPLOS MVC</row>
 			<row>
+				<button label="Hola Mundo!" href="holaMundo.zul" />
+				Ejemplo de Hola Mundo
+			</row>
+			<row>
 				<button label="Calculadora" href="calculadoraPage.zul" />
 				Ejemplo de Calculadora Basica
 			</row>

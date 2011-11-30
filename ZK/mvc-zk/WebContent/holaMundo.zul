@@ -1,0 +1,9 @@
+<?page title="Hello World!!!"?>
+<window title="Hello World Example" border="normal" width="300px"	sizable="false"> 
+
+<button label="Hello World!" onClick='Messagebox.show("Hello World!")' />
+
+<button label="Voler al menù" id="menuPrincipal" href="index.zul" />
+		
+
+</window>
