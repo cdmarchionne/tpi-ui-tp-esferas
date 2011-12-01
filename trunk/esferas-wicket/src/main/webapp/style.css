@@ -66,3 +66,25 @@ h3 {
 	font-size:24pt;
 	color:#092E67;
 }
+table, td, th {
+	border:1px solid black;
+	vertical-align: middle;
+}
+table.personajes {
+	border-spacing: 1px;
+}
+th.title, td.posicion, td.number {
+	text-align:center;
+}
+td.inventario {
+	vertical-align: top;
+	width: 200px;
+}
+td.number {
+	width: 80px;
+}
+td {
+	text-align:left;
+	width: 100px;
+	padding:10px;
+}
