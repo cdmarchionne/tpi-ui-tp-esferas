@@ -13,6 +13,7 @@ public class Personaje extends Posicionable implements Serializable{
 	public static final String NOMBRE_PERSONAJE = "nombrePersonaje";
 	public static final String NOMBRE = "nombre";
 	public static final String DISTANCIA = "distancia";
+	public static final String INVENTARIO = "inventario";
 
 	private NombrePersonaje nombre;
 	private Integer distancia;
