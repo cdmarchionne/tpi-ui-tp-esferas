@@ -1,81 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<head>
-		<meta charset="utf-8" />
-		<title>Mapa</title>
-		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
-	</head>
-	
-	<body>
-		<div id="hd">
-			<div id="logo">
-				<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
-				<h2>Apache Wicket</h2>
-			</div>
-		</div>
+<head>
+<meta charset="utf-8" />
+<title>Mapa</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="style.css" type="text/css" media="screen"
+	title="Stylesheet" />
+</head>
 
-		<div id="bd">
-			<h2>Mapa</h2>
-			<p>
-				Dimension <span wicket:id="dimension">valor</span>
-				
-		        <form wicket:id="mapaForm">
-					<input wicket:id="crearEsfera" type="submit" name="crearEsfera" value="Crear Esfera" />
-					<input wicket:id="crearPersonaje" type="submit" name="crearPersonaje" value="Crear Personaje" />
-					<div wicket:id="feedbackPanel"></div> 
-				</form>
+<body>
+	<div id="hd">
+		<div id="logo">
+			<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
+			<h2>Apache Wicket</h2>
+		</div>
+	</div>
+
+	<div id="bd">
+		<h2>Mapa</h2>
+		<p>
+			Dimension <span wicket:id="dimension">valor</span>
+			<form wicket:id="mapaForm">
+				<input wicket:id="crearPersonaje" type="submit" name="crearPersonaje"
+					value="Crear Personaje" /> <input wicket:id="crearEsfera"
+					type="submit" name="crearEsfera" value="Crear Esfera" />
+				<div wicket:id="feedbackPanel"></div>
+			</form>
+		</p>
+		<p>
+			Elementos Existente
+			<select wicket:id="personajeBuscado">
+				<option>Personaje_1</option>
+				<option>Personaje_2</option>
+			</select>
+			<select wicket:id="esferaBuscada">
+				<option>Esfera_1</option>
+				<option>Esfera_2</option>
+			</select>
+
+			<form wicket:id="busquedaForm">
+				<input wicket:id="atrapar" type="submit" name="atrapar"
+					value="Atrapar" /> <input wicket:id="llamar" type="submit"
+					name="llamar" value="Llamar a ShengLong" />
+				<div wicket:id="feedbackPanel"></div>
+			</form>
 			
-			</p>
-			<p>
-				Elementos Existente
-				<select wicket:id="personajeBuscado">
-					<option>Personaje_1</option>
-					<option>Personaje_2</option>
-				</select>
-				<select wicket:id="esferaBuscada">
-					<option>Esfera_1</option>
-					<option>Esfera_2</option>
-				</select>
-		        <form wicket:id="busquedaForm">
-					<input wicket:id="atrapar" type="submit" name="atrapar" value="Atrapar" />
-					<input wicket:id="llamar" type="submit" name="llamar" value="Llamar a ShengLong" />
-					<div wicket:id="feedbackPanel"></div> 
-				</form>
-			</p>
-			<!-- 
-			<table>
-				<tr>
-					<td></td>
-					<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
-						<td>
-					 		<center>
-								${statusFila.index}
-					 		</center>
-						</td>
-					</c:forEach>
-				</tr>
-				<c:forEach items="${sessionScope.mapa.getColumna(0)}" var="columna" varStatus="statusColumna" >
-					<tr>
-						<td>
-							${statusColumna.index}
-						</td>
-						<c:forEach items="${sessionScope.mapa.getFila(statusColumna.index)}" var="fila" varStatus="statusFila">
-							<td>
-							    <div id="${statusColumna.index}.${statusFila.index}" class="Posicionable" onmousedown="comienzoMovimiento(event, this.id);" onmouseover="this.style.cursor='move'">
-									<img src="images/${fila.objeto.name.toLowerCase()}.png"/>
-							    </div>
-							</td>
-						</c:forEach>
+			<table class="personajes">
+					<tbody>
+					<tr class="title">
+						<!-- Title -->
+						<td>Imagen</td>
+						<td>Nombre</td>
+						<td class="posicion">Posicion</td>
+						<td class="number">Distancia</td>
+						<td class="number">Cantidad</td>
+						<td>Inventario</td>
 					</tr>
-				</c:forEach>
+					<!-- The 'example' list item. 
+						 List items (which are components roughly representing a 'for loop') are 
+						 given example markup. In this case, for each list item we want to have a
+						 <tr> with three <td> tags in it - each one a sub component of the list item.			
+					-->
+					<tr wicket:id="personajes">
+						<!-- For a given list item, render the firstName label. -->
+						<td><img wicket:id="imagen"/></td>
+						<td wicket:id="nombre">[Nombre]</td>
+						<td wicket:id="posicion" class="posicion">[Posicion]</td>
+						<td wicket:id="distancia" class="number">[Distancia]</td>
+						<td wicket:id="cantidad"  class="number">[Cantidad]</td>
+						<td wicket:id="inventario" class="inventario">[Inventario]</td>
+					</tr>
+				</tbody>
 			</table>
-			 -->
-			 
-		</div>
-		
-		<div id="ft">
-		</div>
-	</body>
 	
+		</p>
+	</div>
+
+	<div id="ft"></div>
+</body>
+
 </html>
