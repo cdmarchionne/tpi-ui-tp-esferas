@@ -27,6 +27,9 @@ public class Esfera extends Posicionable implements Serializable{
 
 	@Override
 	public String toString() {
+		if (numero==null){
+			throw new UserException("La esfera no tiene definida una cantidad de estrellas");
+		}
 		return "Esfera de " + numero + " Estrellas";
 	}
 

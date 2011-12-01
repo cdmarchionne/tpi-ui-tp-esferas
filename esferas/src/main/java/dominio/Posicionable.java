@@ -11,6 +11,7 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 	private static final long serialVersionUID = 1L;
 
 	private static final String CASILLERO = "casillero";
+	
 	private Casillero casillero;
 
 	public Posicionable() {
@@ -34,11 +35,11 @@ public abstract class Posicionable extends ObservableObject implements Serializa
 		this.firePropertyChange(CASILLERO, casilleroOLD, this.getCasillero());
 	}
 
-	protected final Punto<Integer> getPosicion() {
+	public final Punto<Integer> getPosicion() {
 		return this.casillero.getPosicion();
 	}
 	
-	protected final void setPosicion(Punto<Integer> posicion) {
+	public final void setPosicion(Punto<Integer> posicion) {
 		this.casillero.setX(posicion.getX());
 		this.casillero.setY(posicion.getY());
 	}
