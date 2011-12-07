@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
 import utils.Punto;
+import utils.Randomize;
 import dominio.Esfera.CantidadEstrellas;
 import dominio.Personaje.NombrePersonaje;
 
-public class Mapa extends ObservableObject implements Serializable{
+public class Mapa extends ObservableObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String CASILLEROS = "casilleros";
@@ -41,12 +44,23 @@ public class Mapa extends ObservableObject implements Serializable{
 		this.setDimension(dimension);
 		casilleros = new ArrayList<Casillero>();
 
-		esferaBuscada = new Esfera(Esfera.CantidadEstrellas.UNA);
-		casilleros.add(new Casillero(new Punto<Integer>(1, 1), esferaBuscada));
+//		esferaBuscada = new Esfera(Esfera.CantidadEstrellas.UNA);
+//		casilleros.add(new Casillero(new Punto<Integer>(1, 1), esferaBuscada));
 
-		personajeBuscado = new Personaje(Personaje.NombrePersonaje.GOKU, 4);
+		personajeBuscado = new Personaje(Personaje.NombrePersonaje.GOKU, 10);
 		casilleros.add(new Casillero(new Punto<Integer>(0, 0), personajeBuscado));
-	}
+
+		for (Esfera.CantidadEstrellas numeroEsfera : Esfera.CantidadEstrellas.values()) {
+			Esfera esfera = new Esfera(numeroEsfera);
+			this.ubicarEsferaRandom(esfera);
+			this.esferaBuscada = esfera;
+			if(!personajeBuscado.getInventario().contains(esfera)){
+				this.personajeCapturaEsfera();
+			}
+		}
+		this.esferaBuscada = null;
+		System.out.println("El personaje " + personajeBuscado + " se coloco en la posicion " + personajeBuscado.getPosicion());
+}
 
 	// ********************************************************
 	// ** Acciones
@@ -85,7 +99,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	public List<NombrePersonaje> getListaPersonajesNoCreadas() {
 		List<NombrePersonaje> listaPersonajesNoCreadas = new ArrayList<Personaje.NombrePersonaje>();
 
-		for (NombrePersonaje personajeExistente : Arrays.asList(NombrePersonaje.values())) {
+		for (NombrePersonaje personajeExistente : Arrays.asList(NombrePersonaje
+				.values())) {
 			if (!existePersonajeEnElMapa(personajeExistente))
 				listaPersonajesNoCreadas.add(personajeExistente);
 		}
@@ -102,14 +117,15 @@ public class Mapa extends ObservableObject implements Serializable{
 	}
 
 	/**
-	 * @return Devuelve una lista con las Esferas que todavia no fueron
-	 *         Cargados en el Mapa
+	 * @return Devuelve una lista con las Esferas que todavia no fueron Cargados
+	 *         en el Mapa
 	 */
 	public List<CantidadEstrellas> getListaEsferasNoCreadas() {
 
 		List<CantidadEstrellas> listaEsferasNoCreadas = new ArrayList<Esfera.CantidadEstrellas>();
 
-		for (CantidadEstrellas esferaExistente : Arrays.asList(CantidadEstrellas.values())) {
+		for (CantidadEstrellas esferaExistente : Arrays
+				.asList(CantidadEstrellas.values())) {
 			if ((!existeEsferaAtrapadaEnLosPersonajes(esferaExistente))
 					&& (!existeEsferaEnElMapa(esferaExistente)))
 				listaEsferasNoCreadas.add(esferaExistente);
@@ -139,8 +155,7 @@ public class Mapa extends ObservableObject implements Serializable{
 	 * Calculo la diferencia absoluta entre cada elemento del par
 	 */
 	private Integer diferenciaAbsoluta(Punto<Integer> ubicacionPersonaje,
-			Punto<Integer> ubicacionEsfera)
-	{
+			Punto<Integer> ubicacionEsfera) {
 		Punto<Integer> dif = new Punto<Integer>(
 				(ubicacionPersonaje.getX() - ubicacionEsfera.getX()),
 				(ubicacionPersonaje.getY() - ubicacionEsfera.getY()));
@@ -151,7 +166,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	 * Calculo la diferencia absoluta entre cada elemento del par
 	 */
 	private Integer calcularDistancia(Personaje personaje, Esfera esfera) {
-		return this.diferenciaAbsoluta(this.buscarPosicion(personaje), this.buscarPosicion(esfera));
+		return this.diferenciaAbsoluta(this.buscarPosicion(personaje),
+				this.buscarPosicion(esfera));
 	}
 
 	/**
@@ -159,11 +175,11 @@ public class Mapa extends ObservableObject implements Serializable{
 	 * @param personaje
 	 * @param esfera
 	 * @return true si puede capturar la esfera. ( tiene que estar dentro de la
-	 *         distancia que puede
-	 *         recorrer el personaje
+	 *         distancia que puede recorrer el personaje
 	 */
 	public boolean puedeCapturarEsfera() {
-		return personajeBuscado.getDistancia() >= calcularDistancia(personajeBuscado, esferaBuscada);
+		return personajeBuscado.getDistancia() >= calcularDistancia(
+				personajeBuscado, esferaBuscada);
 	}
 
 	public String puedeCapturarEsferaMensaje() {
@@ -175,8 +191,9 @@ public class Mapa extends ObservableObject implements Serializable{
 			accion = "no llega";
 		}
 
-		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion
-				+ " a capturar la " + this.getEsferaBuscada().toString();
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " "
+				+ accion + " a capturar la "
+				+ this.getEsferaBuscada().toString();
 	}
 
 	/**
@@ -190,8 +207,8 @@ public class Mapa extends ObservableObject implements Serializable{
 			}
 		}
 
-		throw new UserException("El " + objeto.getClass().toString() + " " + objeto.toString()
-				+ " no se encuentra en el mapa.");
+		throw new UserException("El " + objeto.getClass().toString() + " "
+				+ objeto.toString() + " no se encuentra en el mapa.");
 
 	}
 
@@ -222,7 +239,7 @@ public class Mapa extends ObservableObject implements Serializable{
 		Boolean puedeCapturarla = this.puedeCapturarEsfera();
 
 		if (puedeCapturarla) {
-			personajeBuscado.addInventario(esferaBuscada);
+			personajeBuscado.addToInventario(esferaBuscada);
 
 			Casillero casilleroPersonaje = personajeBuscado.getCasillero();
 			Casillero casilleroEsfera = esferaBuscada.getCasillero();
@@ -243,8 +260,8 @@ public class Mapa extends ObservableObject implements Serializable{
 			accion = "no puede capturar";
 		}
 
-		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion + " la "
-				+ this.getEsferaBuscada().toString();
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " "
+				+ accion + " la " + this.getEsferaBuscada().toString();
 	}
 
 	public String llamarShenLongMensaje() {
@@ -256,8 +273,8 @@ public class Mapa extends ObservableObject implements Serializable{
 			accion = "no puede";
 		}
 
-		return "El personaje " + this.getPersonajeBuscado().getNombre() + " " + accion
-				+ " llamar a Sheng Long";
+		return "El personaje " + this.getPersonajeBuscado().getNombre() + " "
+				+ accion + " llamar a Sheng Long";
 	}
 
 	// ********************************************************
@@ -289,9 +306,9 @@ public class Mapa extends ObservableObject implements Serializable{
 
 	private void validatePosicionValida(Casillero casillero) {
 		Punto<Integer> posicion = casillero.getPosicion();
-		if (!posicion.between(new Punto<Integer>(0,0),this.getDimension())) {
-			throw new UserException("La Posicion " + posicion + " del " + casillero.getObjeto() +
-					" no es valida.");
+		if (!posicion.between(new Punto<Integer>(0, 0), this.getDimension())) {
+			throw new UserException("La Posicion " + posicion + " del "
+					+ casillero.getObjeto() + " no es valida.");
 		}
 	}
 
@@ -312,7 +329,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	private void actualizarVista() {
 		this.firePropertyChange(CASILLEROS, null, this.getCasilleros());
 		this.firePropertyChange(LISTA_ESFERAS, null, this.getListaEsferas());
-		this.firePropertyChange(LISTA_PERSONAJES, null, this.getListaPersonajes());
+		this.firePropertyChange(LISTA_PERSONAJES, null,
+				this.getListaPersonajes());
 	}
 
 	public Esfera getEsferaBuscada() {
@@ -336,7 +354,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	}
 
 	public boolean isHayPersonajeYEsferaBuscada() {
-		return (!this.getListaPersonajes().isEmpty()) && (!this.getListaEsferas().isEmpty());
+		return (!this.getListaPersonajes().isEmpty())
+				&& (!this.getListaEsferas().isEmpty());
 	}
 
 	public boolean isFaltanCrearPersonajes() {
@@ -344,7 +363,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	}
 
 	public void actualizarFaltanCrearPersonajes() {
-		this.firePropertyChange(FALTAN_CREAR_PERSONAJES, null, this.isFaltanCrearPersonajes());
+		this.firePropertyChange(FALTAN_CREAR_PERSONAJES, null,
+				this.isFaltanCrearPersonajes());
 	}
 
 	public boolean isFaltanCrearEsferas() {
@@ -352,7 +372,8 @@ public class Mapa extends ObservableObject implements Serializable{
 	}
 
 	public void actualizarFaltanCrearEsferas() {
-		this.firePropertyChange(FALTAN_CREAR_ESFERAS, null, this.isFaltanCrearEsferas());
+		this.firePropertyChange(FALTAN_CREAR_ESFERAS, null,
+				this.isFaltanCrearEsferas());
 	}
 
 	/**
@@ -360,50 +381,50 @@ public class Mapa extends ObservableObject implements Serializable{
 	 */
 	public List<List<Casillero>> getTablero() {
 		List<List<Casillero>> tablero = new ArrayList<List<Casillero>>();
-		
+
 		for (int j = 0; j < this.getDimension().getY(); j++) {
 			tablero.add(j, this.getFila(j));
 		}
-		
+
 		System.out.println(tablero);
-		
+
 		return tablero;
 	}
-	
+
 	/**
 	 * Obtengo toda la Fila del Tablero
 	 */
 	public List<Casillero> getFila(int numeroFila) {
 		List<Casillero> fila = new ArrayList<Casillero>();
-		
+
 		for (int i = 0; i < this.getDimension().getX(); i++) {
 			Punto<Integer> posicion = new Punto<Integer>(i, numeroFila);
-			if(this.hayObjetoEn(posicion))
+			if (this.hayObjetoEn(posicion))
 				fila.add(this.buscarObjeto(posicion).getCasillero());
 			else
-				fila.add(new Casillero(posicion,new PosicionableNulo()));
+				fila.add(new Casillero(posicion, new PosicionableNulo()));
 		}
-		
+
 		return fila;
 	}
-	
+
 	/**
 	 * Obtengo toda la Columna del Tablero
 	 */
 	public List<Casillero> getColumna(int numeroColumna) {
 		List<Casillero> columna = new ArrayList<Casillero>();
-		
+
 		for (int j = 0; j < this.getDimension().getY(); j++) {
 			Punto<Integer> posicion = new Punto<Integer>(numeroColumna, j);
-			if(this.hayObjetoEn(posicion))
+			if (this.hayObjetoEn(posicion))
 				columna.add(this.buscarObjeto(posicion).getCasillero());
 			else
-				columna.add(new Casillero(posicion,new PosicionableNulo()));
+				columna.add(new Casillero(posicion, new PosicionableNulo()));
 		}
-		
+
 		return columna;
 	}
-	
+
 	/**
 	 * Imprimo los elementos que contiene el mapa
 	 */
@@ -411,8 +432,8 @@ public class Mapa extends ObservableObject implements Serializable{
 		System.out.println("Mapa: \t{");
 		for (Casillero casillero : this.getCasilleros()) {
 
-			System.out.println("\t [ " + casillero.getPosicion().toString() + " ; "
-					+ casillero.getObjeto().toString() + " ] ");
+			System.out.println("\t [ " + casillero.getPosicion().toString()
+					+ " ; " + casillero.getObjeto().toString() + " ] ");
 		}
 		System.out.println("\t}");
 
@@ -427,27 +448,70 @@ public class Mapa extends ObservableObject implements Serializable{
 		for (int i = 0; i < dimension.getX(); i++) {
 			System.out.print((i + 1) + ":\t[ ");
 			for (int j = 0; j < dimension.getY(); j++) {
-				System.out.print(" (" + objetoDelCasilleroString(new Punto<Integer>(i, j)) + ") ");
+				System.out.print(" ("
+						+ objetoDelCasilleroString(new Punto<Integer>(i, j))
+						+ ") ");
 			}
 			System.out.print(" ]\n");
 		}
 		System.out.print("\n");
 	}
-	
+
 	private String objetoDelCasilleroString(Punto<Integer> posicion) {
 		String objetoDelCasillero;
-		
+
 		if (this.hayObjetoEn(posicion)) {
 			Posicionable objeto = this.buscarObjeto(posicion);
 			if (objeto.esEsfera())
-				objetoDelCasillero = "E." + ((Esfera) objeto).getNumero().getCantidadEstrellas();
+				objetoDelCasillero = "E."
+						+ ((Esfera) objeto).getNumero().getCantidadEstrellas();
 			else
-				objetoDelCasillero = "P." + ((Personaje) objeto).toString().charAt(0);
+				objetoDelCasillero = "P."
+						+ ((Personaje) objeto).toString().charAt(0);
 		} else {
 			objetoDelCasillero = "   ";
 		}
-		
+
 		return objetoDelCasillero;
 	}
-	
+
+	public void reubicarEsferasDelPersonaje(Personaje personaje) {
+		List<Esfera> esferas = personaje.getInventario();
+		
+		personaje.setInventario(new ArrayList<Esfera>());
+		
+		for (Esfera esfera : esferas) {
+			esfera.setCasillero(null);
+			this.ubicarEsferaRandom(esfera);
+		}
+	}
+
+	/**
+	 * Ubica una esfera en el Mapa generando posiciones aleatorias.
+	 * Si la posicion esta ocuapado por un personaje le asigna esa esfera como capturada
+	 * @param esfera
+	 */
+	private void ubicarEsferaRandom(Esfera esfera) {
+		Punto<Integer> ubicacionRandom = new Punto<Integer>(-1, -1);
+
+		while ((!existeEsferaAtrapadaEnLosPersonajes(esfera.getNumero()))
+				&& (!existeEsferaEnElMapa(esfera.getNumero()))) {
+			
+			ubicacionRandom.setX(Randomize.randomInteger(0, this.getDimension().getX() - 1));
+			ubicacionRandom.setY(Randomize.randomInteger(0, this.getDimension().getY() - 1));
+
+ 			if (this.hayObjetoEn(ubicacionRandom)) {
+				Posicionable objetoPosicionable = this.buscarObjeto(ubicacionRandom);
+				if (objetoPosicionable.esPersonaje()) {
+					((Personaje) objetoPosicionable).addToInventario(esfera);
+					System.out.println("La Esfera " + esfera + " fue atrapada por el personaje " + objetoPosicionable);
+				}
+			} else {
+				casilleros.add(new Casillero(ubicacionRandom, esfera));
+			}
+		}
+		
+		System.out.println("La Esfera " + esfera + " se coloco en la posicion " + ubicacionRandom);
+	}
+
 }
