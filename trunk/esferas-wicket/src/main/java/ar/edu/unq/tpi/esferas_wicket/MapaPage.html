@@ -27,18 +27,20 @@
 					value="Crear Personaje" /> <input wicket:id="crearEsfera"
 					type="submit" name="crearEsfera" value="Crear Esfera" />
 				<div wicket:id="feedbackPanel"></div>
+
+				Elementos Existente
+				<select wicket:id="personajeBuscado">
+					<option>Personaje_1</option>
+					<option>Personaje_2</option>
+				</select>
+				<select wicket:id="esferaBuscada">
+					<option>Esfera_1</option>
+					<option>Esfera_2</option>
+				</select>
 			</form>
 		</p>
+		
 		<p>
-			Elementos Existente
-			<select wicket:id="personajeBuscado">
-				<option>Personaje_1</option>
-				<option>Personaje_2</option>
-			</select>
-			<select wicket:id="esferaBuscada">
-				<option>Esfera_1</option>
-				<option>Esfera_2</option>
-			</select>
 
 			<form wicket:id="busquedaForm">
 				<input wicket:id="atrapar" type="submit" name="atrapar"
@@ -46,42 +48,8 @@
 					name="llamar" value="Llamar a ShengLong" />
 				<div wicket:id="feedbackPanel"></div>
 			</form>
-			
-			<table class="personajes">
-					<tbody>
-					<tr class="title">
-						<!-- Title -->
-						<td>Imagen</td>
-						<td>Nombre</td>
-						<td class="posicion">Posicion</td>
-						<td class="number">Distancia</td>
-						<td class="number">Cantidad</td>
-					</tr>
-					<!-- The 'example' list item. 
-						 List items (which are components roughly representing a 'for loop') are 
-						 given example markup. In this case, for each list item we want to have a
-						 <tr> with three <td> tags in it - each one a sub component of the list item.			
-					-->
-					<tr wicket:id="personajes">
-						<!-- For a given list item, render the firstName label. -->
-						<td><img wicket:id="imagenPersonaje"/></td>
-						<td><span wicket:id="nombre">[Nombre]</span></td>
-						<td wicket:id="posicion" class="posicion">[Posicion]</td>
-						<td wicket:id="distancia" class="number">[Distancia]</td>
-						<td wicket:id="cantidad"  class="number">[Cantidad]</td>
-						<!-- 
-						<td><img wicket:id="inventario"/></td>
-						 -->
-						<td wicket:id="inventario" class="inventario">
-							<div class="contenedorImagenChica">
-								<img wicket:id="inventarioEsfera" class="imagenChica"/>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-	
 		</p>
+		
 		<p>
 			<table class="tablero">
 				<tbody>
