@@ -1,50 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-	<head>
-		<meta charset="utf-8" />
-		<title>Creacion de Personaje</title>
-		<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
-	</head>
-	
-	<body>
-		<div id="hd">
-			<div id="logo">
-				<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
-				<h2>Apache Wicket</h2>
-			</div>
-		</div>
+<head>
+<meta charset="utf-8" />
+<title>Creacion de Personaje</title>
+<link
+	href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold'
+	rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="style.css" type="text/css" media="screen"
+	title="Stylesheet" />
+</head>
 
-		<div id="bd">
-			<h2>Personaje</h2>
-	        <form wicket:id="personajeForm">
-				<p>	
-					<br/>
-						Personaje
-						<select wicket:id="nombre">
-							<option>Personaje_1</option>
-							<option>Personaje_2</option>
-						</select>
-					<br/>
-				</p>
-				<p>
-					Casillero
-					<br/>
-					X: <input wicket:id="x"/>
-					Y: <input wicket:id="y"/>
-					<br/>
-				</p>
-				<p>
-					Distancia: <input wicket:id="distancia"/>
-				</p>
-				<input wicket:id="aceptar" type="submit" name="aceptar" value="Aceptar" />
-				<input wicket:id="cancel" type="submit" name="cancelar" value="Cancelar" />
-				<div wicket:id="feedbackPanel"></div> 
-			</form>
+<body>
+	<div id="hd">
+		<div id="logo">
+			<img src="logo.png" width="50px" height="50px" alt="Wicket Logo" />
+			<h2>Apache Wicket</h2>
 		</div>
+	</div>
+
+	<div id="bd">
+		<h2>Personaje</h2>
+		<form wicket:id="personajeForm">
+			<p>
+				<br /> Personaje <select wicket:id="nombre">
+					<option>Personaje_1</option>
+					<option>Personaje_2</option>
+				</select> <br />
+			</p>
+			<p>
+				Casillero <br /> X: <input wicket:id="x" /> Y: <input wicket:id="y" />
+				<br />
+			</p>
+			<p>
+				Distancia: <input wicket:id="distancia" />
+			</p>
+			<input wicket:id="aceptar" type="submit" name="aceptar"
+				value="Aceptar" /> <input wicket:id="cancel" type="submit"
+				name="cancelar" value="Cancelar" />
+			<div wicket:id="feedbackPanel"></div>
+		</form>
 		
-		<div id="ft">
-		</div>
-	</body>
-	
+		<table class="personajes">
+			<tbody>
+				<tr class="title">
+					<!-- Title -->
+					<td>Imagen</td>
+					<td>Nombre</td>
+					<td class="posicion">Posicion</td>
+					<td class="number">Distancia</td>
+					<td class="number">Cantidad</td>
+				</tr>
+				<!-- The 'example' list item. 
+						 List items (which are components roughly representing a 'for loop') are 
+						 given example markup. In this case, for each list item we want to have a
+						 <tr> with three <td> tags in it - each one a sub component of the list item.			
+					-->
+				<tr wicket:id="personajes">
+					<!-- For a given list item, render the firstName label. -->
+					<td><img wicket:id="imagenPersonaje" />
+					</td>
+					<td><span wicket:id="nombre">[Nombre]</span>
+					</td>
+					<td wicket:id="posicion" class="posicion">[Posicion]</td>
+					<td wicket:id="distancia" class="number">[Distancia]</td>
+					<td wicket:id="cantidad" class="number">[Cantidad]</td>
+					<!-- 
+						<td><img wicket:id="inventario"/></td>
+						 -->
+					<td wicket:id="inventario" class="inventario">
+						<div class="contenedorImagenChica">
+							<img wicket:id="inventarioEsfera" class="imagenChica" />
+						</div></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div id="ft"></div>
+</body>
+
 </html>

@@ -2,6 +2,7 @@ package ar.edu.unq.tpi.esferas_wicket;
 
 import java.util.List;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -37,48 +38,27 @@ public class MapaPage extends PosicionablePage {
 		this.addFeedbackPanel(formMapa);
 		this.addButtonsMapa(formMapa);
 
-		this.add(new DropDownChoice<Personaje>(Mapa.PERSONAJE_BUSCADO, this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>()));
-		this.add(new DropDownChoice<Esfera>(Mapa.ESFERA_BUSCADA, this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>()));
+		formMapa.add(new DropDownChoice<Personaje>(Mapa.PERSONAJE_BUSCADO, this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>()){
+			private static final long serialVersionUID = 1L;
+            protected void onSelectionChanged(final Personaje newPersonajeBuscado) {
+            	MapaPage.this.getMapa().setPersonajeBuscado(newPersonajeBuscado);
+            }
+		});
+		formMapa.add(new DropDownChoice<Esfera>(Mapa.ESFERA_BUSCADA, this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>()){
+			private static final long serialVersionUID = 1L;
+            protected void onSelectionChanged(final Esfera newEsferaBuscada) {
+            	MapaPage.this.getMapa().setEsferaBuscada(newEsferaBuscada);
+            }
+		});
 		
 		Form<Mapa> formBusqueda = new Form<Mapa>("busquedaForm",cpm);
 		this.add(formBusqueda);
 		this.addFeedbackPanel(formBusqueda);
 		this.addButtonsBusqueda(formBusqueda);
 		
-		this.add(detallePersonaje());
 		this.add(tablaTablero());
 	}
 
-	/**
-	 * Genera una Tabla con los detalles de los personajes
-	 * @return
-	 */
-	private ListView<Personaje> detallePersonaje() {
-		return new ListView<Personaje>("personajes", this.getMapa().getListaPersonajes()) {
-			private static final long serialVersionUID = 1L;
-			// This method is called for each 'entry' in the list.
-			@Override 
-			protected void populateItem(ListItem<Personaje> item) {
-				Personaje personaje = (Personaje) item.getModelObject();
-				item.add(new Image("imagenPersonaje", new Model("images/"+personaje.getName().toLowerCase()+".png")));
-				item.add(new Label(Personaje.NOMBRE, personaje.getName()));
-				item.add(new Label("posicion", personaje.getPosicion().toString()));
-				item.add(new Label(Personaje.DISTANCIA, personaje.getDistancia().toString()));
-				item.add(new Label("cantidad", String.valueOf(personaje.getInventario().size())));
-				
-				ListView<Esfera> inventario = new ListView<Esfera>(Personaje.INVENTARIO, personaje.getInventario()) {
-					private static final long serialVersionUID = 1L;
-					
-					@Override
-					protected void populateItem(ListItem<Esfera> itemEsfera) {
-						itemEsfera.add(new Image("inventarioEsfera", new Model("images/"+itemEsfera.getModelObject().getName().toLowerCase()+".png")));
-					}
-				};
-				item.add(inventario);
-			}		
-		};
-	}
-	
 	/**
 	 * Genera una Tabla con los detalles de los personajes
 	 * @return
@@ -158,9 +138,14 @@ public class MapaPage extends PosicionablePage {
 		form.add(new Button("atrapar") {
 			private static final long serialVersionUID = 1L;
 			
+//		@Override
+//		public boolean isEnabled() {
+//			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
+//		}
+			
 			@Override
 			public void onSubmit() {
-//				this.setResponsePage(new CrearEsferaPage(MapaPage.this));
+				MapaPage.this.getMapa().personajeCapturaEsfera();
 			}
 		});
 		
@@ -171,10 +156,13 @@ public class MapaPage extends PosicionablePage {
 //		public boolean isEnabled() {
 //			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
 //		}
-//		
+		
 		@Override
 		public void onSubmit() {
-//			this.setResponsePage(new CrearPersonajePage(MapaPage.this));
+//			this.setResponsePage(new Page(MapaPage.this.getMapa().getPersonajeBuscado());
+			if(MapaPage.this.getMapa().getPersonajeBuscado().puedeInvocarShengLong()){
+				MapaPage.this.getMapa().reubicarEsferasDelPersonaje(MapaPage.this.getMapa().getPersonajeBuscado());
+			}
 		}
 		});
 	}
