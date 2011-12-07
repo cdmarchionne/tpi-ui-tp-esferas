@@ -72,8 +72,12 @@ public class Personaje extends Posicionable implements Serializable{
 		return inventario;
 	}
 
-	public void addInventario(Esfera inventario) {
-		this.inventario.add(inventario);
+	public void addToInventario(Esfera esfera) {
+		this.inventario.add(esfera);
+	}
+	
+	public void removeFromInventario(Esfera esfera) {
+		this.inventario.remove(esfera);
 	}
 
 	public void setInventario(List<Esfera> inventario) {
