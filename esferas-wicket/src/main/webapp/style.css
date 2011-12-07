@@ -78,10 +78,18 @@ th.title, td.posicion, td.number {
 }
 td.inventario {
 	vertical-align: top;
-	width: 200px;
+	width: 50px;
 }
 td.number {
 	width: 80px;
+}
+div.contenedorImagenChica{
+	height: 35px;
+	width: 35px;
+}
+img.imagenChica {
+	height: 30px;
+	width: 30px;
 }
 td {
 	text-align:left;

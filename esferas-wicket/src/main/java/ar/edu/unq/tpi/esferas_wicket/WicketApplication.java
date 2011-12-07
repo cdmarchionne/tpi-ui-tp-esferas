@@ -49,6 +49,8 @@ public class WicketApplication extends WebApplication{
 		}); 
 	}
 	
+	
+	
 	public Mapa getMapa() {
 		return mapa;
 	}

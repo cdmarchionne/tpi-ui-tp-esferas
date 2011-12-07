@@ -56,7 +56,6 @@
 						<td class="posicion">Posicion</td>
 						<td class="number">Distancia</td>
 						<td class="number">Cantidad</td>
-						<td>Inventario</td>
 					</tr>
 					<!-- The 'example' list item. 
 						 List items (which are components roughly representing a 'for loop') are 
@@ -65,17 +64,44 @@
 					-->
 					<tr wicket:id="personajes">
 						<!-- For a given list item, render the firstName label. -->
-						<td><img wicket:id="imagen"/></td>
-						<td wicket:id="nombre">[Nombre]</td>
+						<td><img wicket:id="imagenPersonaje"/></td>
+						<td><span wicket:id="nombre">[Nombre]</span></td>
 						<td wicket:id="posicion" class="posicion">[Posicion]</td>
 						<td wicket:id="distancia" class="number">[Distancia]</td>
 						<td wicket:id="cantidad"  class="number">[Cantidad]</td>
-						<td wicket:id="inventario" class="inventario">[Inventario]</td>
+						<!-- 
+						<td><img wicket:id="inventario"/></td>
+						 -->
+						<td wicket:id="inventario" class="inventario">
+							<div class="contenedorImagenChica">
+								<img wicket:id="inventarioEsfera" class="imagenChica"/>
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 	
 		</p>
+		<p>
+			<table class="tablero">
+				<tbody>
+					<!-- 
+					<tr class="title">
+						<td wicket:id="numeroColumna">[#Columna]</td>
+					</tr>
+					 -->
+					<tr wicket:id="tablero">
+						<td wicket:id="numeroFila" class="number" align="center">[#Fila]</td>
+						<td wicket:id="columnas">
+							<div>
+								<img wicket:id="imagenCasillero" class="imagenTablero"/>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</p>
+		
 	</div>
 
 	<div id="ft"></div>
