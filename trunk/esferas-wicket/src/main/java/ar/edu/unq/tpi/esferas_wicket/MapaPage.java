@@ -1,5 +1,7 @@
 package ar.edu.unq.tpi.esferas_wicket;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -12,6 +14,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import utils.Punto;
+import dominio.Casillero;
 import dominio.Esfera;
 import dominio.Mapa;
 import dominio.Personaje;
@@ -43,6 +46,7 @@ public class MapaPage extends PosicionablePage {
 		this.addButtonsBusqueda(formBusqueda);
 		
 		this.add(detallePersonaje());
+		this.add(tablaTablero());
 	}
 
 	/**
@@ -56,13 +60,56 @@ public class MapaPage extends PosicionablePage {
 			@Override 
 			protected void populateItem(ListItem<Personaje> item) {
 				Personaje personaje = (Personaje) item.getModelObject();
-				item.add(new Image("imagen", new Model("images/"+personaje.getName().toLowerCase()+".png")));
+				item.add(new Image("imagenPersonaje", new Model("images/"+personaje.getName().toLowerCase()+".png")));
 				item.add(new Label(Personaje.NOMBRE, personaje.getName()));
 				item.add(new Label("posicion", personaje.getPosicion().toString()));
 				item.add(new Label(Personaje.DISTANCIA, personaje.getDistancia().toString()));
 				item.add(new Label("cantidad", String.valueOf(personaje.getInventario().size())));
-				item.add(new Label(Personaje.INVENTARIO, personaje.getInventario().toString()));
+				
+				ListView<Esfera> inventario = new ListView<Esfera>(Personaje.INVENTARIO, personaje.getInventario()) {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					protected void populateItem(ListItem<Esfera> itemEsfera) {
+						itemEsfera.add(new Image("inventarioEsfera", new Model("images/"+itemEsfera.getModelObject().getName().toLowerCase()+".png")));
+					}
+				};
+				item.add(inventario);
 			}		
+		};
+	}
+	
+	/**
+	 * Genera una Tabla con los detalles de los personajes
+	 * @return
+	 */
+	private ListView<List<Casillero>> tablaTablero() {
+		return new ListView<List<Casillero>>("tablero", this.getMapa().getTablero()) {
+			private static final long serialVersionUID = 1L;
+			
+			@Override 
+			protected void populateItem(ListItem<List<Casillero>> itemFila) {
+//				ListView<Casillero> titulo = new ListView<Casillero>("columnas", itemFila.getModelObject()) {
+//					private static final long serialVersionUID = 1L;
+//					
+//					@Override
+//					protected void populateItem(ListItem<Casillero> item) {
+//						item.add(new Label("numeroColumna", String.valueOf(item.getIndex())));
+//					}
+//				};
+//				itemFila.add(titulo);
+				
+				itemFila.add(new Label("numeroFila", String.valueOf(itemFila.getIndex())));
+				ListView<Casillero> fila = new ListView<Casillero>("columnas", itemFila.getModelObject()) {
+					private static final long serialVersionUID = 1L;
+					
+					@Override
+					protected void populateItem(ListItem<Casillero> item) {
+						item.add(new Image("imagenCasillero", new Model("images/"+item.getModelObject().getObjeto().getName().toLowerCase()+".png")));
+					}
+				};
+				itemFila.add(fila);
+			}
 		};
 	}
 	
@@ -79,6 +126,11 @@ public class MapaPage extends PosicionablePage {
 			private static final long serialVersionUID = 1L;
 			
 			@Override
+			public boolean isEnabled() {
+				return (!MapaPage.this.getMapa().getListaEsferasNoCreadas().isEmpty());
+			}
+			
+			@Override
 			public void onSubmit() {
 				this.setResponsePage(new CrearEsferaPage(MapaPage.this));
 			}
@@ -87,6 +139,11 @@ public class MapaPage extends PosicionablePage {
 		form.add(new Button("crearPersonaje") {
 		private static final long serialVersionUID = 1L;
 
+		@Override
+		public boolean isEnabled() {
+			return (!MapaPage.this.getMapa().getListaPersonajesNoCreadas().isEmpty());
+		}
+		
 		@Override
 		public void onSubmit() {
 			this.setResponsePage(new CrearPersonajePage(MapaPage.this));
@@ -110,6 +167,11 @@ public class MapaPage extends PosicionablePage {
 		form.add(new Button("llamar") {
 		private static final long serialVersionUID = 1L;
 
+//		@Override
+//		public boolean isEnabled() {
+//			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
+//		}
+//		
 		@Override
 		public void onSubmit() {
 //			this.setResponsePage(new CrearPersonajePage(MapaPage.this));
