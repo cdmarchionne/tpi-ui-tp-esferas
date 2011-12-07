@@ -95,14 +95,15 @@ public class PosicionablePage extends WebPage implements Serializable{
 	}
 
 	public final void addButtonCancelToReverse(final Form<?> form) {
-		form.add(new Button("cancel") {
+		Button cancelButton = new Button("cancel") {
 				private static final long serialVersionUID = 1L;
-				
 				@Override
 				public void onSubmit() {
 					this.setResponsePage(paginaOrigen);		
 			}
-		});
+		};
+		cancelButton.setDefaultFormProcessing(false);
+		form.add(cancelButton);
 	}
 
 	public PosicionablePage getPaginaOrigen() {
