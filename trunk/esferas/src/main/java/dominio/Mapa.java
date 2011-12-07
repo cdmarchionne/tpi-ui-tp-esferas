@@ -358,18 +358,20 @@ public class Mapa extends ObservableObject implements Serializable{
 	/**
 	 * Obtengo todo el Tablero
 	 */
-//	public List<List<Casillero>> getTablero() {
-//		List<List<Casillero>> tablero = new ArrayList<ArrayList<Casillero>>();
-//		
-//		for (int j = 0; j < this.getDimension().getY(); j++) {
-//			tablero[j].addAll(this.getFila(j));
-//		}
-//		
-//		return tablero;
-//	}
+	public List<List<Casillero>> getTablero() {
+		List<List<Casillero>> tablero = new ArrayList<List<Casillero>>();
+		
+		for (int j = 0; j < this.getDimension().getY(); j++) {
+			tablero.add(j, this.getFila(j));
+		}
+		
+		System.out.println(tablero);
+		
+		return tablero;
+	}
 	
 	/**
-	 * Obtengo todas la Fila del Tablero
+	 * Obtengo toda la Fila del Tablero
 	 */
 	public List<Casillero> getFila(int numeroFila) {
 		List<Casillero> fila = new ArrayList<Casillero>();
@@ -386,7 +388,7 @@ public class Mapa extends ObservableObject implements Serializable{
 	}
 	
 	/**
-	 * Obtengo todas la Columna del Tablero
+	 * Obtengo toda la Columna del Tablero
 	 */
 	public List<Casillero> getColumna(int numeroColumna) {
 		List<Casillero> columna = new ArrayList<Casillero>();
