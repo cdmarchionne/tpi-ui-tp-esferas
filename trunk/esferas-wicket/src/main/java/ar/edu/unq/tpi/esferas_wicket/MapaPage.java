@@ -38,23 +38,10 @@ public class MapaPage extends PosicionablePage {
 		this.addFeedbackPanel(formMapa);
 		this.addButtonsMapa(formMapa);
 
-		formMapa.add(new DropDownChoice<Personaje>(Mapa.PERSONAJE_BUSCADO, this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>()){
-			private static final long serialVersionUID = 1L;
-            protected void onSelectionChanged(final Personaje newPersonajeBuscado) {
-            	MapaPage.this.getMapa().setPersonajeBuscado(newPersonajeBuscado);
-            }
-		});
-		formMapa.add(new DropDownChoice<Esfera>(Mapa.ESFERA_BUSCADA, this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>()){
-			private static final long serialVersionUID = 1L;
-            protected void onSelectionChanged(final Esfera newEsferaBuscada) {
-            	MapaPage.this.getMapa().setEsferaBuscada(newEsferaBuscada);
-            }
-		});
+		formMapa.add(new DropDownChoice<Personaje>(Mapa.PERSONAJE_BUSCADO, this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>()));
+		formMapa.add(new DropDownChoice<Esfera>(Mapa.ESFERA_BUSCADA, this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>()));
 		
-		Form<Mapa> formBusqueda = new Form<Mapa>("busquedaForm",cpm);
-		this.add(formBusqueda);
-		this.addFeedbackPanel(formBusqueda);
-		this.addButtonsBusqueda(formBusqueda);
+		this.addButtonsBusqueda(formMapa);
 		
 		this.add(tablaTablero());
 	}
@@ -69,16 +56,6 @@ public class MapaPage extends PosicionablePage {
 			
 			@Override 
 			protected void populateItem(ListItem<List<Casillero>> itemFila) {
-//				ListView<Casillero> titulo = new ListView<Casillero>("columnas", itemFila.getModelObject()) {
-//					private static final long serialVersionUID = 1L;
-//					
-//					@Override
-//					protected void populateItem(ListItem<Casillero> item) {
-//						item.add(new Label("numeroColumna", String.valueOf(item.getIndex())));
-//					}
-//				};
-//				itemFila.add(titulo);
-				
 				itemFila.add(new Label("numeroFila", String.valueOf(itemFila.getIndex())));
 				ListView<Casillero> fila = new ListView<Casillero>("columnas", itemFila.getModelObject()) {
 					private static final long serialVersionUID = 1L;
@@ -138,10 +115,10 @@ public class MapaPage extends PosicionablePage {
 		form.add(new Button("atrapar") {
 			private static final long serialVersionUID = 1L;
 			
-//		@Override
-//		public boolean isEnabled() {
-//			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
-//		}
+		@Override
+		public boolean isEnabled() {
+			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
+		}
 			
 			@Override
 			public void onSubmit() {
@@ -152,10 +129,10 @@ public class MapaPage extends PosicionablePage {
 		form.add(new Button("llamar") {
 		private static final long serialVersionUID = 1L;
 
-//		@Override
-//		public boolean isEnabled() {
-//			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
-//		}
+		@Override
+		public boolean isEnabled() {
+			return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
+		}
 		
 		@Override
 		public void onSubmit() {
