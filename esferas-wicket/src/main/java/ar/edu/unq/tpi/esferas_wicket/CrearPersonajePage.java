@@ -12,37 +12,20 @@ import org.apache.wicket.model.Model;
 import dominio.Esfera;
 import dominio.Personaje;
 
-public class CrearPersonajePage extends PosicionablePage {
+public class CrearPersonajePage extends PosicionablePage<Personaje> {
 	private static final long serialVersionUID = 1L;
 	private static final String NAME_FORM = "personajeForm";
 	
-	public CrearPersonajePage(PosicionablePage paginaOrigen) {
-		super(paginaOrigen);
-		Form<Personaje> form = new Form<Personaje>(NAME_FORM, this.createModel());
-		this.add(form);
-    	this.addFields(form);
-		this.addButtonsOfPosicionable(form);
+	public CrearPersonajePage(TemplatePage<?> paginaOrigen) {
+		super(paginaOrigen, new Form<Personaje>(NAME_FORM, new CompoundPropertyModel<Personaje>(new Personaje())));
 		this.add(detallePersonaje());
 	}
 
-	/**
-	 * Crea y agrega los controles para crear un mapa nuevo.
-	 */
-	protected void addFields(final Form<Personaje> form) {
-		this.addPunto(form);
-		form.add(new DropDownChoice<Personaje.NombrePersonaje>(Personaje.NOMBRE, this.getMapa().getListaPersonajesNoCreadas()));
-		form.add(this.createRequiredIntegerField(Personaje.DISTANCIA));
-    	this.addFeedbackPanel(form);
+	protected void addPosicionableFields() {
+		this.getForm().add(new DropDownChoice<Personaje.NombrePersonaje>(Personaje.NOMBRE, this.getMapa().getListaPersonajesNoCreadas()));
+		this.getForm().add(this.createRequiredIntegerField(Personaje.DISTANCIA));
 	}
 
-	protected CompoundPropertyModel<Personaje> createModel() {
-		return new CompoundPropertyModel<Personaje>(new Personaje());
-	}
-
-	/**
-	 * Genera una Tabla con los detalles de los personajes
-	 * @return
-	 */
 	private ListView<Personaje> detallePersonaje() {
 		return new ListView<Personaje>("personajes", this.getMapa().getListaPersonajes()) {
 			private static final long serialVersionUID = 1L;
@@ -69,5 +52,4 @@ public class CrearPersonajePage extends PosicionablePage {
 		};
 	}
 	
-
 }
