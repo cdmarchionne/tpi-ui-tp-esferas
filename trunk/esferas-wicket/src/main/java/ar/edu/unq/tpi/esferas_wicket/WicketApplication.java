@@ -31,7 +31,13 @@ public class WicketApplication extends WebApplication{
 		}
 	}
 	
-	
+	protected void init(){
+		mount(new BufferedResponseMapper() {
+			protected String getSessionId(){
+				return Session.get().getId();
+			}
+		}); 
+	}
 	
 	/**
 	 * Devuelvo un booleano que representa si ya existe el mapa
@@ -41,15 +47,9 @@ public class WicketApplication extends WebApplication{
 		return (this.getMapa()!=null);
 	}
 	
-	protected void init(){
-		mount(new BufferedResponseMapper() {
-			protected String getSessionId(){
-				return Session.get().getId();
-			}
-		}); 
-	}
-	
-	
+	//*******************************************
+	//			GETTER Y SETTER
+	//*******************************************
 	
 	public Mapa getMapa() {
 		return mapa;

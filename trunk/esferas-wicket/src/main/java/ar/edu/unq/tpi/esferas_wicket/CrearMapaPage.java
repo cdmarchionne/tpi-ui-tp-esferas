@@ -7,45 +7,34 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import utils.Punto;
 import dominio.Mapa;
 
-public class CrearMapaPage extends PosicionablePage {
+public class CrearMapaPage extends TemplatePage<Punto<Integer>> {
 	private static final long serialVersionUID = 1L;
+	private static final String NAME_FORM = "nuevoMapaForm";
 
 	public CrearMapaPage() {
-		Form<Punto<Integer>> form = new Form<Punto<Integer>>("nuevoMapaForm", this.createModel());
-		this.add(form);
-		this.addFeedbackPanel(form);
-		this.addPunto(form);
-		this.addButtons(form);
+		this.initPage(new Form<Punto<Integer>>(NAME_FORM, new CompoundPropertyModel<Punto<Integer>>(new Punto<Integer>(0,0))));
 	}
 	
-	public CrearMapaPage(PosicionablePage paginaOrigen) {
+	public CrearMapaPage(TemplatePage<?> paginaOrigen) {
 		super(paginaOrigen);
 	}
 	
-	/**
-	 * Crea y agrega los botones: aceptar y cancelar.
-	 */
-	protected void addButtons(final Form<Punto<Integer>> form) {
-		form.add(new Button("aceptar") {
+	protected void addFields() {
+    	this.addPunto();
+	}
+
+	protected void addButtons() {
+		this.getForm().add(new Button("aceptar") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {
-				// navegacion: vuelve a la pagina de busqueda.
-				CrearMapaPage.this.setMapa(new Mapa(form.getModelObject()));
+				CrearMapaPage.this.setMapa(new Mapa(CrearMapaPage.this.getForm().getModelObject()));
 				this.setResponsePage(new MapaPage(CrearMapaPage.this));
 			}
 		});
 
-		this.addButtonCancelToClear(form);
+		this.addButtonCancelToClear();
 	}
 	
-	
-	private CompoundPropertyModel<Punto<Integer>> createModel() {
-		return new CompoundPropertyModel<Punto<Integer>>(new Punto<Integer>(0,0));
-	}
-
-
 }
-
-

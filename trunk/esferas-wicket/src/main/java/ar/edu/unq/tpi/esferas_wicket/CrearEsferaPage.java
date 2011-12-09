@@ -6,29 +6,16 @@ import org.apache.wicket.model.CompoundPropertyModel;
 
 import dominio.Esfera;
 
-public class CrearEsferaPage extends PosicionablePage {
+public class CrearEsferaPage extends PosicionablePage<Esfera> {
 	private static final long serialVersionUID = 1L;
 	private static final String NAME_FORM = "esferaForm";
 	
-	public CrearEsferaPage(PosicionablePage paginaOrigen) {
-		super(paginaOrigen);
-		Form<Esfera> form = new Form<Esfera>(NAME_FORM, this.createModel());
-		this.add(form);
-    	this.addFields(form);
-		this.addButtonsOfPosicionable(form);
+	public CrearEsferaPage(TemplatePage<?> paginaOrigen) {
+		super(paginaOrigen, new Form<Esfera>(NAME_FORM, new CompoundPropertyModel<Esfera>(new Esfera())));
 	}
 
-	/**
-	 * Crea y agrega los controles para crear un mapa nuevo.
-	 */
-	protected void addFields(final Form<Esfera> form) {
-		this.addPunto(form);
-		form.add(new DropDownChoice<Esfera.CantidadEstrellas>(Esfera.NUMERO, this.getMapa().getListaEsferasNoCreadas()));
-    	this.addFeedbackPanel(form);
+	protected void addPosicionableFields() {
+		this.getForm().add(new DropDownChoice<Esfera.CantidadEstrellas>(Esfera.NUMERO, this.getMapa().getListaEsferasNoCreadas()));
 	}
-
-	protected CompoundPropertyModel<Esfera> createModel() {
-		return new CompoundPropertyModel<Esfera>(new Esfera());
-	}
-
+	
 }
