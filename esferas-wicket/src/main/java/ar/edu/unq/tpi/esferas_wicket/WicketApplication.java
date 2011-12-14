@@ -18,6 +18,7 @@ public class WicketApplication extends WebApplication{
 	
 	public WicketApplication() {
 	}
+	
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
@@ -39,10 +40,6 @@ public class WicketApplication extends WebApplication{
 		}); 
 	}
 	
-	/**
-	 * Devuelvo un booleano que representa si ya existe el mapa
-	 * @return
-	 */
 	private boolean existeMapa() {
 		return (this.getMapa()!=null);
 	}

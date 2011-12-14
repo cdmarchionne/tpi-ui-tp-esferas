@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
+
 <head>
-<meta charset="utf-8" />
-<title>Mapa</title>
-<link
-	href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold'
-	rel='stylesheet' type='text/css' />
-<link rel="stylesheet" href="style.css" type="text/css" media="screen"
-	title="Stylesheet" />
+	<meta charset="utf-8" />
+	<title>Mapa</title>
+	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
 </head>
 
 <body>
@@ -22,10 +20,12 @@
 		<h2>Mapa</h2>
 		<p>
 			Dimension <span wicket:id="dimension">valor</span>
-			<form wicket:id="mapaForm">
-				<input wicket:id="crearPersonaje" type="submit" name="crearPersonaje"
-					value="Crear Personaje" /> <input wicket:id="crearEsfera"
-					type="submit" name="crearEsfera" value="Crear Esfera" />
+			<span wicket:id="shengLongPanel"></span>
+		</p>
+		<form wicket:id="mapaForm">
+			<p>
+				<input wicket:id="crearPersonaje" type="submit" name="crearPersonaje" value="Crear Personaje" />
+				<input wicket:id="crearEsfera" type="submit" name="crearEsfera" value="Crear Esfera" />
 				<div wicket:id="feedbackPanel"></div>
 
 				Elementos Existente
@@ -37,14 +37,11 @@
 					<option>Esfera_1</option>
 					<option>Esfera_2</option>
 				</select>
-				<input wicket:id="atrapar" type="submit" name="atrapar"
-					value="Atrapar" /> <input wicket:id="llamar" type="submit"
-					name="llamar" value="Llamar a ShengLong" />
-			</form>
-		</p>
-		
-		<p>
-			<table class="tablero">
+				<input wicket:id="atrapar" type="submit" name="atrapar" value="Atrapar" />
+				<input wicket:id="llamar" type="submit" name="llamar" value="Llamar a ShengLong" />
+			</p>
+			<p>
+			<table class="tablero" id="tablero" name="tablero" >
 				<tbody>
 					<!-- 
 					<tr class="title">
@@ -61,7 +58,8 @@
 					</tr>
 				</tbody>
 			</table>
-		</p>
+			</p>
+		</form>
 		
 	</div>
 

@@ -13,6 +13,8 @@ import utils.Punto;
 import dominio.Mapa;
 
 public abstract class TemplatePage<T> extends WebPage implements Serializable{
+	public static final String FEEDBACK_PANEL = "feedbackPanel";
+
 	private static final long serialVersionUID = 1L;
 	
 	private Form<T> form;
@@ -49,7 +51,7 @@ public abstract class TemplatePage<T> extends WebPage implements Serializable{
 	 * Agrega el panel de errores al formulario
 	 */
 	protected void addFeedbackPanel() {
-    	this.form.add(new FeedbackPanel("feedbackPanel"));
+    	this.form.add(new FeedbackPanel(FEEDBACK_PANEL));
 	}
 
 	/**
