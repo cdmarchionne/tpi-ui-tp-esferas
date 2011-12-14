@@ -8,7 +8,6 @@ import utils.Punto;
 import dominio.Mapa;
 
 public class CrearMapaPage extends TemplatePage<Punto<Integer>> {
-	private static final long serialVersionUID = 1L;
 	private static final String NAME_FORM = "nuevoMapaForm";
 
 	public CrearMapaPage() {
@@ -25,7 +24,6 @@ public class CrearMapaPage extends TemplatePage<Punto<Integer>> {
 
 	protected void addButtons() {
 		this.getForm().add(new Button("aceptar") {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {

@@ -7,7 +7,6 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import dominio.Posicionable;
 
 public class PosicionableChoiceRenderer<T extends Posicionable> implements IChoiceRenderer<T>,Serializable {
-	private static final long serialVersionUID = 1L;
 
 	// Gets the display value that is visible to the end user.
 	public String getDisplayValue(T posicionable) {

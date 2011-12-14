@@ -6,7 +6,6 @@ import org.apache.wicket.markup.html.form.Form;
 import dominio.Posicionable;
 
 public abstract class PosicionablePage<T extends Posicionable> extends TemplatePage<T> {
-	private static final long serialVersionUID = 1L;
 
 	public PosicionablePage(TemplatePage<?> paginaOrigen, Form<T> formulario) {
 		super(paginaOrigen, formulario);
@@ -37,7 +36,6 @@ public abstract class PosicionablePage<T extends Posicionable> extends TemplateP
 
 	protected final void addCrearBotonAceptarParaPosicionables() {
 		Button aceptarButton = new Button("aceptar") {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onSubmit() {

@@ -15,8 +15,6 @@ import dominio.Mapa;
 public abstract class TemplatePage<T> extends WebPage implements Serializable{
 	public static final String FEEDBACK_PANEL = "feedbackPanel";
 
-	private static final long serialVersionUID = 1L;
-	
 	private Form<T> form;
 	
 	private TemplatePage<?> paginaOrigen;
@@ -77,8 +75,6 @@ public abstract class TemplatePage<T> extends WebPage implements Serializable{
 	
 	protected final void addButtonCancelToClear() {
 		Button cancelClearButton = new Button("cancel") {
-				private static final long serialVersionUID = 1L;
-				
 				@Override
 				public void onSubmit() {
 					form.clearInput();
@@ -89,7 +85,6 @@ public abstract class TemplatePage<T> extends WebPage implements Serializable{
 
 	public final void addButtonCancelToReverse() {
 		Button cancelReverseButton = new Button("cancel") {
-				private static final long serialVersionUID = 1L;
 				@Override
 				public void onSubmit() {
 					this.setResponsePage(paginaOrigen);		
@@ -120,11 +115,12 @@ public abstract class TemplatePage<T> extends WebPage implements Serializable{
 	}
 
 	public final Mapa getMapa() {
-		return ((WicketApplication) this.getApplication()).getMapa();
+		Object mapa = this.getSession().getAttribute(Mapa.MAPA);
+		return (mapa==null) ? null : (Mapa) mapa;
 	}
 
 	public final void setMapa(Mapa mapa) {
-		((WicketApplication) this.getApplication()).setMapa(mapa);
+		this.getSession().setAttribute(Mapa.MAPA, mapa);
 	}
 	
 }

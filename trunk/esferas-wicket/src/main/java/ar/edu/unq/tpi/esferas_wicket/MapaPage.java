@@ -15,7 +15,6 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import utils.Punto;
@@ -25,7 +24,6 @@ import dominio.Mapa;
 import dominio.Personaje;
 
 public class MapaPage extends TemplatePage<Mapa> {
-	private static final long serialVersionUID = 1L;
 
 	public static final String SHENG_LONG_PANEL = "shengLongPanel";
 	public static final String TABLERO = "tablero";
@@ -65,7 +63,6 @@ public class MapaPage extends TemplatePage<Mapa> {
 	 */
 	private void addButtonsMapa() {
 		this.getForm().add(new Button("crearEsfera") {
-			private static final long serialVersionUID = 1L;
 			
 			@Override
 			public boolean isEnabled() {
@@ -79,7 +76,6 @@ public class MapaPage extends TemplatePage<Mapa> {
 		});
 		
 		this.getForm().add(new Button("crearPersonaje") {
-			private static final long serialVersionUID = 1L;
 			
 			@Override
 			public boolean isEnabled() {
@@ -99,12 +95,13 @@ public class MapaPage extends TemplatePage<Mapa> {
 	@SuppressWarnings("rawtypes")
 	private void addButtonsBusqueda() {
 		Button buttonAtrapar = new Button(ATRAPAR) {
-			private static final long serialVersionUID = 1L;
 			
 			@Override
 			public boolean isEnabled() {
 				Mapa mapa = MapaPage.this.getMapa();
-				return (mapa.getPersonajeBuscado() != null) && (mapa.getEsferaBuscada() != null);
+				DropDownChoice<?> dropDownChoiceEsfera = (DropDownChoice<?>) MapaPage.this.getForm().get(Mapa.ESFERA_BUSCADA);
+				DropDownChoice<?> dropDownChoicePersonaje = (DropDownChoice<?>) MapaPage.this.getForm().get(Mapa.PERSONAJE_BUSCADO);
+				return (mapa.getPersonajeBuscado() != null) && (mapa.getEsferaBuscada() != null) && (!dropDownChoiceEsfera.getChoices().isEmpty())  && (!dropDownChoicePersonaje.getChoices().isEmpty());
 			}
 			
 			@Override
@@ -117,11 +114,12 @@ public class MapaPage extends TemplatePage<Mapa> {
 		this.getForm().add(buttonAtrapar);
 		
 		AjaxLink buttonLlamar = new AjaxLink(LLAMAR) {
-			private static final long serialVersionUID = 1L;
 			
 			@Override
 			public boolean isEnabled() {
-				return (MapaPage.this.getMapa().getPersonajeBuscado() != null);
+				Personaje personajeBuscado = MapaPage.this.getMapa().getPersonajeBuscado();
+				DropDownChoice<?> dropDownChoicePersonaje = (DropDownChoice<?>) MapaPage.this.getForm().get(Mapa.PERSONAJE_BUSCADO);
+				return (personajeBuscado != null) && (personajeBuscado.puedeInvocarShengLong()) && (!dropDownChoicePersonaje.getChoices().isEmpty());
 			}
 			
 			@Override
@@ -139,17 +137,15 @@ public class MapaPage extends TemplatePage<Mapa> {
 	
 	private ListView<List<Casillero>> detalleTablero() {
 		ListView<List<Casillero>> listView = new ListView<List<Casillero>>(TABLERO, this.getMapa().getTablero()) {
-			private static final long serialVersionUID = 1L;
 			
 			@Override 
 			protected void populateItem(ListItem<List<Casillero>> itemFila) {
 				itemFila.add(new Label("numeroFila", String.valueOf(itemFila.getIndex())));
 				ListView<Casillero> fila = new ListView<Casillero>("columnas", itemFila.getModelObject()) {
-					private static final long serialVersionUID = 1L;
 					
 					@Override
 					protected void populateItem(ListItem<Casillero> item) {
-						item.add(new Image("imagenCasillero", new Model("images/"+item.getModelObject().getObjeto().getName().toLowerCase()+".png")));
+						item.add(new Image("imagenCasillero", "images/"+item.getModelObject().getObjeto().getName().toLowerCase()+".png"));
 					}
 				};
 				itemFila.add(fila);
@@ -164,7 +160,6 @@ public class MapaPage extends TemplatePage<Mapa> {
 		
 		DropDownChoice<Personaje> dropDownChoicePersonaje = new DropDownChoice<Personaje>(Mapa.PERSONAJE_BUSCADO, this.getMapa().getListaPersonajes(), new PosicionableChoiceRenderer<Personaje>());
 		dropDownChoicePersonaje.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
@@ -178,8 +173,8 @@ public class MapaPage extends TemplatePage<Mapa> {
 	protected DropDownChoice<Esfera> createDropDownChoiceEsfera() {
 		
 		DropDownChoice<Esfera> dropDownChoiceEsfera = new DropDownChoice<Esfera>(Mapa.ESFERA_BUSCADA, this.getMapa().getListaEsferas(), new PosicionableChoiceRenderer<Esfera>());
+
 		dropDownChoiceEsfera.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void onUpdate(AjaxRequestTarget target) {
@@ -198,11 +193,9 @@ public class MapaPage extends TemplatePage<Mapa> {
 		modal.setInitialHeight(450);
 		
 		modal.setWindowClosedCallback(new WindowClosedCallback() {
-			private static final long serialVersionUID = 1L;
 			
 			public void onClose(AjaxRequestTarget target) {
 				target.add(MapaPage.this.getForm());
-				target.add(MapaPage.this.getForm().get(Mapa.ESFERA_BUSCADA));
 			}
 		});
 		

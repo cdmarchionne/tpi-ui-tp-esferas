@@ -13,7 +13,6 @@ import dominio.Esfera;
 import dominio.Personaje;
 
 public class CrearPersonajePage extends PosicionablePage<Personaje> {
-	private static final long serialVersionUID = 1L;
 	private static final String NAME_FORM = "personajeForm";
 	
 	public CrearPersonajePage(TemplatePage<?> paginaOrigen) {
@@ -28,7 +27,6 @@ public class CrearPersonajePage extends PosicionablePage<Personaje> {
 
 	private ListView<Personaje> detallePersonaje() {
 		return new ListView<Personaje>("personajes", this.getMapa().getListaPersonajes()) {
-			private static final long serialVersionUID = 1L;
 			// This method is called for each 'entry' in the list.
 			@Override 
 			protected void populateItem(ListItem<Personaje> item) {
@@ -40,7 +38,6 @@ public class CrearPersonajePage extends PosicionablePage<Personaje> {
 				item.add(new Label("cantidad", String.valueOf(personaje.getInventario().size())));
 				
 				ListView<Esfera> inventario = new ListView<Esfera>(Personaje.INVENTARIO, personaje.getInventario()) {
-					private static final long serialVersionUID = 1L;
 					
 					@Override
 					protected void populateItem(ListItem<Esfera> itemEsfera) {
