@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
 import org.uqbar.commons.model.ObservableObject;
 import org.uqbar.commons.model.UserException;
 
