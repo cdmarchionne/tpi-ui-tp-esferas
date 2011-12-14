@@ -44,9 +44,6 @@ public class Mapa extends ObservableObject implements Serializable {
 		this.setDimension(dimension);
 		casilleros = new ArrayList<Casillero>();
 
-//		esferaBuscada = new Esfera(Esfera.CantidadEstrellas.UNA);
-//		casilleros.add(new Casillero(new Punto<Integer>(1, 1), esferaBuscada));
-
 		personajeBuscado = new Personaje(Personaje.NombrePersonaje.GOKU, 10);
 		casilleros.add(new Casillero(new Punto<Integer>(0, 0), personajeBuscado));
 
