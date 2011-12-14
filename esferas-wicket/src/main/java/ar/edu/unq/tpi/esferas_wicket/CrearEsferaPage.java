@@ -7,7 +7,6 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import dominio.Esfera;
 
 public class CrearEsferaPage extends PosicionablePage<Esfera> {
-	private static final long serialVersionUID = 1L;
 	private static final String NAME_FORM = "esferaForm";
 	
 	public CrearEsferaPage(TemplatePage<?> paginaOrigen) {

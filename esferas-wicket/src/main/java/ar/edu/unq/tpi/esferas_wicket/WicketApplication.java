@@ -14,8 +14,6 @@ import dominio.Mapa;
  */
 public class WicketApplication extends WebApplication{    	
 
-	private Mapa mapa = null;
-	
 	public WicketApplication() {
 	}
 	
@@ -24,12 +22,7 @@ public class WicketApplication extends WebApplication{
 	 */
 	@Override
 	public Class<? extends WebPage> getHomePage(){
-		if(existeMapa()){
-			return MapaPage.class;
-		}
-		else{
-			return CrearMapaPage.class;
-		}
+		return CrearMapaPage.class;
 	}
 	
 	protected void init(){
@@ -38,21 +31,6 @@ public class WicketApplication extends WebApplication{
 				return Session.get().getId();
 			}
 		}); 
-	}
-	
-	private boolean existeMapa() {
-		return (this.getMapa()!=null);
-	}
-	
-	//*******************************************
-	//			GETTER Y SETTER
-	//*******************************************
-	
-	public Mapa getMapa() {
-		return mapa;
-	}
-	public void setMapa(Mapa mapa) {
-		this.mapa = mapa;
 	}
 	
 }
